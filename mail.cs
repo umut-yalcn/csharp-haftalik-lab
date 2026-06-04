@@ -1,3 +1,27 @@
+/*E-Posta Adresi Analizi
+
+Soru: Klavyeden girilen bir e-posta adresinin geçerliliğini ve detaylarını string metotları kullanarak analiz eden bir C# programı yazınız. (İşlemleri gerçekleştirmek için bir MailAnaliz sınıfı oluşturmanız beklenmektedir.)
+
+Geçerlilik Kriterleri:
+
+Metin içerisinde mutlaka bir adet "@" işareti bulunmalıdır.
+
+Adres içerisinde boşluk karakteri (space) yer almamalıdır.
+
+Adres ".com", ".edu" veya ".net" uzantılarından biriyle bitmelidir.
+
+İstenen Çıktılar:
+
+Adres yukarıdaki kriterleri sağlamıyorsa ekrana: "Geçersiz e-posta formatı!" yazdırılmalıdır.
+
+Adres geçerli ise:
+
+Kullanıcının hesap adını (@ işaretinden önceki kısım) ayrıştırıp ekrana yazdırınız (Örn: ornek.metin@gmail.com için ornek.metin).
+
+E-posta servis sağlayıcısının adını (@ ile . arasındaki kısım) ekrana yazdırınız (Örn: gmail, hotmail, yahoo vb.).
+
+Uzantısına göre hesap türünü yazdırınız (.com ise "Ticari", .edu ise "Eğitim", .net ise "Ağ", hiçbiri değilse "Diğer" yazdırın).*/
+
 using System;
 
 namespace EpostaAnalizi
