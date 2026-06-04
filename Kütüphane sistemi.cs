@@ -1,4 +1,30 @@
-Kütüphane sistemi
+/*Soru: Bir kütüphane otomasyonu için Kitap isimli bir sınıf tasarlamanız istenmektedir. Bu hafta sadece sınıfın iskeletini ve kurucu metotlarını oluşturacaksınız.
+
+İstenenler:
+
+Sınıf içerisinde aşağıdaki üye değişkenleri dışarıdan doğrudan erişime kapalı (private) olarak tanımlayınız:
+
+kitapAdi (string)
+
+yazarAdi (string)
+
+sayfaSayisi (int)
+
+yayinYili (int)
+
+
+Sınıf için aşağıdaki kurallara uyan 4 farklı kurucu metot yazınız:
+
+Önemli Kural: Sayfa sayısı dışarıdan girildiğinde 10 ile 1000 arasında olmalıdır. Eğer parametre olarak 1000'i aşan bir değer gelirse sayfaSayisi 1000, 10'un altında bir değer gelirse 10 olarak kabul edilip atanmalıdır.
+
+
+1. Kurucu (Parametresiz): sayfaSayisi değeri 100, yayinYili 2024 olarak başlar. (Kitap ve yazar adlarına varsayılan değer atayınız).
+
+2. Kurucu (Tek Parametreli): Sadece sayfaSayisi değerini dışarıdan parametre olarak alır (sınır kuralı uygulanmalıdır). yayinYili 2024 olarak atanır.
+
+3. Kurucu (İki Parametreli): İlk parametre sayfaSayisi, ikinci parametre yayinYili değeridir. İlgili atamaları gerçekleştiriniz.
+
+4. Kurucu (İkiden Fazla Parametreli): params int[] kullanarak sınırsız tam sayı parametresi alabilen bir kurucu yazınız. Gelen değerlerden sadece ilkini sayfaSayisi, ikincisini yayinYili olarak ilgili değişkenlere atayınız. (Diğer parametreleri göz ardı ediniz).*/
 
 using System;
 
