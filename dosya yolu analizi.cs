@@ -1,3 +1,28 @@
+/*Dosya Yolu (File Path) Analizi
+
+Soru: Klavyeden girilen bir tam dosya yolunun (file path) geçerliliğini ve detaylarını string metotları kullanarak analiz eden bir C# programı yazınız. (İşlemleri gerçekleştirmek için bir DosyaAnaliz sınıfı oluşturmanız beklenmektedir.)
+
+Geçerlilik Kriterleri:
+
+Dosya yolu "C:\" veya "D:\" ile başlamalıdır.
+
+İçerisinde klasörleri ayırmak için kullanılan "\" karakterinden sürücü haricinde en az 1 tane daha bulunmalıdır.
+
+Dosya bir uzantıya sahip olmalıdır (Metnin son kısımlarında bir "." bulunmalı ve en sonda bitmemelidir).
+
+İstenen Çıktılar:
+
+Dosya yolu yukarıdaki kriterleri sağlamıyorsa ekrana: "Geçersiz dosya yolu formatı!" yazdırılmalıdır.
+
+Dosya yolu geçerli ise:
+
+Sadece dosyanın adını (uzantısız ve klasör yolları olmadan) ayrıştırıp ekrana yazdırınız (Örn: C:\Belgeler\Odevler\rapor.pdf için sadece rapor).
+
+Dosyanın uzantısını (noktadan sonraki kısım) ekrana yazdırınız.
+
+Uzantısına göre dosya türünü yazdırınız (.pdf veya .doc ise "Belge", .jpg veya .png ise "Görsel", .exe ise "Çalıştırılabilir Uygulama", hiçbiri değilse "Diğer" yazdırın.).*/
+
+
 using System;
 
 namespace DosyaYoluAnalizi
