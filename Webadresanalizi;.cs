@@ -1,3 +1,27 @@
+/* Web Adresi (URL) Analizi
+
+Soru: Klavyeden girilen bir web sayfası adresinin geçerliliğini ve detaylarını string metotları kullanarak analiz eden bir C# programı yazınız. (İşlemleri gerçekleştirmek için bir WebAnaliz sınıfı oluşturmanız beklenmektedir.)
+
+Geçerlilik Kriterleri:
+
+Adres "http://" veya "https://" ile başlamalıdır.
+
+İçerisinde "www" ibaresi geçmelidir.
+
+Adres içerisinde en az 3 adet "." (nokta) ayracı bulunmalıdır (örn: www.ornek.com.tr).
+
+İstenen Çıktılar:
+
+Adres yukarıdaki kriterleri sağlamıyorsa ekrana: "Geçersiz web adresi formatı!" yazdırılmalıdır.
+
+Adres geçerli ise:
+
+Web sayfasının domain (alan adı) kısmını ayrıştırıp ekrana yazdırınız (Örn: https://www.google.com.tr için sadece google yazdırılacak).
+
+Sayfanın uzantısını kontrol ederek hangi ülkeye ait olduğunu yazdırınız. (Uzantıyı 4 durum için yapınız : .tr ise "Türkiye", .uk ise "İngiltere", .com ise "Ticari/Evrensel", hiçbiri değilse "Diğer" yazdırın). */
+
+
+
 using System; // Gerekli sınıf ve metodları kullanabilmek için System ad alanını ekliyoruz.
 
 namespace WebAdresAnalizi // Programımızın ad alanı
