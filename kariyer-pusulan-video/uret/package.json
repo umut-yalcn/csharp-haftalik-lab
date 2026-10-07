@@ -1,0 +1,12 @@
+{
+  "name": "kariyer-pusulan-reels",
+  "private": true,
+  "description": "Kariyer Pusulan 2.500 Reels: kodla kare kare video üretimi",
+  "scripts": {
+    "ciz": "node ciz.js"
+  },
+  "dependencies": {
+    "@fontsource/montserrat": "^5.3.0",
+    "playwright": "1.56"
+  }
+}
