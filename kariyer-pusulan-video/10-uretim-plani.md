@@ -33,7 +33,7 @@ Fotoğraf gerçekçiliği bu yöntemle çıkmaz. Hedef, feed'deki görsellerin h
 | 5 · 0:12–0:15 | Çatı ve şehir silüeti, köprü, alacakaranlık. Ayakların altından KP Rehber tarzı kıvrılan turkuaz ışık nehri şehre akar. Kamera yükselir. | Orta |
 | 6 · 0:15–0:19 | Telefon çizimi; içinde kariyer keşif arayüzü. Kartlar kayar, kaydet ikonu "pop" yapar, başvuru sayfası açılır. Keşfet / Kaydet / Başvur. | Kolay-orta |
 | 7 · 0:19–0:22 | Gün batımı gökyüzü (ufukta sıcak, üstte lacivert), birlikte yürüyen 6 silüet, slow motion yürüme döngüsü. Gökyüzü laciverte döner, beyaz ışık açılır. | Zor (yürüme animasyonu) |
-| 8 · 0:22–0:25 | Açık zemin, orijinal logo, başlıklar, site adresi (bkz. `kesit-08.md`). | Kolay |
+| 8 · 0:22–0:25 | Koyu lacivert zemin; orijinal logo parlayan beyaz yuvarlak rozet içinde, başlıklar, site adresi (bkz. `kesit-08.md`). | Kolay |
 
 Bütün ekran yazıları videonun içine doğrudan çizilir. Ayrı kurgu gerekmez, ama istenirse şeffaf yazı katmanları da ayrıca verilebilir.
 
@@ -64,7 +64,7 @@ Bütün ekran yazıları videonun içine doğrudan çizilir. Ayrı kurgu gerekme
 ## Riskler ve dürüst sınırlar
 - **Gerçekçilik:** Video stilize olacak; kampüs ve şehir fotoğraf gibi görünmeyecek. Feed'in AI-fotoğraf hissini birebir vermez. Daha yakın bir sonuç için ileride kesit 1, 3, 4 ve 7 bir video aracında üretilip bu videodaki yerlerine konabilir (karma yol). Plan buna uygun kuruluyor: her kesit ayrı dosya.
 - **Kesit 7 yürüyüş:** Silüetlerin doğal yürümesi en zor kısım. Gerekirse yürüyüş yerine yavaşça ilerleyen, saçları ve ceketleri rüzgârda hareket eden duruş silüetlerine geçilir.
-- **Logo boyutu:** Logo dosyası 224 px. Outro'da en fazla 240 px genişlikte kullanılabilir. Daha büyük dosya bulunursa logo büyütülür.
+- **Logo:** Logo dosyası 224 px ve lacivert. Koyu zeminde okunsun diye beyaz rozet içinde, en fazla 240 px genişlikte kullanılır. Feed'deki beyaz-turkuaz logo varyantının büyük bir dosyası bulunursa rozete gerek kalmaz.
 - **Müzik yok:** Video sessiz teslim edilir, müzik Instagram'da eklenir.
 
 ## Sizden beklenenler

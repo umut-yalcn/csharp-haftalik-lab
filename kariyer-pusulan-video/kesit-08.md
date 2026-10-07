@@ -1,32 +1,32 @@
 # Kesit 8 — Outro, Logo ve CTA (0:22–0:25)
 
-**Süre:** 3 sn · **Logo dosyası:** `referans/logo-orijinal.png` (224×225 px, beyaz zeminli)
+**Üretim süresi:** 5 sn (yalnızca arka plan) · **Kullanılacak:** 3 sn
 
 ## Amaç
-Marka imzası ve harekete çağrı. Yerleşim feed'deki **"7 Günde 250 Üye!"** gönderisinden: ortada logo, altında iki renkli büyük başlık, en altta hap şeklinde site adresi.
+Marka imzası ve harekete çağrı. Feed'deki **"7 Günde 250 Üye!"** gönderisinin yerleşimi birebir şablon olarak kullanılır: üstte ortada parlayan logo, altında büyük iki renkli başlık, en altta hap şeklinde site adresi.
 
-## Zemin kararı: açık zemin
-Verilen logo **lacivert** (`#03214B`) ve **beyaz zeminli**. Koyu lacivert zeminde K, P ve dış halka kaybolur. Logoyu değiştirmeden okunur kılmanın yolu açık zemin. Senaryonun ilk metni de zaten "Temiz açık arka plan" diyordu.
+## Zemin kararı
+Senaryo metni "temiz açık arka plan" diyor, prompt ise "deep navy gradient". **Koyu lacivert öneriyorum.** Feed'deki bütün marka ve milestone gönderileri koyu zeminde, açık zemin önceki kesitlerden gelen ışık akışını da koparır. Açık zemin isterseniz aynı yerleşimi `#F4F8FF` zemin + lacivert yazı ile kullanın.
 
-- Zemin: ortası beyaz `#FFFFFF`, kenarlara doğru çok açık buz mavisi `#EAF4FB` radyal gradyan.
-- Logonun beyaz zemini sahne zeminiyle birleşir, ayrıca dekupe gerekmez. Logonun hemen çevresi tam beyaz kalmalı ki kutu kenarı görünmesin.
-- Geçiş: kesit 7'deki lacivert gökyüzünün ortasından beyaz bir ışık açılır ve kareyi kaplar (0:21,6–0:22,2).
+## Prompt (yalnızca arka plan)
+```
+Clean minimalist cinematic vertical 9:16 background loop. Elegant smooth gradient from deep navy (#040A1C) at the edges
+to slightly brighter navy-blue (#0A1F4D) in the upper center, a soft turquoise radial glow behind the upper-center area,
+fine floating cyan and white light particles drifting slowly upward, a very faint thin compass rose outline barely
+visible in the background, gentle slow breathing camera push-in. Completely empty, uncluttered center composition
+reserved for graphic overlay. Premium modern tech aesthetic. No text, no letters, no logos, no symbols in the center.
+```
 
-## Logo kalitesi uyarısı
-Dosya 224 px genişliğinde. Ekranda **en fazla ~240 px** genişlikte kullanılmalı, daha büyüğü bulanık görünür. Daha büyük bir dosya (en az 1000 px ya da SVG) bulunursa logo ~360 px'e büyütülebilir.
-
-## Yerleşim (1080×1920)
+## Yerleşim (kurguda, 1080×1920)
 | Öğe | Konum | Zaman | Stil |
 |---|---|---|---|
-| **Orijinal logo** | Merkez, y ≈ 560 px, genişlik 240 px | 0:22,2'de belirir (opacity 0→100 + scale %94→%100, 14 kare) | **Logo hiçbir şekilde değiştirilmez, yeniden çizilmez, renklendirilmez.** Arkasında yalnızca çok hafif turkuaz yumuşak ışık halesi (ayrı katman). |
-| **2.500 kişi pusulasını buldu.** | y ≈ 860 px, 2 satır | 0:22,6 | Montserrat Black, marka laciverti `#03214B`. "**2.500**" mavi `#0155FA` → turkuaz `#00C5C3` gradyan. |
-| **Sıradaki sen misin?** | y ≈ 1070 px | 0:23,2 | Montserrat ExtraBold, `#0285ED`. |
-| **KariyerPusulan.com** | y ≈ 1300 px, hap çerçeve, solda globe ikonu | 0:23,6 | İnce `#03214B` çerçeve, lacivert yazı. |
-| **Keşfet • Kaydet • Başvur** | y ≈ 1400 px | 0:23,8 | Montserrat SemiBold, `#03214B` %70, geniş harf aralığı, noktalar turkuaz. |
+| **Orijinal logo** (`referans/logo-orijinal.png`) | Merkez üst, y ≈ 520 px, logo genişliği en fazla 240 px | 0:22.0'da belirir (scale %90→%100 + opacity, 12 kare). | **Logo hiçbir şekilde değiştirilmez, yeniden çizilmez, renklendirilmez.** Verilen dosya beyaz zeminli ve lacivert olduğu için koyu zeminde kaybolur. Bu yüzden logo, profil fotoğrafındaki gibi **beyaz yuvarlak bir rozetin** (çap ≈ 290 px) içine olduğu gibi konur. Rozetin çevresinde yumuşak turkuaz parlama olur. Dosya 224 px olduğu için 240 px'ten büyük kullanılmaz. |
+| **2.500 kişi pusulasını buldu.** | y ≈ 820 px, 2 satır | 0:22.4 | Montserrat Black, beyaz. "**2.500**" mavi→turkuaz gradyan. |
+| **Sıradaki sen misin?** | y ≈ 1040 px | 0:23.2 | Montserrat ExtraBold, turkuaz `#18D1E3`, hafif parlama. |
+| **KariyerPusulan.com** | y ≈ 1300 px, hap çerçeve içinde, solda globe ikonu | 0:23.6 | Feed'deki site adresi hap etiketiyle aynı: ince turkuaz çerçeve, beyaz yazı. |
+| **Keşfet • Kaydet • Başvur** | y ≈ 1400 px | 0:23.8 | Montserrat Medium, `#8FD8FF`, geniş harf aralığı. Noktalar turkuaz. |
 
-Arka planda çok silik bir pusula gülü çizgisi (`#03214B` %6) yavaşça döner. Birkaç turkuaz parçacık süzülür.
-
-**0:24,0–0:25,0:** Bütün öğeler sabit kalır, yalnızca parçacıklar hareket eder.
+**0:24.0–0:25.0:** Bütün öğeler sabit kalır. Yalnızca arka plan parçacıkları hareket eder. Son karede animasyon yok, Reels kapak karesi olarak da kullanılabilir.
 
 ## Ses
-Son vuruş 0:24,0'da. Müzik 0:25,0'e kadar yumuşak kuyrukla kapanır.
+Son vuruş 0:24.0'da. Müzik 0:25.0'e kadar yumuşak kuyrukla (reverb tail) kapanır.

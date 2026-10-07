@@ -30,7 +30,7 @@
 | 0:09–0:12 | 4 | 2.500 farklı hedef / hikâye / gelecek ihtimali. | Bakış çizgileri ışıklı yola dönüşür |
 | 0:12–0:15 | 5 | Ama mesele 2.500 değil. / Sıradaki fırsatı bulmak. | Yol kameranın altından geçer |
 | 0:15–0:19 | 6 | Keşfet. Kaydet. Başvur. | Telefon ekranına zoom |
-| 0:19–0:22 | 7 | İyi ki varsınız. 💙 / Daha yeni başlıyoruz. | Gökyüzü laciverte döner, ortadan beyaz ışık açılır |
+| 0:19–0:22 | 7 | İyi ki varsınız. 💙 / Daha yeni başlıyoruz. | Gökyüzü marka laciverdine döner |
 | 0:22–0:25 | 8 | 2.500 kişi pusulasını buldu. / Sıradaki sen misin? / KariyerPusulan.com / Keşfet • Kaydet • Başvur | — (son 1 sn sabit) |
 
 ## Müzik

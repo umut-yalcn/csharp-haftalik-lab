@@ -24,26 +24,24 @@ Bu rehber profilin ekran görüntülerinden (`referans/`) çıkarıldı. Renk ko
 
 | Konu | Senaryodaki hâli | Önerim | Neden |
 |---|---|---|---|
-| Kesit 8 zemini | "Temiz açık arka plan" (metin) ile "deep navy gradient" (prompt) çelişiyor | **Açık zemin** (kesit 7'nin lacivertinden beyaza ışık açılımı) | Verilen orijinal logo lacivert renkte ve beyaz zeminli. Koyu zeminde lacivert kısımları kaybolur, logoyu değiştirmeden okunur kılmanın yolu açık zemin. |
+| Kesit 8 zemini | "Temiz açık arka plan" (metin) ile "deep navy gradient" (prompt) çelişiyor | **Koyu lacivert** | Feed'in neredeyse tamamı koyu. "7 Günde 250 Üye!" gönderisi bu outro için birebir şablon. |
 | Kesit 7 gün batımı | Sıcak altın saat | Altın arka ışık kalsın ama gökyüzü hızla lacivert ve turkuaza dönsün | Feed soğuk tonlu. Altın yalnızca kutlama vurgusu olarak kullanılıyor. |
 | Kesit 5 yol | Dijital turkuaz çizgi | KP Rehber'deki **kıvrılan, parlayan ışık nehri** | Takipçinin tanıdığı motif. Seriyle bağ kurar. |
 | Geçişler | Beyaz flash | Beyaz yerine **turkuaz-beyaz** flash | Marka rengi korunur. |
 | Kesit 6 arayüz | Yapay zekâ ile üretilmiş uygulama | Gerçek `kariyerpusulan.com` mobil ekran kaydı, telefona yerleştirilmiş | Üretilen arayüz anlamsız metin içerir. Gerçek site daha inandırıcı ve "stok" hissi vermez. |
 | 2.500 rakamı | Animasyonla yükselir | "250 Üye" gönderisindeki gibi mavi-turkuaz gradyanlı, kalın rakam | Önceki milestone gönderisiyle süreklilik kurar ("250 → 2.500"). |
 
-## Renk paleti
+## Renk paleti (tahmini)
 
-Lacivert, turkuaz ve mavi kodları orijinal logo dosyasından (`referans/logo-orijinal.png`) ölçüldü. Diğerleri feed'den tahmin.
-
-| Rol | HEX | Kaynak | Kullanım |
-|---|---|---|---|
-| Gece zemini | `#020C24` | feed | Arka planlar, vinyet |
-| **Marka laciverti** | `#03214B` | logo | Gradyan, kart zemini, açık zeminde yazı |
-| **Marka mavisi** | `#0285ED` → `#0155FA` | logo (ok gradyanı) | Vurgu kelimesi, ışık izleri |
-| **Marka turkuazı** | `#00C5C3` | logo (S yolu) | Ana vurgu, ışıklı yol, rakam gradyanı |
-| Açık mavi | `#8FD8FF` | feed | Parlama, ikincil metin |
-| Beyaz | `#FFFFFF` | — | Ana başlık |
-| Altın (yalnızca vurgu) | `#F5B83D` | feed | Kesit 7'de en fazla 1 dokunuş, tercihen hiç |
+| Rol | HEX | Kullanım |
+|---|---|---|
+| Gece zemini | `#040A1C` | Arka planlar, vinyet |
+| Lacivert | `#0A1F4D` | Gradyan, kart zemini |
+| Elektrik mavisi | `#1E6BFF` | Vurgu kelimesi, ışık izleri |
+| Turkuaz | `#18D1E3` | Ana vurgu, ışıklı yol, rakam gradyanı |
+| Açık mavi | `#8FD8FF` | Parlama, ikincil metin |
+| Beyaz | `#FFFFFF` | Ana başlık |
+| Altın (yalnızca vurgu) | `#F5B83D` | Kesit 7'de en fazla 1 dokunuş, tercihen hiç |
 
 **Renk derecelendirme (grade):** Gölgeler laciverte, yüksek ışıklar turkuaz-beyaza kaysın (teal-navy split tone). Kontrast orta-yüksek, siyahlar tamamen ezilmesin. Bütün kesitlere aynı LUT uygulanmalı.
 
