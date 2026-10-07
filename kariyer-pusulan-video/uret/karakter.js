@@ -189,7 +189,9 @@
     // önden: yüz (yüz hatları yok; yalnızca hafif burun ve yanak gölgesi)
     if (on && s.tip !== "duz" && s.tip !== "lowpoly") {
       g.save(); g.globalAlpha = 0.25; g.fillStyle = ton(k.ten, -0.4);
-      g.beginPath(); g.ellipse(h.x + 4, h.y + 14, 4, 9, 0, 0, Math.PI * 2); g.fill(); g.restore();
+      g.beginPath(); g.ellipse(h.x + 4 + (h.don || 0) * 16, h.y + 14, 4, 9, 0, 0, Math.PI * 2); g.fill();
+      if (h.don) { g.globalAlpha = 0.18 * h.don; g.beginPath(); g.ellipse(h.x - 22, h.y + 6, 12, 26, 0, 0, Math.PI * 2); g.fill(); }
+      g.restore();
     }
     // omuz çantası
     if (canta && canta.tip === "omuz") {

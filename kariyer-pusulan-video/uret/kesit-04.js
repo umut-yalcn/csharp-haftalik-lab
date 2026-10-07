@@ -62,10 +62,10 @@
 
   // --- portre ekleri ---
   const PORTRELER = [
-    { ortam: koridor, sac: "uzun", ekle: (g) => { g.beginPath(); g.roundRect(-110, -420, 150, 200, 10); g.fill(); g.beginPath(); g.roundRect(-96, -440, 150, 30, 6); g.fill(); } },
-    { ortam: atrium, sac: null, ekle: null, yaka: true },
-    { ortam: calismaAlani, sac: "topuz", ekle: null, kulaklik: true },
-    { ortam: durak, sac: null, ekle: null, canta: true },
+    { ortam: koridor, ad: "ayse", ek: {} },                          // üniversite öğrencisi
+    { ortam: atrium, ad: "baris", ek: {} },                          // yeni mezun
+    { ortam: calismaAlani, ad: "zeynep", ek: { kulaklik: "#1F1F1F" } }, // yazılım öğrenen
+    { ortam: durak, ad: "deniz", ek: {} },                           // staj arayan
   ];
 
   function portreCiz(ctx, i, yerel, t) {
@@ -74,25 +74,14 @@
     ctx.save();
     ctx.translate(W / 2, H * 0.55); ctx.scale(olcek, olcek); ctx.translate(-W / 2, -H * 0.55);
     P.ortam(ctx, t);
-    const p = poz.portre({ don: lerp(0.35, 0.85, ease.inOut(k)), nefes: Math.sin(t * 2) * 2, egim: lerp(-4, 6, k) });
-    p.sac = P.sac;
-    p.ekle = P.ekle;
-    KP.insan(ctx, p, {
-      x: AYAK.x, y: AYAK.y, olcek: OLCEK, t, tohum: i + 1, isikBicim: "cizgi",
-      kenarlar: [[-5, 0, "rgba(24,209,227,0.95)"], [-2, 4, "rgba(143,216,255,0.6)"], [4, 0, "rgba(30,107,255,0.45)"]],
-      parlamaKenar: [-7, 0, "rgba(24,209,227,0.9)"],
+    const don = lerp(0.35, 0.85, ease.inOut(k));
+    const p = KP.poz2.ayakta({ nefes: Math.sin(t * 2) * 2, egim: lerp(-4, 6, k) + don * 8 });
+    p.bas.don = don; p.bas.y -= 4 * don; // yüz sağ üste döner
+    KP.karakter(ctx, p, KP.kadro(P.ad, "on", P.ek), {
+      x: AYAK.x, y: AYAK.y, olcek: OLCEK,
+      stil: { tip: "sinematik", karartma: "rgba(6,16,46,0.4)" },
+      kenarIsigi: [[-4, 0, "rgba(24,209,227,0.8)"], [-2, 3, "rgba(143,216,255,0.5)"], [3, 0, "rgba(30,107,255,0.4)"], [-6, 0, "rgba(24,209,227,0.7)", 7]],
     });
-    // kıyafet ayrıntıları kenar ışığıyla
-    ctx.save(); ctx.translate(AYAK.x, AYAK.y); ctx.scale(OLCEK, OLCEK);
-    ctx.strokeStyle = "rgba(143,216,255,0.45)"; ctx.lineWidth = 2.2 / OLCEK * 2;
-    if (P.yaka) { ctx.beginPath(); ctx.moveTo(-34, -512); ctx.lineTo(4, -420); ctx.lineTo(40, -512); ctx.stroke(); ctx.beginPath(); ctx.moveTo(4, -420); ctx.lineTo(4, -300); ctx.stroke(); }
-    if (P.kulaklik) {
-      ctx.strokeStyle = "rgba(24,209,227,0.8)"; ctx.lineWidth = 4;
-      ctx.beginPath(); ctx.ellipse(6, -536, 34, 16, 0, 0, Math.PI); ctx.stroke();
-      ctx.fillStyle = "#02050D"; for (const s of [-1, 1]) { ctx.beginPath(); ctx.ellipse(6 + s * 34, -532, 10, 15, 0, 0, Math.PI * 2); ctx.fill(); ctx.stroke(); }
-    }
-    if (P.canta) { ctx.strokeStyle = "rgba(24,209,227,0.6)"; ctx.lineWidth = 3; for (const s of [-1, 1]) { ctx.beginPath(); ctx.moveTo(s * 58, -508); ctx.quadraticCurveTo(s * 66, -420, s * 60, -300); ctx.stroke(); } }
-    ctx.restore();
     ctx.restore();
   }
 
@@ -123,6 +112,7 @@
       }
 
       // yazı: "2.500 farklı" sabit, alt satırdaki kelime değişir
+      KP.yaziGolgesi(ctx, 1390, 300, 0.6); // açık renk kıyafetlerin üstünde okunurluk için
       satir(ctx, [{ m: "2.500", renk: "gradyan" }, { m: " farklı" }], { y: 1330, boy: 100, agirlik: 900, k: aralik(t, 0.08, 0.3), parlama: 18 });
       for (let j = 0; j < KELIMELER.length; j++) {
         const [t0, m] = KELIMELER[j], t1 = KELIMELER[j + 1] ? KELIMELER[j + 1][0] : 99;

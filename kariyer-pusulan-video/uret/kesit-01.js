@@ -114,11 +114,15 @@
       oda(ctx, t, parlak);
       laptop(ctx, t);
       // öğrenci, arkadan; ekran ışığı başın ve omuzların kenarını boyar
-      KP.insan(ctx, poz.otur({ nefes: Math.sin(t * 2) * 2, egim: Math.sin(t * 0.8) * 4 }), {
-        x: 480, y: 2170, olcek: 1.5, t,
-        kenarlar: [[0, 5, `rgba(120,200,255,${0.75 * parlak})`], [5, 0, "rgba(24,209,227,0.7)"], [-5, 0, "rgba(30,107,255,0.7)"]],
-        parlamaKenar: [0, 6, "rgba(30,107,255,0.9)"],
-      });
+      {
+        const p = KP.poz2.ayakta({ nefes: Math.sin(t * 2) * 2, egim: Math.sin(t * 0.8) * 4 });
+        p.kollar = [[[-80, -498], [-96, -400], [-72, -318]], [[80, -498], [96, -400], [72, -318]]]; // eller klavyede
+        KP.karakter(ctx, p, KP.kadro("deniz", "arka", { canta: null }), {
+          x: 480, y: 2170, olcek: 1.5,
+          stil: { tip: "sinematik", karartma: `rgba(4,12,40,${0.62 - 0.1 * parlak})` },
+          kenarIsigi: [[0, 5, `rgba(120,200,255,${0.75 * parlak})`], [5, 0, "rgba(24,209,227,0.6)"], [-5, 0, "rgba(30,107,255,0.6)"], [0, 7, "rgba(30,107,255,0.8)", 6]],
+        });
+      }
       // sandalye sırtı (kameraya en yakın katman)
       ctx.fillStyle = "#03060F";
       ctx.beginPath(); ctx.roundRect(300, 1640, 360, 420, [60, 60, 0, 0]); ctx.fill();

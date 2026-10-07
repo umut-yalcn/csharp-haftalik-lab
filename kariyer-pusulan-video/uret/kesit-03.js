@@ -32,12 +32,14 @@
 
   // Grup: x, merdiven seviyesi (y), ölçek, telefon eli, saç
   const GRUP = [
-    { x: 170, y: 1690, o: 0.98, tel: "sag", sac: "uzun", derin: 1.0 },
-    { x: 380, y: 1640, o: 0.92, tel: "sol", sac: null, derin: 0.85 },
-    { x: 560, y: 1760, o: 1.05, tel: "sag", sac: "topuz", derin: 1.15 },
-    { x: 760, y: 1620, o: 0.9, tel: null, sac: null, derin: 0.8, egim: -8 },
-    { x: 930, y: 1700, o: 1.0, tel: "sol", sac: "uzun", derin: 1.05 },
-  ];
+    { ad: "ayse", x: 170, y: 1690, o: 0.98, tel: "sag", derin: 1.0, agirlik: 0.5 },
+    { ad: "can", x: 380, y: 1640, o: 0.92, tel: "sol", derin: 0.85, agirlik: -0.4 },
+    { ad: "zeynep", x: 560, y: 1760, o: 1.05, tel: "sag", derin: 1.15, agirlik: 0.3 },
+    { ad: "emre", x: 760, y: 1620, o: 0.9, tel: null, derin: 0.8, egim: -8, agirlik: 0.6 },
+    { ad: "mert", x: 930, y: 1700, o: 1.0, tel: "sol", derin: 1.05, agirlik: -0.5 },
+  ].sort((a, b) => a.y - b.y); // uzaktakiler önce çizilir
+  const STIL = { tip: "sinematik", karartma: "rgba(14,34,80,0.34)" };
+  const KENAR = [[-4, 0, "rgba(255,240,215,0.8)"], [0, 4, "rgba(255,250,235,0.75)"], [4, 0, "rgba(24,209,227,0.5)"], [-6, 0, "rgba(255,236,200,0.6)", 6]];
 
   function gokyuzu(ctx, c) {
     const g = ctx.createLinearGradient(0, 0, 0, UFUK);
@@ -79,14 +81,17 @@
       ctx.drawImage(bina, -100 - 40 * c, UFUK - 680);
       merdivenler(ctx, c);
       for (const k of GRUP) {
-        const p = poz.ayakta({ telefon: k.tel, nefes: Math.sin(t * 2 + k.x) * 1.5, egim: k.egim || 0 });
-        p.sac = k.sac;
-        if (k.tel) p.bas.y += 10; // telefona eğilen baş
-        KP.insan(ctx, p, {
-          x: k.x + 70 * c * k.derin, y: k.y, olcek: k.o, t, tohum: k.x,
-          kenarlar: [[-4, 0, "rgba(255,240,215,0.9)"], [0, 4, "rgba(255,250,235,0.8)"], [4, 0, "rgba(24,209,227,0.7)"]],
-          parlamaKenar: [-6, 0, "rgba(255,236,200,0.8)"],
-        });
+        const p = KP.poz2.ayakta({ telefon: k.tel, nefes: Math.sin(t * 2 + k.x) * 1.5, egim: k.egim || 0, agirlik: k.agirlik });
+        const x = k.x + 70 * c * k.derin;
+        ctx.fillStyle = "rgba(4,10,30,0.4)"; ctx.beginPath(); ctx.ellipse(x, k.y + 18 * k.o, 62 * k.o, 10 * k.o, 0, 0, Math.PI * 2); ctx.fill();
+        KP.karakter(ctx, p, KP.kadro(k.ad, "on"), { x, y: k.y, olcek: k.o, stil: STIL, kenarIsigi: KENAR });
+        if (p.telefon) {
+          // telefon ekranının yüze vuran ışığı
+          const tx = x + p.bas.x * k.o, ty = k.y + (p.bas.y + 24) * k.o;
+          const g = ctx.createRadialGradient(tx, ty, 4, tx, ty, 70 * k.o);
+          g.addColorStop(0, "rgba(120,236,245,0.28)"); g.addColorStop(1, "rgba(24,209,227,0)");
+          ctx.save(); ctx.globalCompositeOperation = "lighter"; ctx.fillStyle = g; ctx.beginPath(); ctx.arc(tx, ty, 70 * k.o, 0, Math.PI * 2); ctx.fill(); ctx.restore();
+        }
       }
       vinyet(ctx, 0.5);
 

@@ -151,88 +151,21 @@
     ctx.restore();
   }
 
-  // Arkadan görünen mezun silüeti (ayak tabanı orijinde)
-  function siluetYolu(g, nefes) {
-    const n = nefes;
-    g.beginPath();
-    // bacaklar (hafif açık, aşağı doğru incelir) ve ayakkabılar
-    g.moveTo(-56, -262); g.lineTo(-4, -262); g.lineTo(-10, -130); g.lineTo(-16, -12); g.lineTo(-46, -12); g.lineTo(-52, -130); g.closePath();
-    g.moveTo(4, -262); g.lineTo(56, -262); g.lineTo(52, -130); g.lineTo(46, -12); g.lineTo(16, -12); g.lineTo(10, -130); g.closePath();
-    g.moveTo(-18, -2); g.ellipse(-32, -6, 18, 9, 0, 0, Math.PI * 2);
-    g.moveTo(46, -2); g.ellipse(32, -6, 18, 9, 0, 0, Math.PI * 2);
-    // ceket: geniş omuz, belde daralır, kalçada hafif açılır
-    g.moveTo(-78, -246);
-    g.bezierCurveTo(-74, -300, -70, -340, -76, -400);
-    g.bezierCurveTo(-84, -460, -92, -490, -88, -508 - n);
-    g.bezierCurveTo(-80, -528, -50, -536, -24, -540 - n);
-    g.lineTo(24, -540 - n);
-    g.bezierCurveTo(50, -536, 80, -528, 88, -508 - n);
-    g.bezierCurveTo(92, -490, 84, -460, 76, -400);
-    g.bezierCurveTo(70, -340, 74, -300, 78, -246);
-    g.closePath();
-    // kollar: dirsekte hafif kırık, eller
-    g.moveTo(-88, -506); g.bezierCurveTo(-104, -440, -108, -380, -100, -330); g.bezierCurveTo(-98, -300, -96, -284, -94, -270);
-    g.lineTo(-74, -272); g.bezierCurveTo(-76, -300, -78, -330, -80, -360); g.bezierCurveTo(-82, -420, -78, -470, -70, -500); g.closePath();
-    g.moveTo(-84, -264); g.ellipse(-84, -258, 11, 15, 0, 0, Math.PI * 2);
-    g.moveTo(88, -506); g.bezierCurveTo(104, -440, 108, -380, 100, -330); g.bezierCurveTo(98, -300, 96, -284, 94, -270);
-    g.lineTo(74, -272); g.bezierCurveTo(76, -300, 78, -330, 80, -360); g.bezierCurveTo(82, -420, 78, -470, 70, -500); g.closePath();
-    g.moveTo(96, -264); g.ellipse(84, -258, 11, 15, 0, 0, Math.PI * 2);
-    // yaka, boyun, baş ve saç
-    g.moveTo(-17, -536 - n); g.lineTo(-15, -556 - n); g.lineTo(15, -556 - n); g.lineTo(17, -536 - n); g.closePath();
-    g.moveTo(37, -596 - n); g.ellipse(0, -596 - n, 37, 45, 0, 0, Math.PI * 2);
-    g.moveTo(39, -606 - n); g.ellipse(0, -608 - n, 39, 38, 0, Math.PI * 1.05, Math.PI * 1.95);
-  }
-
-  // Silüet önce maske olarak ayrı tuvale çizilir; kenar ışığı maskeden kaydırılmış kopyası çıkarılarak
-  // bulunur. Böylece yalnızca dış kenar parlar, parçaların iç sınırları görünmez.
-  const MW = 300, MH = 720, MX = MW / 2, MY = MH - 20;
-  const maske = tuval(MW, MH), maskeCtx = maske.getContext("2d");
-  const kenar = tuval(MW, MH), kenarCtx = kenar.getContext("2d");
-
-  function kenarIsigi(dx, dy, renk) {
-    kenarCtx.globalCompositeOperation = "source-over";
-    kenarCtx.clearRect(0, 0, MW, MH);
-    kenarCtx.drawImage(maske, 0, 0);
-    kenarCtx.globalCompositeOperation = "source-in";
-    kenarCtx.fillStyle = renk; kenarCtx.fillRect(0, 0, MW, MH);
-    kenarCtx.globalCompositeOperation = "destination-out";
-    kenarCtx.drawImage(maske, dx, dy);
-    return kenar;
-  }
-
-  function siluet(ctx, c, t) {
-    const dy = kaydirma(AYAK.y, c), nefes = Math.sin(t * 2.1) * 1.5;
-    maskeCtx.setTransform(1, 0, 0, 1, 0, 0);
-    maskeCtx.clearRect(0, 0, MW, MH);
-    maskeCtx.setTransform(FIGUR_OLCEK, 0, 0, FIGUR_OLCEK, MX, MY);
-    maskeCtx.fillStyle = "#02050D";
-    siluetYolu(maskeCtx, nefes); maskeCtx.fill();
-
+  // Çatıdaki mezun (kadrodan Barış), arkadan; şehir ve yol ışığı kenarlarını boyar
+  function mezun(ctx, c, t) {
+    const dy = kaydirma(AYAK.y, c);
     ctx.save();
     ctx.translate(AYAK.x, AYAK.y + dy);
-    // ayakların altına düşen ışık
     const g0 = ctx.createRadialGradient(0, 0, 10, 0, 0, 200);
     g0.addColorStop(0, "rgba(24,209,227,0.45)"); g0.addColorStop(1, "rgba(24,209,227,0)");
     ctx.fillStyle = g0; ctx.beginPath(); ctx.ellipse(0, 0, 200, 40, 0, 0, Math.PI * 2); ctx.fill();
-    // gövde
-    ctx.drawImage(maske, -MX, -MY);
-    // yoldan vuran ışık bel altını hafifçe aydınlatır
-    kenarCtx.globalCompositeOperation = "source-over";
-    kenarCtx.clearRect(0, 0, MW, MH);
-    kenarCtx.drawImage(maske, 0, 0);
-    kenarCtx.globalCompositeOperation = "source-in";
-    const g1 = kenarCtx.createLinearGradient(0, MY, 0, MY - 300);
-    g1.addColorStop(0, "rgba(24,209,227,0.32)"); g1.addColorStop(1, "rgba(24,209,227,0)");
-    kenarCtx.fillStyle = g1; kenarCtx.fillRect(0, 0, MW, MH);
-    ctx.drawImage(kenar, -MX, -MY);
-    // kenar ışıkları: solda turkuaz, sağda mavi, üstte açık mavi
-    ctx.globalCompositeOperation = "lighter";
-    ctx.drawImage(kenarIsigi(4, 0, "rgba(24,209,227,0.95)"), -MX, -MY);
-    ctx.drawImage(kenarIsigi(-3, 0, "rgba(30,107,255,0.8)"), -MX, -MY);
-    ctx.drawImage(kenarIsigi(0, 3, "rgba(143,216,255,0.6)"), -MX, -MY);
-    ctx.globalAlpha = 0.6; ctx.filter = "blur(6px)";
-    ctx.drawImage(kenarIsigi(5, 0, "rgba(24,209,227,0.9)"), -MX, -MY);
     ctx.restore();
+    const p = KP.poz2.ayakta({ nefes: Math.sin(t * 2.1) * 1.5, agirlik: 0.4 });
+    KP.karakter(ctx, p, KP.kadro("baris", "arka"), {
+      x: AYAK.x, y: AYAK.y + dy, olcek: FIGUR_OLCEK,
+      stil: { tip: "sinematik", karartma: "rgba(4,12,40,0.5)" },
+      kenarIsigi: [[4, 0, "rgba(24,209,227,0.85)"], [-3, 0, "rgba(30,107,255,0.7)"], [0, 3, "rgba(143,216,255,0.5)"], [5, 0, "rgba(24,209,227,0.7)", 6]],
+    });
   }
 
   function gokyuzu(ctx, c, t) {
@@ -303,7 +236,7 @@
       sehirVeSu(ctx, c, t);
       teras(ctx, c);
       isikNehri(ctx, c, t, sonGuc);
-      siluet(ctx, c, t);
+      mezun(ctx, c, t);
       parcaciklar(ctx, tozlar, t, { yMin: 300, yMax: 1700, alfa: 0.7 });
       ctx.restore();
 
