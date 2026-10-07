@@ -5,8 +5,11 @@
   const { W, H, R, aralik, ease, lerp, clamp, rastgele, satir, yaziGolgesi, parlamaKatmani, grain, vinyet, poz, figur } = window.KP;
 
   const SURE = 3;
-  const EKRAN = { x: 250, y: 800, w: 580, h: 370 };
-  const HEDEF = { x: 610, y: 960 }; // zoom yapılan sekme kartı
+  // --laptop yeni: ekran küçülür, klavye tabanı perspektifle görünür (televizyon gibi durmasın)
+  const YENI = (window.KP.SECENEK || {}).laptop === "yeni";
+  const EKRAN = YENI ? { x: 300, y: 770, w: 480, h: 300 } : { x: 250, y: 800, w: 580, h: 370 };
+  const HEDEF = YENI ? { x: 600, y: 915 } : { x: 610, y: 960 }; // zoom yapılan sekme kartı
+  const MASA_Y = YENI ? 1072 : 1210;
   const r0 = rastgele(101);
   const PENCERELER = Array.from({ length: 9 }, (_, i) => ({
     x: 14 + r0() * 330, y: 52 + r0() * 170, w: 170 + r0() * 120, h: 110 + r0() * 90,
@@ -75,10 +78,10 @@
     while (x < 1010) { const bw = 18 + r2() * 22, bh = 70 + r2() * 70; ctx.fillStyle = r2() < 0.5 ? "#081633" : "#0A1D40"; ctx.fillRect(x, 560 - bh, bw, bh); x += bw + 3; }
     ctx.fillStyle = "rgba(143,216,255,0.12)"; ctx.fillRect(700, 560, 330, 2);
     // masa
-    const m = ctx.createLinearGradient(0, 1215, 0, 1700);
+    const m = ctx.createLinearGradient(0, MASA_Y + 5, 0, MASA_Y + 490);
     m.addColorStop(0, `rgba(20,60,130,${0.55 * parlak})`); m.addColorStop(0.4, "#050C1E"); m.addColorStop(1, "#02050D");
-    ctx.fillStyle = m; ctx.fillRect(0, 1210, W, 700);
-    ctx.fillStyle = `rgba(143,216,255,${0.25 * parlak})`; ctx.fillRect(0, 1210, W, 2);
+    ctx.fillStyle = m; ctx.fillRect(0, MASA_Y, W, H);
+    ctx.fillStyle = `rgba(143,216,255,${0.25 * parlak})`; ctx.fillRect(0, MASA_Y, W, 2);
   }
 
   function laptop(ctx, t) {
@@ -86,6 +89,7 @@
     const ec = ekranTuval.getContext("2d");
     ec.setTransform(1, 0, 0, 1, 0, 0); ekranIcerik(ec, t);
     parlamaKatmani(ctx, (g) => { g.globalAlpha = 0.9; g.drawImage(ekranTuval, e.x, e.y); }, { blur: 50, guc: 0.55 });
+    if (YENI) { yeniLaptop(ctx, e); return; }
     ctx.fillStyle = "#0A0F1E"; ctx.beginPath(); ctx.roundRect(e.x - 18, e.y - 18, e.w + 36, e.h + 36, 18); ctx.fill();
     ctx.drawImage(ekranTuval, e.x, e.y);
     // klavye tabanı
@@ -99,6 +103,55 @@
     ctx.fillStyle = "rgba(24,209,227,0.4)"; ctx.fillRect(905, 1150, 3, 96);
     for (let i = 0; i < 3; i++) { ctx.fillStyle = ["#071331", "#0A1A3E", "#061028"][i]; ctx.beginPath(); ctx.roundRect(70 - i * 6, 1218 - i * 16, 170, 16, 3); ctx.fill(); }
     ctx.fillStyle = "rgba(143,216,255,0.25)"; ctx.fillRect(64, 1186, 170, 2);
+  }
+
+  // Arkadan, omuz üstünden görülen laptop: ince çerçeveli kapak, kamera, menteşe,
+  // perspektifle kameraya doğru genişleyen klavye tabanı, tuşlar ve dokunmatik yüzey.
+  function yeniLaptop(ctx, e) {
+    const c = 10; // çerçeve
+    // kapak (hafif geriye yatık: üst kenar biraz dar)
+    ctx.fillStyle = "#151C2C";
+    ctx.beginPath(); ctx.moveTo(e.x - c + 6, e.y - c); ctx.lineTo(e.x + e.w + c - 6, e.y - c); ctx.lineTo(e.x + e.w + c, e.y + e.h + c); ctx.lineTo(e.x - c, e.y + e.h + c); ctx.closePath(); ctx.fill();
+    ctx.strokeStyle = "rgba(143,216,255,0.35)"; ctx.lineWidth = 2; ctx.stroke();
+    ctx.drawImage(ekranTuval, e.x, e.y);
+    ctx.fillStyle = "#05080F"; ctx.beginPath(); ctx.arc(e.x + e.w / 2, e.y - c / 2, 2.5, 0, Math.PI * 2); ctx.fill(); // kamera
+    // menteşe
+    const ay = e.y + e.h + c;
+    ctx.fillStyle = "#0B101C"; ctx.fillRect(e.x + 30, ay, e.w - 60, 7);
+    // klavye tabanı: arka kenar menteşede, ön kenar kameraya yakın ve geniş
+    const arkaY = ay + 6, onY = ay + 178, arkaG = e.w + 26, onG = e.w + 250, mx = e.x + e.w / 2;
+    const nokta = (u, v) => [mx + (u - 0.5) * lerp(arkaG, onG, v), lerp(arkaY, onY, Math.pow(v, 0.9))];
+    const taban = ctx.createLinearGradient(0, arkaY, 0, onY);
+    taban.addColorStop(0, "#2A3550"); taban.addColorStop(1, "#141B2B");
+    ctx.fillStyle = taban;
+    ctx.beginPath(); ctx.moveTo(...nokta(0, 0)); ctx.lineTo(...nokta(1, 0)); ctx.lineTo(...nokta(1, 1)); ctx.lineTo(...nokta(0, 1)); ctx.closePath(); ctx.fill();
+    // ön kenar kalınlığı
+    const [solX, onYk] = nokta(0, 1), [sagX] = nokta(1, 1);
+    ctx.fillStyle = "#0A0F1A"; ctx.beginPath(); ctx.moveTo(solX, onYk); ctx.lineTo(sagX, onYk); ctx.lineTo(sagX - 6, onYk + 12); ctx.lineTo(solX + 6, onYk + 12); ctx.closePath(); ctx.fill();
+    ctx.fillStyle = "rgba(143,216,255,0.35)"; ctx.fillRect(solX + 4, onYk, sagX - solX - 8, 1.5);
+    // tuşlar (ekran ışığıyla hafif aydınlanır)
+    const satirlar = 5, sutun = 14;
+    for (let r = 0; r < satirlar; r++) {
+      const v0 = 0.06 + r * 0.105, v1 = v0 + 0.085;
+      for (let s = 0; s < sutun; s++) {
+        let u0 = 0.07 + s * (0.86 / sutun), u1 = u0 + 0.86 / sutun - 0.012;
+        if (r === satirlar - 1 && s > 3 && s < 10) { if (s !== 4) continue; u1 = 0.07 + 10 * (0.86 / sutun) - 0.012; } // boşluk tuşu
+        const a = nokta(u0, v0), b = nokta(u1, v0), cc = nokta(u1, v1), d = nokta(u0, v1);
+        ctx.fillStyle = "#0B111D"; ctx.beginPath(); ctx.moveTo(...a); ctx.lineTo(...b); ctx.lineTo(...cc); ctx.lineTo(...d); ctx.closePath(); ctx.fill();
+        ctx.strokeStyle = "rgba(24,209,227,0.18)"; ctx.lineWidth = 1; ctx.stroke();
+      }
+    }
+    // dokunmatik yüzey
+    const t0 = nokta(0.36, 0.64), t1 = nokta(0.64, 0.64), t2 = nokta(0.64, 0.94), t3 = nokta(0.36, 0.94);
+    ctx.fillStyle = "#1C2538"; ctx.beginPath(); ctx.moveTo(...t0); ctx.lineTo(...t1); ctx.lineTo(...t2); ctx.lineTo(...t3); ctx.closePath(); ctx.fill();
+    ctx.strokeStyle = "rgba(143,216,255,0.25)"; ctx.stroke();
+    // kupa ve defterler masada
+    ctx.fillStyle = "#04091A";
+    ctx.beginPath(); ctx.roundRect(925, 1110, 82, 100, [6, 6, 14, 14]); ctx.fill();
+    ctx.lineWidth = 12; ctx.strokeStyle = "#04091A"; ctx.beginPath(); ctx.arc(1010, 1155, 24, -1.2, 1.2); ctx.stroke();
+    ctx.fillStyle = "rgba(24,209,227,0.4)"; ctx.fillRect(925, 1110, 3, 96);
+    for (let i = 0; i < 3; i++) { ctx.fillStyle = ["#071331", "#0A1A3E", "#061028"][i]; ctx.beginPath(); ctx.roundRect(40 - i * 6, 1168 - i * 16, 170, 16, 3); ctx.fill(); }
+    ctx.fillStyle = "rgba(143,216,255,0.25)"; ctx.fillRect(34, 1136, 170, 2);
   }
 
   window.KESITLER["01"] = {

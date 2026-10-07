@@ -15,7 +15,7 @@
 <body>
 <canvas id="c" width="1080" height="1920"></canvas>
 <script src="lib.js"></script>
-<script>window.KP.insanModu = new URLSearchParams(location.search).get("insan") || "siluet";</script>
+<script>{ const q = new URLSearchParams(location.search); window.KP.insanModu = q.get("insan") || "siluet"; window.KP.YAZI.stil = q.get("yazi") || "eski"; window.KP.SECENEK = Object.fromEntries(q); }</script>
 <script src="figur.js"></script>
 <script src="ikon.js"></script>
 <script src="figur2.js"></script>

@@ -63,16 +63,20 @@
     return parcalar.reduce((s, p) => s + ctx.measureText(p.m).width, 0);
   }
 
-  function gradyanDolgu(ctx, x, y, boy) {
+  function gradyanDolgu(ctx, x, y, boy, stil = "eski") {
     const g = ctx.createLinearGradient(x, y - boy * 0.85, x, y + boy * 0.1);
-    g.addColorStop(0, R.acikMavi);
-    g.addColorStop(0.45, R.turkuaz);
-    g.addColorStop(1, R.mavi);
+    if (stil === "eski") { g.addColorStop(0, R.acikMavi); g.addColorStop(0.45, R.turkuaz); g.addColorStop(1, R.mavi); }
+    else { g.addColorStop(0, "#2BE3F0"); g.addColorStop(1, "#1E7BFF"); } // dar aralık, doygun
     return g;
   }
 
+  // Vurgu yazısı stilleri: "eski" (geniş gradyan + ışıma), "keskin" (dar gradyan + sert gölge),
+  // "duz" (tek renk turkuaz + sert gölge), "kutu" (beyaz yazı, arkada turkuaz vurgu kutusu)
+  const YAZI = { stil: "eski" };
+
   // Ortalanmış, parça parça renkli tek satır. k: giriş ilerlemesi (0..1).
-  function satir(ctx, parcalar, { x = W / 2, y, boy = 80, agirlik = 800, renk = R.beyaz, k = 1, aralikHarf = 0, parlama = 0 }) {
+  function satir(ctx, parcalar, { x = W / 2, y, boy = 80, agirlik = 800, renk = R.beyaz, k = 1, aralikHarf = 0, parlama = 0, yaziStili = null }) {
+    const stil = yaziStili || YAZI.stil;
     if (k <= 0) return;
     ctx.save();
     ctx.font = `${agirlik} ${boy}px Montserrat`;
@@ -85,10 +89,21 @@
     const py = y + (1 - e) * 26;
     for (const p of parcalar) {
       const w = ctx.measureText(p.m).width;
-      const r = p.renk === "gradyan" ? gradyanDolgu(ctx, px, py, boy) : p.renk || renk;
-      if (parlama > 0) {
-        ctx.shadowColor = p.renk === "gradyan" || p.renk === R.turkuaz ? R.turkuaz : "rgba(143,216,255,0.6)";
-        ctx.shadowBlur = parlama;
+      const vurgu = p.renk === "gradyan" || p.renk === R.turkuaz;
+      let r = p.renk === "gradyan" ? gradyanDolgu(ctx, px, py, boy, stil) : p.renk || renk;
+      if (stil === "eski") {
+        if (parlama > 0) { ctx.shadowColor = vurgu ? R.turkuaz : "rgba(143,216,255,0.6)"; ctx.shadowBlur = parlama; }
+      } else {
+        // ışıma yok; zeminden ayrışma keskin, hafif kaydırılmış koyu gölgeyle
+        ctx.shadowColor = "rgba(2,6,20,0.75)"; ctx.shadowBlur = Math.max(2, boy * 0.03); ctx.shadowOffsetY = Math.max(2, boy * 0.04);
+        if (vurgu && stil === "duz") r = "#22D8E6";
+        if (vurgu && stil === "kutu") {
+          const pad = boy * 0.14;
+          ctx.save(); ctx.shadowColor = "transparent";
+          ctx.fillStyle = "#14C3D6"; ctx.beginPath(); ctx.roundRect(px - pad * 0.6, py - boy * 0.8, w + pad * 1.2, boy * 1.02, boy * 0.16); ctx.fill();
+          ctx.restore();
+          r = "#FFFFFF"; ctx.shadowColor = "rgba(2,6,20,0.35)";
+        }
       }
       ctx.fillStyle = r;
       ctx.fillText(p.m, px, py);
@@ -201,7 +216,7 @@
   }
 
   window.KP = {
-    W, H, FPS, R, clamp, lerp, aralik, ease, rastgele, tuval,
+    W, H, FPS, R, YAZI, clamp, lerp, aralik, ease, rastgele, tuval,
     parlamaKatmani, satir, yaziGolgesi, parcacikSeti, parcaciklar, grain, vinyet,
     yuvarlakDikdortgen, kureIkonu, pusulaGulu,
   };

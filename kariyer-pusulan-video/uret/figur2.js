@@ -9,12 +9,13 @@
   function ayakta2({ nefes = 0, egim = 0, agirlik = 0, telefon = null } = {}) {
     const n = nefes, a = agirlik; // agirlik: -1 sol bacak, +1 sağ bacak taşır (kalça kayar)
     const p = {
-      bas: { x: egim + a * 4, y: -598 - n },
+      bas: { x: egim + a * 4, y: ((window.KP.SECENEK || {}).yuz ? -590 : -598) - n }, // yeni görünümde boyun daha kısa
       omuz: [[-74, -510 - n + a * 3], [74, -510 - n - a * 3]],
       kalca: [[-34 + a * 6, -262 + a * 4], [34 + a * 6, -262 - a * 4]],
       kollar: [
-        [[-80, -498 - n], [-100, -382], [-108, -276]],
-        [[80, -498 - n], [100, -382], [108, -276]],
+        ...(((window.KP.SECENEK || {}).yuz) // yeni görünüm: kollar gövdeye yakın, dirsekte hafif bükük
+          ? [[[-80, -498 - n], [-92, -384], [-90, -282]], [[80, -498 - n], [92, -384], [90, -282]]]
+          : [[[-80, -498 - n], [-100, -382], [-108, -276]], [[80, -498 - n], [100, -382], [108, -276]]]),
       ],
       bacaklar: [
         [[-34 + a * 6, -262], [-36 + a * 2, -140], [-38, -24]],
