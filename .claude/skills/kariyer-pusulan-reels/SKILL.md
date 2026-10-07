@@ -37,6 +37,7 @@ node ciz.js 05                        # kesit 5 -> cikti/kesit-05.mp4
 node ciz.js 05 --kareler 0,45,89      # yalnızca seçili kareler (PNG) -> cikti/kesit-05-kareler/
 sh onizle.sh 05 0,45,89 onizleme.png  # kareleri yan yana önizleme
 # seçenekler (varsayılanlar onaylı hâller): --yazi eski|keskin|duz|kutu  --laptop eski|yeni  --yuz yok|sade|detayli
+# insansız sürüm: node ciz.js 01 --insanlar yok  -> cikti/kesit-01-yok.mp4 (insanlı kesitler: 01 03 04 05 07)
 ```
 Birleştirme (`cikti/` içinde):
 ```

@@ -221,4 +221,6 @@
     yuvarlakDikdortgen, kureIkonu, pusulaGulu,
   };
   window.KESITLER = window.KESITLER || {};
+  // insansız sürümde figürlere bağlı gölge ve ışıklar da çizilmez
+  window.KP.insanVar = () => (window.KP.SECENEK || {}).insanlar !== "yok";
 })();

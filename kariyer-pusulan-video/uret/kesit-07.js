@@ -88,7 +88,7 @@
       ctx.save(); ctx.translate(0, yukari * 260);
       gokyuzu(ctx, t);
       yol(ctx, t);
-      for (const k of GRUP) {
+      for (const k of KP.insanVar() ? GRUP : []) {
         ctx.fillStyle = "rgba(4,8,20,0.45)"; ctx.beginPath(); ctx.ellipse(k.x, k.y + 18, 62, 11, 0, 0, Math.PI * 2); ctx.fill();
         const p = KP.poz2.yuru((k.faz + t / 2.4) % 1); // ağır çekim adımlar
         KP.karakter(ctx, p, KP.kadro(k.ad, "arka"), { x: k.x, y: k.y, olcek: k.o, stil: STIL, kenarIsigi: KENAR });

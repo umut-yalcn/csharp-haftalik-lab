@@ -80,7 +80,7 @@
       gokyuzu(ctx, c);
       ctx.drawImage(bina, -100 - 40 * c, UFUK - 680);
       merdivenler(ctx, c);
-      for (const k of GRUP) {
+      for (const k of KP.insanVar() ? GRUP : []) {
         const p = KP.poz2.ayakta({ telefon: k.tel, nefes: Math.sin(t * 2 + k.x) * 1.5, egim: k.egim || 0, agirlik: k.agirlik });
         const x = k.x + 70 * c * k.derin;
         ctx.fillStyle = "rgba(4,10,30,0.4)"; ctx.beginPath(); ctx.ellipse(x, k.y + 18 * k.o, 62 * k.o, 10 * k.o, 0, 0, Math.PI * 2); ctx.fill();

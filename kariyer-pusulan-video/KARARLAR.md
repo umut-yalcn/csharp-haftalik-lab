@@ -33,6 +33,13 @@ Bu dosya projenin hafızasıdır: kullanıcıyla verilen ve onaylanan kararlar b
 - **Kadro** (`uret/kadro.js`): Deniz, Elif, Zeynep, Emre, Can, Ayşe, Mert, Barış. Her kesitte aynı kişi aynı kıyafetle görünür. Yeni bir kişi gerekirse kadroya eklenir.
 - Kalabalıkta uzaktakiler önce çizilir; her figürün altında zemin gölgesi olur.
 
+## İnsansız sürüm
+- Kullanıcı aynı videonun **insan figürü olmayan** bir sürümünü de istedi: `cikti/kariyer-pusulan-2500-insansiz.mp4`.
+- Sahneler, geçişler, yazılar ve dekor aynı kalır. Yalnızca karakterler ve onlara bağlı gölgeler, ayak altı ışığı ve telefon ışıkları çizilmez. Kesit 1'deki boş sandalye dekor olarak kalır.
+- Üretim: `node ciz.js <kesit> --insanlar yok` (çıktı `kesit-XX-yok.mp4`). Kesit 2, 6 ve 8'de insan yoktur; normal dosyaları kullanılır.
+- Kesit 2 ve 6'daki ekrana dokunan başparmak arayüz etkileşiminin parçası olarak bırakıldı.
+- İnsanlı sürüm de korunur: `cikti/kariyer-pusulan-2500.mp4`.
+
 ## Sahneye özel
 - **Kesit 1:** Televizyon değil, **laptop**: klavye, dokunmatik yüzey, menteşe ve ince çerçeve görünür. Laptop öğrenciye göre gerçekçi boyda (`LAPTOP_OLCEK = 0.62`). Geri bildirim: "laptop aşırı büyük".
 - **Kesit 4:** Portrelerde yüz sağ üste döner (`bas.don`). "2.500 farklı" yazısının arkasında koyu bant var.
@@ -41,3 +48,4 @@ Bu dosya projenin hafızasıdır: kullanıcıyla verilen ve onaylanan kararlar b
 ## Geri bildirim geçmişi
 1. Figürler beğenilmedi, bir tasarım kararı istendi → silüet iyileştirme → renkli karakterler → sinematik stil seçildi.
 2. "Parlak yazılar net değil", "ilk sahnede bilgisayar olsun", "insan görselleri iyileşmeli" → keskin gradyan, laptop ve sade yüz seçildi; laptop küçültüldü.
+3. "Aynı video olsun ama insanları tamamen kaldır; geçiş ve görseller değişmesin" → ayrı insansız sürüm üretildi.

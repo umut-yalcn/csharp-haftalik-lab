@@ -236,7 +236,7 @@
       sehirVeSu(ctx, c, t);
       teras(ctx, c);
       isikNehri(ctx, c, t, sonGuc);
-      mezun(ctx, c, t);
+      if (KP.insanVar()) mezun(ctx, c, t);
       parcaciklar(ctx, tozlar, t, { yMin: 300, yMax: 1700, alfa: 0.7 });
       ctx.restore();
 

@@ -251,6 +251,7 @@
   const onbellek = {};
   // koru: renk dönüşümünden muaf tutulacak renkler (ör. ten ve saç doğal kalsın)
   function karakter(ctx, p, k, { x, y, olcek = 1, stil = { tip: "cel" }, kenarIsigi = null, renkDonustur = null, koru = [] }) {
+    if ((window.KP.SECENEK || {}).insanlar === "yok") return; // insansız sürüm
     const MW = Math.ceil(380 * olcek) + 60, MH = Math.ceil(760 * olcek) + 60, MX = MW / 2, MY = MH - 30;
     const anahtar = `${MW}x${MH}`;
     if (!onbellek[anahtar]) onbellek[anahtar] = [tuval(MW, MH), tuval(MW, MH), tuval(MW, MH), tuval(MW, MH)];
