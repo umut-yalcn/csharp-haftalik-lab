@@ -87,8 +87,8 @@
       for (const k of GRUP) {
         const p = poz.yuru((k.faz + t / 2.4) % 1); // ağır çekim adımlar
         p.sac = k.sac;
-        figur(ctx, p, {
-          x: k.x, y: k.y, olcek: k.o,
+        KP.insan(ctx, p, {
+          x: k.x, y: k.y, olcek: k.o, t, tohum: k.x, iz: { adet: 90, hiz: 0.5, boy: 260 },
           kenarlar: [[-3, 0, "rgba(255,205,140,0.85)"], [3, 0, "rgba(255,205,140,0.85)"], [0, 4, "rgba(255,225,170,0.9)"], [0, -3, "rgba(24,209,227,0.35)"]],
           parlamaKenar: [0, 5, "rgba(255,200,130,0.8)"],
         });

@@ -1,5 +1,6 @@
 // Bir kesiti kare kare çizer ve MP4'e çevirir.
-// Kullanım: node ciz.js <kesit no, ör. 08> [--kareler 0,45,89]  (--kareler: yalnızca o kareleri PNG olarak kaydeder)
+// Kullanım: node ciz.js <kesit no, ör. 08> [--kareler 0,45,89] [--insan isik]
+//   --kareler: yalnızca o kareleri PNG olarak kaydeder; --insan isik: figürleri ışıktan insan olarak çizer
 const http = require("http"), fs = require("fs"), path = require("path"), { spawn } = require("child_process");
 const { chromium } = require("playwright");
 
@@ -28,7 +29,8 @@ function sunucu() {
   const tarayici = await chromium.launch({ args: ["--disable-gpu-vsync", "--force-color-profile=srgb"] });
   const sayfa = await tarayici.newPage({ viewport: { width: 1080, height: 1920 } });
   sayfa.on("pageerror", (h) => { console.error("Sayfa hatası:", h.message); process.exit(1); });
-  await sayfa.goto(`http://127.0.0.1:${s.address().port}/uret/sahne.html`);
+  const insan = process.argv.includes("--insan") ? process.argv[process.argv.indexOf("--insan") + 1] : "siluet";
+  await sayfa.goto(`http://127.0.0.1:${s.address().port}/uret/sahne.html?insan=${insan}`);
   await sayfa.evaluate(() => window.hazir);
   const sure = await sayfa.evaluate((k) => window.sure(k), kesit);
   const toplam = Math.round(sure * 30);

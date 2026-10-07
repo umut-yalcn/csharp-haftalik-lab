@@ -114,8 +114,8 @@
       oda(ctx, t, parlak);
       laptop(ctx, t);
       // öğrenci, arkadan; ekran ışığı başın ve omuzların kenarını boyar
-      figur(ctx, poz.otur({ nefes: Math.sin(t * 2) * 2, egim: Math.sin(t * 0.8) * 4 }), {
-        x: 480, y: 2170, olcek: 1.5,
+      KP.insan(ctx, poz.otur({ nefes: Math.sin(t * 2) * 2, egim: Math.sin(t * 0.8) * 4 }), {
+        x: 480, y: 2170, olcek: 1.5, t,
         kenarlar: [[0, 5, `rgba(120,200,255,${0.75 * parlak})`], [5, 0, "rgba(24,209,227,0.7)"], [-5, 0, "rgba(30,107,255,0.7)"]],
         parlamaKenar: [0, 6, "rgba(30,107,255,0.9)"],
       });

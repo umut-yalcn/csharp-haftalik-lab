@@ -77,8 +77,8 @@
     const p = poz.portre({ don: lerp(0.35, 0.85, ease.inOut(k)), nefes: Math.sin(t * 2) * 2, egim: lerp(-4, 6, k) });
     p.sac = P.sac;
     p.ekle = P.ekle;
-    figur(ctx, p, {
-      x: AYAK.x, y: AYAK.y, olcek: OLCEK,
+    KP.insan(ctx, p, {
+      x: AYAK.x, y: AYAK.y, olcek: OLCEK, t, tohum: i + 1, isikBicim: "cizgi",
       kenarlar: [[-5, 0, "rgba(24,209,227,0.95)"], [-2, 4, "rgba(143,216,255,0.6)"], [4, 0, "rgba(30,107,255,0.45)"]],
       parlamaKenar: [-7, 0, "rgba(24,209,227,0.9)"],
     });

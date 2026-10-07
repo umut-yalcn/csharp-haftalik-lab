@@ -213,5 +213,16 @@
     }
   }
 
-  Object.assign(window.KP, { poz: { ayakta, yuru, otur, portre }, figur });
+  // Yalnızca maskeyi döndürür (ışıktan insan gibi başka çizim biçimleri için)
+  function figurMaskesi(p, olcek = 1) {
+    const MW = Math.ceil(340 * olcek) + 40, MH = Math.ceil(720 * olcek) + 40;
+    const c = tuval(MW, MH), m = c.getContext("2d");
+    const MX = MW / 2, MY = MH - 24;
+    m.setTransform(olcek, 0, 0, olcek, MX, MY);
+    m.fillStyle = "#fff"; m.strokeStyle = "#fff";
+    govdeCiz(m, p);
+    return { tuval: c, MX, MY, MW, MH };
+  }
+
+  Object.assign(window.KP, { poz: { ayakta, yuru, otur, portre }, figur, figurMaskesi });
 })();

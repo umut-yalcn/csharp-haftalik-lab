@@ -82,8 +82,8 @@
         const p = poz.ayakta({ telefon: k.tel, nefes: Math.sin(t * 2 + k.x) * 1.5, egim: k.egim || 0 });
         p.sac = k.sac;
         if (k.tel) p.bas.y += 10; // telefona eğilen baş
-        figur(ctx, p, {
-          x: k.x + 70 * c * k.derin, y: k.y, olcek: k.o,
+        KP.insan(ctx, p, {
+          x: k.x + 70 * c * k.derin, y: k.y, olcek: k.o, t, tohum: k.x,
           kenarlar: [[-4, 0, "rgba(255,240,215,0.9)"], [0, 4, "rgba(255,250,235,0.8)"], [4, 0, "rgba(24,209,227,0.7)"]],
           parlamaKenar: [-6, 0, "rgba(255,236,200,0.8)"],
         });
