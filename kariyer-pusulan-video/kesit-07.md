@@ -24,7 +24,7 @@ No text, no logos.
 | 0:20.8–0:22.0 | **Daha yeni başlıyoruz.** | Montserrat ExtraBold, beyaz. "**yeni başlıyoruz**" turkuaz. |
 
 ## Geçiş → Kesit 8
-Gökyüzündeki ışık yukarı doğru lacivert ve turkuaza akar (renk geçişi ve yukarı tilt). Kare tamamen marka laciverti `#0A1F4D` olur. Kesit 8 bu renkten açılır.
+Gökyüzündeki ışık yukarı doğru lacivert ve turkuaza akar (renk geçişi ve yukarı tilt). Kare marka laciverti `#03214B` olur. Ardından ortadan beyaz bir ışık açılarak kareyi kaplar; kesit 8 bu açık zeminden başlar.
 
 ## Ses
 Müzik en duygusal noktasında. Hafif koro ya da pad katmanı.

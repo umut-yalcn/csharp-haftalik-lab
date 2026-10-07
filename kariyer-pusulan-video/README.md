@@ -14,7 +14,8 @@
 | [kesit-07.md](kesit-07.md) | Birlikte yürüyüş & gün batımı | 0:19–0:22 |
 | [kesit-08.md](kesit-08.md) | Outro, logo ve CTA | 0:22–0:25 |
 | [09-kurgu-ve-overlay.md](09-kurgu-ve-overlay.md) | Birleştirme, yazı animasyonları, logo, müzik, dışa aktarma | — |
-| `referans/` | Instagram profilinin ekran görüntüleri | — |
+| [10-uretim-plani.md](10-uretim-plani.md) | Kodla (API anahtarsız) üretim planı | — |
+| `referans/` | Instagram profilinin ekran görüntüleri ve orijinal logo (`logo-orijinal.png`) | — |
 
 ## Temel kurallar
 
