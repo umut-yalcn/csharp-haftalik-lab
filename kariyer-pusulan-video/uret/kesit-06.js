@@ -226,10 +226,15 @@
       const sonraki = parcalar[i + 1] ? parcalar[i + 1][1] : 99;
       const aktif = t < sonraki - 0.08;
       ctx.globalAlpha = k * dis;
+      // ortak yazı stiliyle aynı: eski stilde ışımalı geniş gradyan, keskin stilde dar gradyan + sert gölge
+      const keskin = KP.YAZI.stil !== "eski";
+      if (keskin) { ctx.shadowColor = "rgba(2,6,20,0.75)"; ctx.shadowBlur = 2; ctx.shadowOffsetY = 3; }
       if (aktif) {
-        const g = ctx.createLinearGradient(0, 230, 0, 310); g.addColorStop(0, R.acikMavi); g.addColorStop(0.5, R.turkuaz); g.addColorStop(1, R.mavi);
-        ctx.fillStyle = g; ctx.shadowColor = R.turkuaz; ctx.shadowBlur = 24;
-      } else { ctx.fillStyle = R.beyaz; ctx.shadowBlur = 0; }
+        const g = ctx.createLinearGradient(0, 240, 0, 306);
+        if (keskin) { g.addColorStop(0, "#2BE3F0"); g.addColorStop(1, "#1E7BFF"); }
+        else { g.addColorStop(0, R.acikMavi); g.addColorStop(0.5, R.turkuaz); g.addColorStop(1, R.mavi); ctx.shadowColor = R.turkuaz; ctx.shadowBlur = 24; }
+        ctx.fillStyle = g;
+      } else { ctx.fillStyle = R.beyaz; if (!keskin) ctx.shadowBlur = 0; }
       ctx.fillText(m, x, 300 + (1 - k) * 20);
       x += w + ara;
     });
@@ -261,9 +266,9 @@
       grain(ctx, kare, 0.05);
       // kesit 5'in yol ışığından açılış, sonda ışığa geçiş
       const acilis = 1 - ease.out(aralik(t, 0, 0.25));
-      if (acilis > 0) { ctx.fillStyle = `rgba(120,236,245,${acilis * 0.85})`; ctx.fillRect(0, 0, W, H); }
+      if (acilis > 0) { ctx.fillStyle = `rgba(120,236,245,${acilis * 0.85 * KP.gecisIsigi()})`; ctx.fillRect(0, 0, W, H); }
       const kapanis = ease.in(aralik(t, 3.8, 4.0));
-      if (kapanis > 0) { ctx.fillStyle = `rgba(160,225,250,${kapanis * 0.9})`; ctx.fillRect(0, 0, W, H); }
+      if (kapanis > 0) { ctx.fillStyle = `rgba(160,225,250,${kapanis * 0.9 * KP.gecisIsigi()})`; ctx.fillRect(0, 0, W, H); }
     },
   };
 })();

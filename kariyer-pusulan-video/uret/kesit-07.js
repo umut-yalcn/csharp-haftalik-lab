@@ -103,7 +103,9 @@
       const x0 = W / 2 - (mw + kalpBoy * 2.4) / 2, yaz = ease.inOut(aralik(t, 0.25, 1.25));
       yaziGolgesi(ctx, 480, 380, 0.3);
       ctx.beginPath(); ctx.rect(x0 - 20, 280, (mw + 40) * yaz, 260); ctx.clip();
-      ctx.fillStyle = R.beyaz; ctx.shadowColor = "rgba(143,216,255,0.6)"; ctx.shadowBlur = 18;
+      ctx.fillStyle = R.beyaz;
+      if (KP.YAZI.stil === "eski") { ctx.shadowColor = "rgba(143,216,255,0.6)"; ctx.shadowBlur = 18; }
+      else { ctx.shadowColor = "rgba(2,6,20,0.7)"; ctx.shadowBlur = 3; ctx.shadowOffsetY = 3; } // ışıma yok, keskin
       ctx.fillText(metin, x0, 460);
       ctx.restore();
       kalp(ctx, x0 + mw + kalpBoy * 1.4, 420, kalpBoy, aralik(t, 1.15, 1.45));
@@ -112,7 +114,7 @@
       grain(ctx, kare, 0.06);
       // kesit 6'nın ekran ışığından açılış; sonda kare marka laciverdine döner (kesit 8 bu renkten açılır)
       const acilis = 1 - ease.out(aralik(t, 0, 0.3));
-      if (acilis > 0) { ctx.fillStyle = `rgba(160,225,250,${acilis * 0.9})`; ctx.fillRect(0, 0, W, H); }
+      if (acilis > 0) { ctx.fillStyle = `rgba(160,225,250,${acilis * 0.9 * KP.gecisIsigi()})`; ctx.fillRect(0, 0, W, H); }
       const lacivert = ease.in(aralik(t, 2.45, 3.0));
       if (lacivert > 0) { ctx.fillStyle = `rgba(10,31,77,${lacivert})`; ctx.fillRect(0, 0, W, H); }
     },

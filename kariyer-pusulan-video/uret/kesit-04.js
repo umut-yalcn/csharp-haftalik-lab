@@ -123,12 +123,12 @@
       // portre geçişlerinde turkuaz ışık sızıntısı
       for (let j = 1; j < 4; j++) {
         const d = Math.abs(t - j * SURE_P);
-        if (d < 0.07) { ctx.fillStyle = `rgba(24,209,227,${0.45 * (1 - d / 0.07)})`; ctx.fillRect(0, 0, W, H); }
+        if (d < 0.07) { ctx.fillStyle = `rgba(24,209,227,${0.45 * (1 - d / 0.07) * KP.gecisIsigi()})`; ctx.fillRect(0, 0, W, H); }
       }
       grain(ctx, kare, 0.06);
       // kesit 3'ün turkuaz rakamından açılış; sonda karanlığa geçiş
       const acilis = 1 - ease.out(aralik(t, 0, 0.28));
-      if (acilis > 0) { ctx.fillStyle = `rgba(24,209,227,${acilis})`; ctx.fillRect(0, 0, W, H); }
+      if (acilis > 0) { ctx.fillStyle = `rgba(24,209,227,${acilis * KP.gecisIsigi()})`; ctx.fillRect(0, 0, W, H); }
       const kapanis = ease.in(aralik(t, 2.85, 3.0));
       if (kapanis > 0) { ctx.fillStyle = `rgba(4,10,28,${kapanis * 0.85})`; ctx.fillRect(0, 0, W, H); }
     },

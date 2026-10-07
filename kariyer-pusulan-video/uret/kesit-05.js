@@ -253,7 +253,7 @@
       if (acilis > 0) { ctx.fillStyle = `rgba(4,10,28,${acilis * 0.85})`; ctx.fillRect(0, 0, W, H); }
       // yolun ışığı kareyi kaplar; kesit 6 aynı turkuaz ışıktan açılır
       const isik = ease.in(aralik(t, 2.75, 3.0));
-      if (isik > 0) { ctx.fillStyle = `rgba(120,236,245,${isik * 0.85})`; ctx.fillRect(0, 0, W, H); }
+      if (isik > 0) { ctx.fillStyle = `rgba(120,236,245,${isik * 0.85 * KP.gecisIsigi()})`; ctx.fillRect(0, 0, W, H); }
     },
   };
 })();

@@ -134,20 +134,20 @@
         if (p > 0) {
           const r = lerp(40, 2400, p);
           const g = ctx.createRadialGradient(bx, by, 0, bx, by, r);
-          g.addColorStop(0, `rgba(235,252,255,${clamp(p * 2)})`); g.addColorStop(0.6, `rgba(120,236,245,${clamp(p * 1.6)})`); g.addColorStop(1, "rgba(24,209,227,0)");
+          g.addColorStop(0, `rgba(235,252,255,${clamp(p * 2) * KP.gecisIsigi()})`); g.addColorStop(0.6, `rgba(120,236,245,${clamp(p * 1.6) * KP.gecisIsigi()})`); g.addColorStop(1, "rgba(24,209,227,0)");
           ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);
-          if (p > 0.8) { ctx.fillStyle = `rgba(235,252,255,${(p - 0.8) * 5})`; ctx.fillRect(0, 0, W, H); }
+          if (p > 0.8) { ctx.fillStyle = `rgba(235,252,255,${(p - 0.8) * 5 * KP.gecisIsigi()})`; ctx.fillRect(0, 0, W, H); }
         }
       }
       // vuruş kesmelerinde kısa ışık sızıntısı
       for (let i = 1; i < 4; i++) {
         const d = Math.abs(t - i * VURUS);
-        if (d < 0.05) { ctx.fillStyle = `rgba(120,236,245,${0.25 * (1 - d / 0.05)})`; ctx.fillRect(0, 0, W, H); }
+        if (d < 0.05) { ctx.fillStyle = `rgba(120,236,245,${0.25 * (1 - d / 0.05) * KP.gecisIsigi()})`; ctx.fillRect(0, 0, W, H); }
       }
       grain(ctx, kare, 0.05);
       // kesit 1'in flaşından açılış
       const acilis = 1 - ease.out(aralik(t, 0, 0.22));
-      if (acilis > 0) { ctx.fillStyle = `rgba(230,251,255,${acilis})`; ctx.fillRect(0, 0, W, H); }
+      if (acilis > 0) { ctx.fillStyle = `rgba(230,251,255,${acilis * KP.gecisIsigi()})`; ctx.fillRect(0, 0, W, H); }
     },
   };
 })();

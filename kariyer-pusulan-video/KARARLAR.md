@@ -19,6 +19,7 @@ Bu dosya projenin hafızasıdır: kullanıcıyla verilen ve onaylanan kararlar b
 - **Vurgu kelimeleri: "keskin gradyan" (B stili).** Turkuazdan (#2BE3F0) maviye (#1E7BFF) dar geçiş, **ışıma yok**, altında ince sert koyu gölge.
   - Neden: Eski geniş gradyan ve ışıma Instagram sıkıştırmasında bulanıklaşıyordu. Geri bildirim: "renkler güzel ama parlak durduğu için net değil".
   - Kodda varsayılan: `YAZI.stil = "keskin"`.
+- **Hiçbir yazıda ışıma (glow/shadowBlur ile parlama) olmaz.** Buna `satir()` dışında özel kodla çizilen yazılar da dahil (kesit 6'daki "Keşfet. Kaydet. Başvur.", kesit 7'deki el yazısı). Yeni yazı eklerken mümkünse `satir()` kullan.
 - Bütün yazılar Reels güvenli alanında kalır: üst 220 px, alt 420 px ve sağ 140 px boş bırakılır.
 - Yazı açık renkli bir şeyin üstüne gelirse arkasına `yaziGolgesi` bandı eklenir.
 
@@ -33,10 +34,13 @@ Bu dosya projenin hafızasıdır: kullanıcıyla verilen ve onaylanan kararlar b
 - **Kadro** (`uret/kadro.js`): Deniz, Elif, Zeynep, Emre, Can, Ayşe, Mert, Barış. Her kesitte aynı kişi aynı kıyafetle görünür. Yeni bir kişi gerekirse kadroya eklenir.
 - Kalabalıkta uzaktakiler önce çizilir; her figürün altında zemin gölgesi olur.
 
-## İnsansız sürüm
-- Kullanıcı aynı videonun **insan figürü olmayan** bir sürümünü de istedi: `cikti/kariyer-pusulan-2500-insansiz.mp4`.
+## İnsansız sürüm (şu an paylaşılan ana sürüm)
+- Kullanıcı aynı videonun **insan figürü olmayan** bir sürümünü de istedi: `cikti/kariyer-pusulan-2500-insansiz.mp4`. Karşı taraf bunu "daha akıcı" buldu; revizyonlar bu sürüme yapılır.
+- **Hız 0.75x:** Yazılar çok hızlı geçiyordu. Video 0.75x hızda baştan çizilir (`--hiz 0.75`); süre yaklaşık 33,3 sn, 1000 kare. Sonradan yavaşlatma yapılmaz, çünkü kareler tekrar eder ve görüntü takılır.
+- **Yumuşak geçişler:** Geçişlerdeki ışık dolguları (flaş, ışık patlaması, sızıntı) yarı yoğunlukta (`--gecis yumusak`). Karanlık geçişler aynı kalır.
+- Tam komut: `node ciz.js <kesit> --insanlar yok --gecis yumusak --hiz 0.75` (8 kesitin hepsi) → `kesit-XX-yok-yumusak-0.75.mp4`, ardından birleştirme.
 - Sahneler, geçişler, yazılar ve dekor aynı kalır. Yalnızca karakterler ve onlara bağlı gölgeler, ayak altı ışığı ve telefon ışıkları çizilmez. Kesit 1'deki boş sandalye dekor olarak kalır.
-- Üretim: `node ciz.js <kesit> --insanlar yok` (çıktı `kesit-XX-yok.mp4`). Kesit 2, 6 ve 8'de insan yoktur; normal dosyaları kullanılır.
+- Kesit 2, 6 ve 8'de insan yoktur, ama hız ve geçiş ayarları için onlar da aynı seçeneklerle yeniden çizilir.
 - Kesit 2 ve 6'daki ekrana dokunan başparmak arayüz etkileşiminin parçası olarak bırakıldı.
 - İnsanlı sürüm de korunur: `cikti/kariyer-pusulan-2500.mp4`.
 
@@ -49,3 +53,4 @@ Bu dosya projenin hafızasıdır: kullanıcıyla verilen ve onaylanan kararlar b
 1. Figürler beğenilmedi, bir tasarım kararı istendi → silüet iyileştirme → renkli karakterler → sinematik stil seçildi.
 2. "Parlak yazılar net değil", "ilk sahnede bilgisayar olsun", "insan görselleri iyileşmeli" → keskin gradyan, laptop ve sade yüz seçildi; laptop küçültüldü.
 3. "Aynı video olsun ama insanları tamamen kaldır; geçiş ve görseller değişmesin" → ayrı insansız sürüm üretildi.
+4. "Başvur yazısı iyi okunmuyor", "yazılar çok hızlı geçiyor, 0.75x'e alabiliriz", "geçişler biraz fazla ışıklı" → kesit 6 kelimeleri keskin stile geçti, insansız sürüm 0.75x ve yumuşak geçişlerle yeniden üretildi.

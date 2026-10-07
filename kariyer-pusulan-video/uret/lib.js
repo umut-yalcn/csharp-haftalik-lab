@@ -223,4 +223,6 @@
   window.KESITLER = window.KESITLER || {};
   // insansız sürümde figürlere bağlı gölge ve ışıklar da çizilmez
   window.KP.insanVar = () => (window.KP.SECENEK || {}).insanlar !== "yok";
+  // geçişlerdeki ışık dolgularının (flaş, ışık patlaması, sızıntı) yoğunluğu; --gecis yumusak ile yarıya iner
+  window.KP.gecisIsigi = () => ((window.KP.SECENEK || {}).gecis === "yumusak" ? 0.5 : 1);
 })();

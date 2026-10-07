@@ -56,10 +56,12 @@
     ctx.setTransform(1, 0, 0, 1, 0, 0);
     ctx.globalAlpha = 1; ctx.globalCompositeOperation = "source-over"; ctx.filter = "none";
     ctx.clearRect(0, 0, 1080, 1920);
-    k.ciz(ctx, no / window.KP.FPS, no);
+    k.ciz(ctx, (no / window.KP.FPS) * hiz(), no);
     return document.getElementById("c").toDataURL("image/png").split(",")[1];
   };
-  window.sure = (kesit) => window.KESITLER[kesit].sure;
+  // --hiz 0.75: her kare daha yavaş zamanla çizilir; video süresi 1/hiz kat uzar, hareket akıcı kalır
+  const hiz = () => parseFloat(window.KP.SECENEK.hiz || "1");
+  window.sure = (kesit) => window.KESITLER[kesit].sure / hiz();
 </script>
 </body>
 </html>

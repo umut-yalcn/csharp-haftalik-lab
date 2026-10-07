@@ -37,7 +37,9 @@ node ciz.js 05                        # kesit 5 -> cikti/kesit-05.mp4
 node ciz.js 05 --kareler 0,45,89      # yalnızca seçili kareler (PNG) -> cikti/kesit-05-kareler/
 sh onizle.sh 05 0,45,89 onizleme.png  # kareleri yan yana önizleme
 # seçenekler (varsayılanlar onaylı hâller): --yazi eski|keskin|duz|kutu  --laptop eski|yeni  --yuz yok|sade|detayli
-# insansız sürüm: node ciz.js 01 --insanlar yok  -> cikti/kesit-01-yok.mp4 (insanlı kesitler: 01 03 04 05 07)
+# GÜNCEL ANA SÜRÜM (insansız, 0.75x, yumuşak geçiş) — 8 kesitin hepsi:
+#   node ciz.js 01 --insanlar yok --gecis yumusak --hiz 0.75   -> cikti/kesit-01-yok-yumusak-0.75.mp4
+#   birleştirmede bu dosyaları kullan -> kariyer-pusulan-2500-insansiz.mp4 (~33,3 sn, 1000 kare)
 ```
 Birleştirme (`cikti/` içinde):
 ```
@@ -48,7 +50,7 @@ Tam bir kesit 1–3 dakika sürer. Uzun işlemleri arka planda çalıştır.
 
 ## 4. Değişmez kurallar
 - **Logo:** Yalnızca `referans/logo-orijinal.png`. Değiştirme. Koyu zeminde beyaz rozet içinde, en fazla 240 px.
-- **Yazı:** Montserrat. Vurgu kelimesi için `{ renk: "gradyan" }`; varsayılan stil keskin gradyan, ışıma yok. Gerektiğinde yazının arkasına `yaziGolgesi` bandı. Bütün yazılar güvenli alanda: üst 220 px, alt 420 px ve sağ 140 px boş.
+- **Yazı:** Hiçbir yazıda ışıma yok; özel kodla çizilen yazılar da `KP.YAZI.stil`'e uymalı. Montserrat. Vurgu kelimesi için `{ renk: "gradyan" }`; varsayılan stil keskin gradyan, ışıma yok. Gerektiğinde yazının arkasına `yaziGolgesi` bandı. Bütün yazılar güvenli alanda: üst 220 px, alt 420 px ve sağ 140 px boş.
 - **İnsanlar:** Her zaman kadrodan ve şu çağrıyla:
   ```
   KP.karakter(ctx, KP.poz2.ayakta|yuru(...), KP.kadro(ad, "arka"|"on", ek), { x, y, olcek, stil: { tip: "sinematik", karartma }, kenarIsigi })
@@ -64,6 +66,6 @@ Tam bir kesit 1–3 dakika sürer. Uzun işlemleri arka planda çalıştır.
   ffmpeg -loop 1 -t 0.2 -i kare.png -vf scale=720:1280 -crf 30 test.mp4
   ```
   Ardından kareyi çıkarıp bak.
-- [ ] Birleştirilmiş video 25,0 sn ve 750 kare olmalı (`ffprobe -count_frames`).
+- [ ] Birleştirilmiş videonun süresi ve kare sayısı doğru olmalı (`ffprobe -count_frames`): 1x'te 25,0 sn ve 750 kare, 0.75x'te 33,3 sn ve 1000 kare.
 - [ ] Geçişlerin öncesinden ve sonrasından kare çıkarıp sıçrama olmadığını kontrol et.
 - [ ] Commit'le ve gönder. Değişikliği ve gerekiyorsa `KARARLAR.md` güncellemesini kullanıcıya kısa ve net anlat.

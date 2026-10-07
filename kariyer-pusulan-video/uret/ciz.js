@@ -1,5 +1,5 @@
 // Bir kesiti kare kare çizer ve MP4'e çevirir.
-// Kullanım: node ciz.js <kesit no, ör. 08> [--kareler 0,45,89] [--insan isik] [--yazi keskin|duz|kutu] [--laptop yeni] [--yuz yok|sade|detayli] [--insanlar yok]
+// Kullanım: node ciz.js <kesit no, ör. 08> [--kareler 0,45,89] [--insan isik] [--yazi keskin|duz|kutu] [--laptop yeni] [--yuz yok|sade|detayli] [--insanlar yok] [--gecis yumusak] [--hiz 0.75]
 //   --kareler: yalnızca o kareleri PNG olarak kaydeder; --insan isik: figürleri ışıktan insan olarak çizer
 const http = require("http"), fs = require("fs"), path = require("path"), { spawn } = require("child_process");
 const { chromium } = require("playwright");
@@ -31,8 +31,8 @@ function sunucu() {
   sayfa.on("pageerror", (h) => { console.error("Sayfa hatası:", h.message); process.exit(1); });
   const insan = process.argv.includes("--insan") ? process.argv[process.argv.indexOf("--insan") + 1] : "siluet";
   // ek seçenekler sayfaya sorgu parametresi olarak geçer: --yazi keskin, --laptop yeni, --yuz sade
-  const ek = ["yazi", "laptop", "yuz", "insanlar"].filter((a) => process.argv.includes("--" + a)).map((a) => `&${a}=${process.argv[process.argv.indexOf("--" + a) + 1]}`).join("");
-  const etiket = ["yazi", "laptop", "yuz", "insanlar"].filter((a) => process.argv.includes("--" + a)).map((a) => process.argv[process.argv.indexOf("--" + a) + 1]).join("-");
+  const ek = ["yazi", "laptop", "yuz", "insanlar", "gecis", "hiz"].filter((a) => process.argv.includes("--" + a)).map((a) => `&${a}=${process.argv[process.argv.indexOf("--" + a) + 1]}`).join("");
+  const etiket = ["yazi", "laptop", "yuz", "insanlar", "gecis", "hiz"].filter((a) => process.argv.includes("--" + a)).map((a) => process.argv[process.argv.indexOf("--" + a) + 1]).join("-");
   await sayfa.goto(`http://127.0.0.1:${s.address().port}/uret/sahne.html?insan=${insan}${ek}`);
   await sayfa.evaluate(() => window.hazir);
   const sure = await sayfa.evaluate((k) => window.sure(k), kesit);

@@ -115,9 +115,9 @@
       grain(ctx, kare, 0.05);
       // kesit 2'nin beyaz ışığından açılış; sonda turkuaz dolgu
       const acilis = 1 - ease.out(aralik(t, 0, 0.3));
-      if (acilis > 0) { ctx.fillStyle = `rgba(235,252,255,${acilis})`; ctx.fillRect(0, 0, W, H); }
+      if (acilis > 0) { ctx.fillStyle = `rgba(235,252,255,${acilis * KP.gecisIsigi()})`; ctx.fillRect(0, 0, W, H); }
       const dolgu = ease.in(aralik(t, 2.75, 3.0));
-      if (dolgu > 0) { ctx.fillStyle = `rgba(24,209,227,${dolgu})`; ctx.fillRect(0, 0, W, H); }
+      if (dolgu > 0) { ctx.fillStyle = `rgba(24,209,227,${dolgu * KP.gecisIsigi()})`; ctx.fillRect(0, 0, W, H); }
     },
   };
 })();
