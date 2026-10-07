@@ -1,5 +1,15 @@
 # Üretim Planı — Kodla Çizilen Reels (API anahtarsız)
 
+> **Durum:** Aşama 0–3 tamamlandı. Birleştirilmiş video `cikti/kariyer-pusulan-2500.mp4` (25,0 sn, 750 kare, 1080×1920, 30 fps, sessiz), kapak `cikti/kapak.png`, kesitler `cikti/kesit-01.mp4` … `kesit-08.mp4`.
+>
+> **Yeniden üretmek için** (`uret/` klasöründe):
+> ```
+> npm install
+> PLAYWRIGHT_BROWSERS_PATH=/opt/pw-browsers node ciz.js 05            # tek kesit -> cikti/kesit-05.mp4
+> sh onizle.sh 05 0,45,89 onizleme.png                                # seçili karelerden önizleme
+> ```
+> Kesitler `cikti/` içinde ffmpeg concat ile birleştirilir (bkz. 09-kurgu-ve-overlay.md).
+
 Diğer Reels oturumundaki yöntemin aynısı: sahneler kodla çizilir, başsız Chromium'da kare kare görüntülenir, ffmpeg ile videoya çevrilir. Yapay zekâ video modeli, ücret ya da API anahtarı gerekmez.
 
 ## Yöntem ve araçlar

@@ -315,6 +315,12 @@
       satir(ctx, [{ m: "bulmak." }], { y: 732, boy: 76, agirlik: 800, k: aralik(t, 1.9, 2.25) });
 
       grain(ctx, kare, 0.06);
+      // kesit 4'ün karanlık kapanışından açılış
+      const acilis = 1 - ease.out(aralik(t, 0, 0.25));
+      if (acilis > 0) { ctx.fillStyle = `rgba(4,10,28,${acilis * 0.85})`; ctx.fillRect(0, 0, W, H); }
+      // yolun ışığı kareyi kaplar; kesit 6 aynı turkuaz ışıktan açılır
+      const isik = ease.in(aralik(t, 2.75, 3.0));
+      if (isik > 0) { ctx.fillStyle = `rgba(120,236,245,${isik * 0.85})`; ctx.fillRect(0, 0, W, H); }
     },
   };
 })();
