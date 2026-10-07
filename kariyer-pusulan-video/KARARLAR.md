@@ -54,5 +54,5 @@ Bu dosya projenin hafızasıdır: kullanıcıyla verilen ve onaylanan kararlar b
 1. Figürler beğenilmedi, bir tasarım kararı istendi → silüet iyileştirme → renkli karakterler → sinematik stil seçildi.
 2. "Parlak yazılar net değil", "ilk sahnede bilgisayar olsun", "insan görselleri iyileşmeli" → keskin gradyan, laptop ve sade yüz seçildi; laptop küçültüldü.
 3. "Aynı video olsun ama insanları tamamen kaldır; geçiş ve görseller değişmesin" → ayrı insansız sürüm üretildi.
-5. "Her şey mükemmel; geçişlerdeki beyaz flaş azalsın" → beyaz flaşlar 0.2'ye indirildi (`--flas az`), başka hiçbir şey değişmedi.
 4. "Başvur yazısı iyi okunmuyor", "yazılar çok hızlı geçiyor, 0.75x'e alabiliriz", "geçişler biraz fazla ışıklı" → kesit 6 kelimeleri keskin stile geçti, insansız sürüm 0.75x ve yumuşak geçişlerle yeniden üretildi.
+5. "Her şey mükemmel; geçişlerdeki beyaz flaş azalsın" → beyaz flaşlar 0.2'ye indirildi (`--flas az`), başka hiçbir şey değişmedi.
