@@ -114,7 +114,7 @@
       grain(ctx, kare, 0.06);
       // kesit 6'nın ekran ışığından açılış; sonda kare marka laciverdine döner (kesit 8 bu renkten açılır)
       const acilis = 1 - ease.out(aralik(t, 0, 0.3));
-      if (acilis > 0) { ctx.fillStyle = `rgba(160,225,250,${acilis * 0.9 * KP.gecisIsigi()})`; ctx.fillRect(0, 0, W, H); }
+      if (acilis > 0) { ctx.fillStyle = `rgba(160,225,250,${acilis * 0.9 * KP.gecisIsigi("beyaz")})`; ctx.fillRect(0, 0, W, H); }
       const lacivert = ease.in(aralik(t, 2.45, 3.0));
       if (lacivert > 0) { ctx.fillStyle = `rgba(10,31,77,${lacivert})`; ctx.fillRect(0, 0, W, H); }
     },

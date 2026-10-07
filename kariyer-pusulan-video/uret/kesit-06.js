@@ -268,7 +268,7 @@
       const acilis = 1 - ease.out(aralik(t, 0, 0.25));
       if (acilis > 0) { ctx.fillStyle = `rgba(120,236,245,${acilis * 0.85 * KP.gecisIsigi()})`; ctx.fillRect(0, 0, W, H); }
       const kapanis = ease.in(aralik(t, 3.8, 4.0));
-      if (kapanis > 0) { ctx.fillStyle = `rgba(160,225,250,${kapanis * 0.9 * KP.gecisIsigi()})`; ctx.fillRect(0, 0, W, H); }
+      if (kapanis > 0) { ctx.fillStyle = `rgba(160,225,250,${kapanis * 0.9 * KP.gecisIsigi("beyaz")})`; ctx.fillRect(0, 0, W, H); }
     },
   };
 })();

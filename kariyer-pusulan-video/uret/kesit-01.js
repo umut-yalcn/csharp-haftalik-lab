@@ -211,7 +211,7 @@
       const acilis = 1 - ease.out(aralik(t, 0, 0.3));
       if (acilis > 0) { ctx.fillStyle = `rgba(2,5,13,${acilis})`; ctx.fillRect(0, 0, W, H); }
       const flas = ease.in(aralik(t, 2.8, 3.0));
-      if (flas > 0) { ctx.fillStyle = `rgba(230,251,255,${flas * KP.gecisIsigi()})`; ctx.fillRect(0, 0, W, H); }
+      if (flas > 0) { ctx.fillStyle = `rgba(230,251,255,${flas * KP.gecisIsigi("beyaz")})`; ctx.fillRect(0, 0, W, H); }
     },
   };
 })();

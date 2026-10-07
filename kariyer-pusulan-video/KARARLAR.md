@@ -38,7 +38,8 @@ Bu dosya projenin hafızasıdır: kullanıcıyla verilen ve onaylanan kararlar b
 - Kullanıcı aynı videonun **insan figürü olmayan** bir sürümünü de istedi: `cikti/kariyer-pusulan-2500-insansiz.mp4`. Karşı taraf bunu "daha akıcı" buldu; revizyonlar bu sürüme yapılır.
 - **Hız 0.75x:** Yazılar çok hızlı geçiyordu. Video 0.75x hızda baştan çizilir (`--hiz 0.75`); süre yaklaşık 33,3 sn, 1000 kare. Sonradan yavaşlatma yapılmaz, çünkü kareler tekrar eder ve görüntü takılır.
 - **Yumuşak geçişler:** Geçişlerdeki ışık dolguları (flaş, ışık patlaması, sızıntı) yarı yoğunlukta (`--gecis yumusak`). Karanlık geçişler aynı kalır.
-- Tam komut: `node ciz.js <kesit> --insanlar yok --gecis yumusak --hiz 0.75` (8 kesitin hepsi) → `kesit-XX-yok-yumusak-0.75.mp4`, ardından birleştirme.
+- **Beyaz flaş az:** Beyaz ya da beyaza yakın geçiş flaşları ayrıca 0.2 yoğunlukta (`--flas az`). Bunlar kesit 1'in sonu ve 2'nin başı, kesit 2'deki "Başvur" patlaması ve 3'ün başı, kesit 6'nın sonu ve 7'nin başı. Turkuaz renkli geçişler 0.5'te kalır.
+- Tam komut: `node ciz.js <kesit> --insanlar yok --gecis yumusak --flas az --hiz 0.75` (8 kesitin hepsi) → `kesit-XX-yok-yumusak-az-0.75.mp4`, ardından birleştirme. Kesit 4, 5 ve 8 `--flas`tan etkilenmediği için onların `kesit-XX-yok-yumusak-0.75.mp4` dosyaları da birebir aynıdır.
 - Sahneler, geçişler, yazılar ve dekor aynı kalır. Yalnızca karakterler ve onlara bağlı gölgeler, ayak altı ışığı ve telefon ışıkları çizilmez. Kesit 1'deki boş sandalye dekor olarak kalır.
 - Kesit 2, 6 ve 8'de insan yoktur, ama hız ve geçiş ayarları için onlar da aynı seçeneklerle yeniden çizilir.
 - Kesit 2 ve 6'daki ekrana dokunan başparmak arayüz etkileşiminin parçası olarak bırakıldı.
@@ -53,4 +54,5 @@ Bu dosya projenin hafızasıdır: kullanıcıyla verilen ve onaylanan kararlar b
 1. Figürler beğenilmedi, bir tasarım kararı istendi → silüet iyileştirme → renkli karakterler → sinematik stil seçildi.
 2. "Parlak yazılar net değil", "ilk sahnede bilgisayar olsun", "insan görselleri iyileşmeli" → keskin gradyan, laptop ve sade yüz seçildi; laptop küçültüldü.
 3. "Aynı video olsun ama insanları tamamen kaldır; geçiş ve görseller değişmesin" → ayrı insansız sürüm üretildi.
+5. "Her şey mükemmel; geçişlerdeki beyaz flaş azalsın" → beyaz flaşlar 0.2'ye indirildi (`--flas az`), başka hiçbir şey değişmedi.
 4. "Başvur yazısı iyi okunmuyor", "yazılar çok hızlı geçiyor, 0.75x'e alabiliriz", "geçişler biraz fazla ışıklı" → kesit 6 kelimeleri keskin stile geçti, insansız sürüm 0.75x ve yumuşak geçişlerle yeniden üretildi.
