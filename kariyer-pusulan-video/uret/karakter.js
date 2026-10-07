@@ -155,10 +155,10 @@
     for (const kol of p.kollar) {
       const [o, d, e] = kol;
       const bilek = [lerp(d[0], e[0], kisaKol ? 0.15 : 1), lerp(d[1], e[1], kisaKol ? 0.15 : 1)];
-      boya(g, (q, dx, dy) => { const t = (pt) => [pt[0] + dx, pt[1] + dy]; kapsul(q, t(o), t(d), 32 + bol * 0.6, 27 + bol * 0.5); kapsul(q, t(d), t(bilek), 27 + bol * 0.5, 23 + bol * 0.3); }, ust.renk, s, [Math.min(o[0], e[0]) - 20, o[1], Math.max(o[0], e[0]) + 20, e[1]]);
-      if (kisaKol) boya(g, (q, dx, dy) => kapsul(q, [bilek[0] + dx, bilek[1] + dy], [e[0] + dx, e[1] + dy], 20, 17), k.ten, s, null);
+      boya(g, (q, dx, dy) => { const t = (pt) => [pt[0] + dx, pt[1] + dy]; kapsul(q, t(o), t(d), 36 + bol * 0.6, 31 + bol * 0.5); kapsul(q, t(d), t(bilek), 31 + bol * 0.5, 26 + bol * 0.3); }, ust.renk, s, [Math.min(o[0], e[0]) - 20, o[1], Math.max(o[0], e[0]) + 20, e[1]]);
+      if (kisaKol) boya(g, (q, dx, dy) => kapsul(q, [bilek[0] + dx, bilek[1] + dy], [e[0] + dx, e[1] + dy], 23, 19), k.ten, s, null);
       const yon = Math.atan2(e[1] - d[1], e[0] - d[0]);
-      boya(g, (q, dx, dy) => elips(q, e[0] + Math.cos(yon) * 15 + dx, e[1] + Math.sin(yon) * 15 + dy, 11, 18, yon - Math.PI / 2), k.ten, s, null);
+      boya(g, (q, dx, dy) => elips(q, e[0] + Math.cos(yon) * 17 + dx, e[1] + Math.sin(yon) * 17 + dy, 13, 22, yon - Math.PI / 2), k.ten, s, null);
     }
     // telefon (önden: ekran ışığı; arkadan: görünmez)
     if (p.telefon && on) {
@@ -180,12 +180,12 @@
       uzun: (q, dx, dy) => { q.moveTo(h.x - 38 + dx, h.y + 4 + dy); q.bezierCurveTo(h.x - 42 + dx, h.y - 60 + dy, h.x + 42 + dx, h.y - 60 + dy, h.x + 38 + dx, h.y + 4 + dy); if (on) { q.quadraticCurveTo(h.x + 10 + dx, h.y - 34 + dy, h.x - 38 + dx, h.y + 4 + dy); } else { q.bezierCurveTo(h.x + 46 + dx, h.y + 70 + dy, h.x + 46 + dx, h.y + 120 + dy, h.x + 40 + dx, h.y + 132 + dy); q.lineTo(h.x - 40 + dx, h.y + 132 + dy); q.bezierCurveTo(h.x - 46 + dx, h.y + 120 + dy, h.x - 46 + dx, h.y + 70 + dy, h.x - 38 + dx, h.y + 4 + dy); } q.closePath(); },
       topuz: (q, dx, dy) => { q.moveTo(h.x - 35 + dx, h.y + (on ? -4 : 10) + dy); q.bezierCurveTo(h.x - 40 + dx, h.y - 60 + dy, h.x + 40 + dx, h.y - 60 + dy, h.x + 35 + dx, h.y + (on ? -4 : 10) + dy); q.quadraticCurveTo(h.x + dx, h.y + (on ? -28 : 24) + dy, h.x - 35 + dx, h.y + (on ? -4 : 10) + dy); q.closePath(); elips(q, h.x + dx, h.y - 50 + dy, 22, 18); },
       kivircik: (q, dx, dy) => { for (let i = 0; i < 11; i++) { const a = Math.PI * (0.95 + i * 0.11); elips(q, h.x + Math.cos(a) * 34 + dx, h.y - 6 + Math.sin(a) * 40 + dy, 17, 16); } if (!on) elips(q, h.x + dx, h.y + 4 + dy, 32, 30); },
-      bere: (q, dx, dy) => { q.moveTo(h.x - 38 + dx, h.y - 8 + dy); q.bezierCurveTo(h.x - 42 + dx, h.y - 70 + dy, h.x + 42 + dx, h.y - 70 + dy, h.x + 38 + dx, h.y - 8 + dy); q.lineTo(h.x - 38 + dx, h.y - 8 + dy); q.closePath(); },
+      bere: (q, dx, dy) => { const alt = on ? -8 : 16; q.moveTo(h.x - 38 + dx, h.y + alt + dy); q.bezierCurveTo(h.x - 42 + dx, h.y - 70 + dy, h.x + 42 + dx, h.y - 70 + dy, h.x + 38 + dx, h.y + alt + dy); q.lineTo(h.x - 38 + dx, h.y + alt + dy); q.closePath(); },
     };
     sacYol.dalgali = sacYol.uzun;
     boya(g, sacYol[st], sr, s, [h.x - 46, h.y - 50, h.x + 46, h.y + 132]);
     if (st === "dalgali" && !on) for (const x of [-22, 0, 22]) cizgi(g, s, sr, [[h.x + x, h.y + 10], [h.x + x - 6, h.y + 60], [h.x + x + 4, h.y + 110]], 2.5, 0.45);
-    if (st === "bere") { boya(g, (q, dx, dy) => q.roundRect(h.x - 40 + dx, h.y - 16 + dy, 80, 16, 6), sr, s, null); boya(g, (q, dx, dy) => elips(q, h.x + dx, h.y - 60 + dy, 9, 9), sr, s, null); }
+    if (st === "bere") { boya(g, (q, dx, dy) => q.roundRect(h.x - 40 + dx, h.y + (on ? -16 : 6) + dy, 80, 16, 6), sr, s, null); boya(g, (q, dx, dy) => elips(q, h.x + dx, h.y - 60 + dy, 9, 9), sr, s, null); }
     // önden: yüz (yüz hatları yok; yalnızca hafif burun ve yanak gölgesi)
     if (on && s.tip !== "duz" && s.tip !== "lowpoly") {
       g.save(); g.globalAlpha = 0.25; g.fillStyle = ton(k.ten, -0.4);

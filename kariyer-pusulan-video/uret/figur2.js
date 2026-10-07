@@ -9,7 +9,7 @@
   function ayakta2({ nefes = 0, egim = 0, agirlik = 0, telefon = null } = {}) {
     const n = nefes, a = agirlik; // agirlik: -1 sol bacak, +1 sağ bacak taşır (kalça kayar)
     const p = {
-      bas: { x: egim + a * 4, y: -606 - n },
+      bas: { x: egim + a * 4, y: -598 - n },
       omuz: [[-74, -510 - n + a * 3], [74, -510 - n - a * 3]],
       kalca: [[-34 + a * 6, -262 + a * 4], [34 + a * 6, -262 - a * 4]],
       kollar: [

@@ -5,14 +5,18 @@
   const { W, H, R, aralik, ease, lerp, clamp, rastgele, satir, yaziGolgesi, parlamaKatmani, grain, vinyet, poz, figur } = window.KP;
 
   const SURE = 3, UFUK = 1140, KX = 540;
+  // Kadrodan altı kişi; uzaktakiler (küçük y) önce çizilir
   const GRUP = [
-    { x: 250, y: 1720, o: 0.78, faz: 0.1, sac: "uzun" },
-    { x: 395, y: 1690, o: 0.82, faz: 0.55, sac: null },
-    { x: 500, y: 1745, o: 0.86, faz: 0.3, sac: "topuz" },
-    { x: 610, y: 1700, o: 0.84, faz: 0.8, sac: null },
-    { x: 720, y: 1730, o: 0.8, faz: 0.45, sac: "uzun" },
-    { x: 850, y: 1695, o: 0.79, faz: 0.05, sac: null },
+    { ad: "can", x: 395, y: 1690, o: 0.8, faz: 0.55 },
+    { ad: "emre", x: 850, y: 1695, o: 0.79, faz: 0.05 },
+    { ad: "zeynep", x: 610, y: 1700, o: 0.82, faz: 0.8 },
+    { ad: "elif", x: 250, y: 1720, o: 0.8, faz: 0.1 },
+    { ad: "ayse", x: 720, y: 1730, o: 0.8, faz: 0.45 },
+    { ad: "deniz", x: 500, y: 1745, o: 0.85, faz: 0.3 },
   ];
+  // Sinematik stil: güneş karşıda, sırtlar gölgede; kenarlar sıcak ışık alır
+  const STIL = { tip: "sinematik", karartma: "rgba(12,24,58,0.42)" };
+  const KENAR = [[3, 0, "rgba(255,206,150,0.55)"], [-3, 0, "rgba(255,206,150,0.55)"], [0, 3, "rgba(255,225,180,0.7)"], [0, 5, "rgba(255,190,130,0.55)", 6]];
   const lambalar = [-1, 1].flatMap((s) => [0, 1, 2, 3, 4].map((i) => ({ s, i })));
 
   function gokyuzu(ctx, t) {
@@ -85,13 +89,9 @@
       gokyuzu(ctx, t);
       yol(ctx, t);
       for (const k of GRUP) {
-        const p = poz.yuru((k.faz + t / 2.4) % 1); // ağır çekim adımlar
-        p.sac = k.sac;
-        KP.insan(ctx, p, {
-          x: k.x, y: k.y, olcek: k.o, t, tohum: k.x, iz: { adet: 90, hiz: 0.5, boy: 260 },
-          kenarlar: [[-3, 0, "rgba(255,205,140,0.85)"], [3, 0, "rgba(255,205,140,0.85)"], [0, 4, "rgba(255,225,170,0.9)"], [0, -3, "rgba(24,209,227,0.35)"]],
-          parlamaKenar: [0, 5, "rgba(255,200,130,0.8)"],
-        });
+        ctx.fillStyle = "rgba(4,8,20,0.45)"; ctx.beginPath(); ctx.ellipse(k.x, k.y + 18, 62, 11, 0, 0, Math.PI * 2); ctx.fill();
+        const p = KP.poz2.yuru((k.faz + t / 2.4) % 1); // ağır çekim adımlar
+        KP.karakter(ctx, p, KP.kadro(k.ad, "arka"), { x: k.x, y: k.y, olcek: k.o, stil: STIL, kenarIsigi: KENAR });
       }
       ctx.restore();
       vinyet(ctx, 0.55);
