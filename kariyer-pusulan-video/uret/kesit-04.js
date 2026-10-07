@@ -85,12 +85,114 @@
     ctx.restore();
   }
 
+  // --- insansız sürüm: pusula ve 2.500 ışık noktası ---
+  // Ortada ince çizgili pusula gülü, çevresinde yörüngede dönen 2.500 ışık noktası. Her kelimede iğne
+  // bir yöne dönüp oradaki ikonu yakar (hedef, hikâye, gelecek ihtimali); sonda sağ üste, bakış
+  // çizgilerinin birleştiği noktaya döner ve kesit 5'in ışık yoluna bağlanır.
+  const PM = { x: 540, y: 760 }, PR = 290, IKON_R = 395;
+  const derece = (d) => (d * Math.PI) / 180;
+  const DURAKLAR = [ // [başlangıç zamanı, iğne açısı, ikon]
+    [0.08, derece(-140), "hedef"],
+    [1.0, derece(25), "hikaye"],
+    [1.9, derece(150), "gelecek"],
+  ];
+  const SON_ACI = Math.atan2(BIRLESME.y - PM.y, BIRLESME.x - PM.x);
+  const NOKTALAR = (() => {
+    const r = rastgele(2500);
+    return Array.from({ length: 2500 }, (_, i) => ({
+      r: PR + 30 + Math.pow(r(), 0.7) * 110, a: r() * Math.PI * 2, hiz: (0.05 + r() * 0.12) * (r() < 0.5 ? 1 : 0.6),
+      b: 0.8 + r() * 1.6, alfa: 0.25 + r() * 0.75, gir: (i / 2500) * 0.7, renk: r() < 0.75 ? "#18D1E3" : "#E6FBFF",
+    }));
+  })();
+
+  function igneAcisi(t) {
+    let a = derece(-90);
+    for (const [t0, hedef] of DURAKLAR) a = lerp(a, hedef, ease.inOut(aralik(t, t0, t0 + 0.4)));
+    return lerp(a, SON_ACI, ease.inOut(aralik(t, 2.4, 2.85)));
+  }
+
+  function hedefIkonu(ctx, x, y, r) {
+    for (const k of [1, 0.66, 0.33]) { ctx.beginPath(); ctx.arc(x, y, r * k, 0, Math.PI * 2); ctx.stroke(); }
+    ctx.beginPath(); ctx.arc(x, y, r * 0.1, 0, Math.PI * 2); ctx.fill();
+    ctx.beginPath(); ctx.moveTo(x + r * 1.15, y - r * 1.15); ctx.lineTo(x + r * 0.12, y - r * 0.12); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(x + r * 1.15, y - r * 1.15); ctx.lineTo(x + r * 0.8, y - r * 1.2); ctx.moveTo(x + r * 1.15, y - r * 1.15); ctx.lineTo(x + r * 1.2, y - r * 0.8); ctx.stroke();
+  }
+
+  function pusulaSahnesi(ctx, t) {
+    const gir = ease.out(aralik(t, 0, 0.45));
+    if (gir <= 0) return;
+    ctx.save();
+    ctx.globalAlpha = gir;
+    // merkezden yayılan yumuşak turkuaz hale
+    const hale = ctx.createRadialGradient(PM.x, PM.y, 10, PM.x, PM.y, PR + 180);
+    hale.addColorStop(0, "rgba(24,209,227,0.22)"); hale.addColorStop(1, "rgba(24,209,227,0)");
+    ctx.fillStyle = hale; ctx.fillRect(0, 0, W, H);
+    // pusula gülü: ince çizgiler, yavaş döner
+    KP.pusulaGulu(ctx, PM.x, PM.y, PR, t * 0.06, R.turkuaz, 0.55);
+    KP.pusulaGulu(ctx, PM.x, PM.y, PR * 0.62, -t * 0.09, R.acikMavi, 0.35);
+    // 2.500 ışık noktası: yörüngede döner, kesit başında sırayla belirir
+    ctx.globalCompositeOperation = "lighter";
+    for (const n of NOKTALAR) {
+      const g = clamp((t - n.gir) / 0.25);
+      if (g <= 0) continue;
+      const a = n.a + t * n.hiz;
+      ctx.globalAlpha = gir * g * n.alfa * (0.75 + 0.25 * Math.sin(t * 3 + n.a * 7));
+      ctx.fillStyle = n.renk;
+      ctx.fillRect(PM.x + Math.cos(a) * n.r - n.b / 2, PM.y + Math.sin(a) * n.r * 0.92 - n.b / 2, n.b, n.b);
+    }
+    ctx.globalCompositeOperation = "source-over";
+    ctx.globalAlpha = gir;
+    // ikonlar: iğne gelince parlayıp büyür, sonra sönük kalır (sahne dolar)
+    DURAKLAR.forEach(([t0, aci, ad], i) => {
+      const gel = ease.outBack(aralik(t, t0 + 0.25, t0 + 0.55));
+      if (gel <= 0) return;
+      const sonraki = DURAKLAR[i + 1] ? DURAKLAR[i + 1][0] + 0.2 : 2.45;
+      const aktif = t < sonraki ? 1 : 0.45;
+      const x = PM.x + Math.cos(aci) * IKON_R, y = PM.y + Math.sin(aci) * IKON_R * 0.92, boy = 132 * gel;
+      ctx.save();
+      ctx.globalAlpha = gir * (0.45 + 0.55 * aktif);
+      if (aktif === 1) parlamaKatmani(ctx, (g) => { g.fillStyle = R.turkuaz; g.globalAlpha = 0.7; g.beginPath(); g.roundRect(x - boy / 2, y - boy / 2, boy, boy, boy * 0.24); g.fill(); }, { blur: 26, guc: 0.8 });
+      ctx.fillStyle = "rgba(6,20,52,0.92)"; ctx.beginPath(); ctx.roundRect(x - boy / 2, y - boy / 2, boy, boy, boy * 0.24); ctx.fill();
+      ctx.strokeStyle = R.turkuaz; ctx.lineWidth = 2.5; ctx.beginPath(); ctx.roundRect(x - boy / 2, y - boy / 2, boy, boy, boy * 0.24); ctx.stroke();
+      ctx.strokeStyle = ctx.fillStyle = aktif === 1 ? "#E6FBFF" : R.turkuaz; ctx.lineWidth = 4.5; ctx.lineCap = "round"; ctx.lineJoin = "round";
+      if (ad === "hedef") hedefIkonu(ctx, x - 4, y + 4, boy * 0.27);
+      if (ad === "hikaye") KP.IKON.kitap(ctx, x, y, boy * 0.3);
+      if (ad === "gelecek") {
+        KP.IKON.roket(ctx, x, y, boy * 0.3);
+        // dallanan ışık yolları: geleceğin farklı ihtimalleri
+        const d = ease.out(aralik(t, t0 + 0.45, t0 + 0.95));
+        ctx.lineWidth = 3; ctx.strokeStyle = R.turkuaz; ctx.globalAlpha *= 0.8;
+        for (const s of [-0.5, 0, 0.5]) {
+          ctx.beginPath(); ctx.moveTo(x, y + boy / 2 + 6);
+          ctx.quadraticCurveTo(x + s * 60, y + boy / 2 + 50 * d, x + s * 150 * d, y + boy / 2 + 110 * d); ctx.stroke();
+        }
+      }
+      // iğne gelince halka dalgası
+      const dalga = aralik(t, t0 + 0.3, t0 + 0.9);
+      if (dalga > 0 && dalga < 1) { ctx.globalAlpha = gir * (1 - dalga) * 0.8; ctx.strokeStyle = R.turkuaz; ctx.lineWidth = 3; ctx.beginPath(); ctx.arc(x, y, boy * 0.6 + dalga * 80, 0, Math.PI * 2); ctx.stroke(); }
+      ctx.restore();
+    });
+    // iğne: ön ucu turkuaz-beyaz, arka ucu lacivert; merkezde göbek
+    const a = igneAcisi(t), L = PR * 0.86, gen = 22;
+    const uc = [PM.x + Math.cos(a) * L, PM.y + Math.sin(a) * L], kuyruk = [PM.x - Math.cos(a) * L * 0.55, PM.y - Math.sin(a) * L * 0.55];
+    const yan = (s) => [PM.x + Math.cos(a + Math.PI / 2) * gen * s, PM.y + Math.sin(a + Math.PI / 2) * gen * s];
+    parlamaKatmani(ctx, (g) => { g.fillStyle = R.turkuaz; g.beginPath(); g.moveTo(...uc); g.lineTo(...yan(1)); g.lineTo(...yan(-1)); g.closePath(); g.fill(); g.beginPath(); g.arc(...uc, 12, 0, Math.PI * 2); g.fill(); }, { blur: 22, guc: 0.9 });
+    const ig = ctx.createLinearGradient(PM.x, PM.y, ...uc); ig.addColorStop(0, "#18D1E3"); ig.addColorStop(1, "#E6FBFF");
+    ctx.fillStyle = ig; ctx.beginPath(); ctx.moveTo(...uc); ctx.lineTo(...yan(1)); ctx.lineTo(...yan(-1)); ctx.closePath(); ctx.fill();
+    ctx.fillStyle = "#0E2A63"; ctx.beginPath(); ctx.moveTo(...kuyruk); ctx.lineTo(...yan(1)); ctx.lineTo(...yan(-1)); ctx.closePath(); ctx.fill();
+    ctx.strokeStyle = "rgba(143,216,255,0.7)"; ctx.lineWidth = 2; ctx.beginPath(); ctx.moveTo(...kuyruk); ctx.lineTo(...yan(1)); ctx.lineTo(...uc); ctx.lineTo(...yan(-1)); ctx.closePath(); ctx.stroke();
+    ctx.fillStyle = "#E6FBFF"; ctx.beginPath(); ctx.arc(PM.x, PM.y, 14, 0, Math.PI * 2); ctx.fill();
+    ctx.fillStyle = R.turkuaz; ctx.beginPath(); ctx.arc(PM.x, PM.y, 7, 0, Math.PI * 2); ctx.fill();
+    ctx.restore();
+  }
+
   window.KESITLER["04"] = {
     sure: SURE,
     ciz(ctx, t, kare) {
       const i = Math.min(3, Math.floor(t / SURE_P)), yerel = t - i * SURE_P;
       portreCiz(ctx, i, yerel, t);
       vinyet(ctx, 0.65);
+      if (!KP.insanVar()) pusulaSahnesi(ctx, t); // insansız sürümde boş kalan sahneyi doldurur
 
       // bakış çizgileri: her portrenin bakış noktasından sağ üstteki birleşme noktasına
       const c = ease.inOut(aralik(t, 2.45, 2.9));
