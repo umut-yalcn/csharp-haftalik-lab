@@ -15,6 +15,7 @@
 | [kesit-08.md](kesit-08.md) | Outro, logo ve CTA | 0:22–0:25 |
 | [09-kurgu-ve-overlay.md](09-kurgu-ve-overlay.md) | Birleştirme, yazı animasyonları, logo, müzik, dışa aktarma | — |
 | [10-uretim-plani.md](10-uretim-plani.md) | Kodla (API anahtarsız) üretim planı | — |
+| [KARARLAR.md](KARARLAR.md) | **Onaylanan kararlar ve geri bildirim geçmişi (önce bunu oku)** | — |
 | `referans/` | Instagram profilinin ekran görüntüleri ve orijinal logo (`logo-orijinal.png`) | — |
 
 ## Temel kurallar

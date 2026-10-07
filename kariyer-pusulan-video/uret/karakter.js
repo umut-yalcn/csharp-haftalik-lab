@@ -197,7 +197,7 @@
     if (st === "dalgali" && !on) for (const x of [-22, 0, 22]) cizgi(g, s, sr, [[h.x + x, h.y + 10], [h.x + x - 6, h.y + 60], [h.x + x + 4, h.y + 110]], 2.5, 0.45);
     if (st === "bere") { boya(g, (q, dx, dy) => q.roundRect(h.x - 40 + dx, h.y + (on ? -16 : 6) + dy, 80, 16, 6), sr, s, null); boya(g, (q, dx, dy) => elips(q, h.x + dx, h.y - 60 + dy, 9, 9), sr, s, null); }
     // önden: yüz. --yuz sade|detayli ile yüz hatları çizilir; yoksa yalnızca burun ve yanak gölgesi
-    const yuzModu = (window.KP.SECENEK || {}).yuz || "yok";
+    const yuzModu = (window.KP.SECENEK || {}).yuz || "sade";
     if (on && yuzModu !== "yok") yuz(g, h, k, yuzModu);
     else if (on && s.tip !== "duz" && s.tip !== "lowpoly") {
       g.save(); g.globalAlpha = 0.25; g.fillStyle = ton(k.ten, -0.4);

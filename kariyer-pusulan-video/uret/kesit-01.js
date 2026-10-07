@@ -9,7 +9,12 @@
   const YENI = (window.KP.SECENEK || {}).laptop === "yeni";
   const EKRAN = YENI ? { x: 300, y: 770, w: 480, h: 300 } : { x: 250, y: 800, w: 580, h: 370 };
   const HEDEF = YENI ? { x: 600, y: 915 } : { x: 610, y: 960 }; // zoom yapılan sekme kartı
-  const MASA_Y = YENI ? 1072 : 1210;
+  // Yeni laptop öğrenciye göre gerçekçi boyda: mantıksal çizim LAPTOP_OLCEK ile küçültülür,
+  // menteşe (540, 1080) masa çizgisine oturur.
+  const LAPTOP_OLCEK = 0.62, MENTESE = { x: 540, y: 1080 }, MENTESE_G = { x: 560, y: 1116 };
+  const gorunen = (p) => (YENI ? { x: MENTESE_G.x + (p.x - MENTESE.x) * LAPTOP_OLCEK, y: MENTESE_G.y + (p.y - MENTESE.y) * LAPTOP_OLCEK } : p);
+  const HEDEF_G = gorunen(HEDEF); // zoom hedefinin ekrandaki yeri
+  const MASA_Y = YENI ? MENTESE_G.y - 4 : 1210;
   const r0 = rastgele(101);
   const PENCERELER = Array.from({ length: 9 }, (_, i) => ({
     x: 14 + r0() * 330, y: 52 + r0() * 170, w: 170 + r0() * 120, h: 110 + r0() * 90,
@@ -85,6 +90,14 @@
   }
 
   function laptop(ctx, t) {
+    if (YENI) {
+      ctx.save();
+      ctx.translate(MENTESE_G.x, MENTESE_G.y); ctx.scale(LAPTOP_OLCEK, LAPTOP_OLCEK); ctx.translate(-MENTESE.x, -MENTESE.y);
+      laptopCiz(ctx, t);
+      ctx.restore();
+    } else laptopCiz(ctx, t);
+  }
+  function laptopCiz(ctx, t) {
     const e = EKRAN;
     const ec = ekranTuval.getContext("2d");
     ec.setTransform(1, 0, 0, 1, 0, 0); ekranIcerik(ec, t);
@@ -159,8 +172,8 @@
     ciz(ctx, t, kare) {
       const parlak = 0.85 + 0.15 * Math.sin(t * 11) * Math.sin(t * 4.3);
       const yakl = ease.inOut(aralik(t, 0, 2.5)), zoom = ease.in(aralik(t, 2.5, 2.92));
-      const olcek = (1 + 0.16 * yakl) * (1 + 7 * zoom);
-      const mx = lerp(540, HEDEF.x, zoom), my = lerp(1010, HEDEF.y, zoom);
+      const olcek = (1 + 0.16 * yakl) * (1 + (YENI ? 7 / LAPTOP_OLCEK : 7) * zoom);
+      const mx = lerp(540, HEDEF_G.x, zoom), my = lerp(1010, HEDEF_G.y, zoom);
 
       ctx.save();
       ctx.translate(mx, my); ctx.scale(olcek, olcek); ctx.translate(-mx, -my);

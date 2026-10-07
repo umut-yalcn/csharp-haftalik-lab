@@ -15,7 +15,14 @@
 <body>
 <canvas id="c" width="1080" height="1920"></canvas>
 <script src="lib.js"></script>
-<script>{ const q = new URLSearchParams(location.search); window.KP.insanModu = q.get("insan") || "siluet"; window.KP.YAZI.stil = q.get("yazi") || "eski"; window.KP.SECENEK = Object.fromEntries(q); }</script>
+<script>{
+  // Onaylanan varsayılanlar (KARARLAR.md): keskin gradyan yazı, yeni laptop, sade yüz.
+  // Eski hâller için: --yazi eski, --laptop eski, --yuz yok
+  const q = new URLSearchParams(location.search);
+  window.KP.insanModu = q.get("insan") || "siluet";
+  window.KP.SECENEK = { yazi: "keskin", laptop: "yeni", yuz: "sade", ...Object.fromEntries(q) };
+  window.KP.YAZI.stil = window.KP.SECENEK.yazi;
+}</script>
 <script src="figur.js"></script>
 <script src="ikon.js"></script>
 <script src="figur2.js"></script>
