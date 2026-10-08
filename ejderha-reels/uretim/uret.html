@@ -6,7 +6,7 @@
 // Onaylı tasarımlar:
 //  - miğfer: Hilal, örnek 8 (eskitme orta k=0.45, gömülü; matlık 3. Orta)
 //  - laptop: kararmış çelik, köşe başlıkları, deri kayış yok; ekran net, koyu tema ana sayfa
-const KIRP_KOYU = [108, 0, 1317, 782]; // referans/site-ana-sayfa-koyu-v2.png (1600x824), önceki kırpmayla aynı oran
+const KIRP_KOYU = [0, 0, 1904, 1130]; // referans/site-ana-sayfa-koyu-v3-tam.png (yakınlaştırılmış ekran görüntüsü; tam genişlik, alt kısım sayfa zemin rengiyle uzatıldı)
 const MIGFER_SABIT = { k: 0.45, tohum: 4242 + 31, filtre: "brightness(0.7) saturate(0.55) contrast(0.92)", yumusak: 0.62, dikenEsik: 128, bant: 9 };
 const PUS = [118, 111, 117];
 let LOGO, SITE, DUZ;
@@ -129,7 +129,7 @@ function yakinPlan(s, kareIm, dx, dy) {
 }
 
 window.hazirla = async () => {
-  [LOGO, SITE] = await Promise.all(["varlik/logo-koyu-tema.png", "varlik/site-ana-sayfa-koyu-v2.png"].map(yukle));
+  [LOGO, SITE] = await Promise.all(["varlik/logo-koyu-tema.png", "varlik/site-ana-sayfa-koyu-v3-tam.png"].map(yukle));
   DUZ = duzMigfer(LOGO, MIGFER_SABIT.k, MIGFER_SABIT.tohum);
   return true;
 };

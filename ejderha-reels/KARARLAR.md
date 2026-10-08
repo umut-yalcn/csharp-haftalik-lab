@@ -59,3 +59,7 @@ Bu dosya projenin hafızasıdır. Yeni bir adım atmadan önce oku; bir karar de
 - Geri bildirim: ekrandaki sayfa moderatör girişli (sağ üstte "Umut Y. Moderatör") ekran görüntüsüydü; yerine kullanıcının verdiği yeni ana sayfa (ziyaretçi görünümü: "Giriş Yap", "Kayıt Ol"; 2266 program, 954 kurum; Privia Security ve YEKÜV kartları) konuldu.
 - Dosya: `referans/site-ana-sayfa-koyu-v2.png` (1600×824), kırpma `[108, 0, 1317, 782]` (önceki kırpmayla aynı oran ve bölge).
 - Başka hiçbir şey değişmedi (miğfer, laptop tasarımı, takip, geçişler, ses aynı).
+
+## Üretim v4 — laptop ekranında yeni sayfa (2204 program, 984 kurum; Toptalent.co ve Mastercard kartları)
+- Kaynak: `referans/site-ana-sayfa-koyu-v3.png` (1919×989, yakınlaştırılmış). Logo ve "Kayıt Ol" kesilmesin diye tam genişlik (kaydırma çubuğu hariç, 1904 px) kullanıldı; ekran oranı (1,684) için alt kısım sayfanın zemin rengiyle uzatıldı → `referans/site-ana-sayfa-koyu-v3-tam.png`, kırpma `[0, 0, 1904, 1130]`.
+- Başka hiçbir şey değişmedi (kontrol: ekran dışındaki pikseller v3 ile birebir aynı).
