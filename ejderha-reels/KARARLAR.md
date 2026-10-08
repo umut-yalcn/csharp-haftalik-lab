@@ -54,3 +54,8 @@ Bu dosya projenin hafızasıdır. Yeni bir adım atmadan önce oku; bir karar de
 - **Işık/sis eşleme:** miğferin altındaki bölgenin parlaklığı ve kontrastı her karede ölçülür (409. kare referans); miğfer parlaklığı ve pusu buna göre ayarlanır.
 - Doğrulama: miğfere göre sabitlenmiş kırpmalarda altındaki kafatası dokusu kaymıyor; ardışık karelerde sıçrama yok.
 - Çıktılar: `cikti/ejderha-dikey-9x16.mp4`, `cikti/ejderha-yatay.mp4`, kontrol için `cikti/ejderha-migfer-yakindan.mp4` (miğferi takip eden yakın kadraj, 10,5–18 sn).
+
+## Üretim v3 — laptop ekranındaki sayfa güncellendi
+- Geri bildirim: ekrandaki sayfa moderatör girişli (sağ üstte "Umut Y. Moderatör") ekran görüntüsüydü; yerine kullanıcının verdiği yeni ana sayfa (ziyaretçi görünümü: "Giriş Yap", "Kayıt Ol"; 2266 program, 954 kurum; Privia Security ve YEKÜV kartları) konuldu.
+- Dosya: `referans/site-ana-sayfa-koyu-v2.png` (1600×824), kırpma `[108, 0, 1317, 782]` (önceki kırpmayla aynı oran ve bölge).
+- Başka hiçbir şey değişmedi (miğfer, laptop tasarımı, takip, geçişler, ses aynı).
