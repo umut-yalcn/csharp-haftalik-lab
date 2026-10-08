@@ -1,0 +1,250 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<link rel="stylesheet" href="node_modules/@fontsource/montserrat/500.css">
+<link rel="stylesheet" href="node_modules/@fontsource/montserrat/700.css">
+<link rel="stylesheet" href="node_modules/@fontsource/montserrat/800.css">
+</head><body style="margin:0;background:#111">
+<canvas id="migfer-10-ejderhada" width="1770" height="920"></canvas>
+<canvas id="migfer-10-tasarim" width="1770" height="920"></canvas>
+<script>
+const yukle = (s) => new Promise((ok, no) => { const i = new Image(); i.onload = () => ok(i); i.onerror = no; i.src = s; });
+const tuval = (w, h) => { const c = document.createElement("canvas"); c.width = w; c.height = h; return c; };
+const TAU = Math.PI * 2;
+let tohum = 1;
+const rnd = () => (tohum = (tohum * 16807) % 2147483647) / 2147483647;
+
+// ---------- ortak malzemeler: eskitilmiş kararmış çelik + solmuş bronz ----------
+function percin(ctx, x, y, r) {
+  const g = ctx.createRadialGradient(x - r * 0.35, y - r * 0.35, r * 0.1, x, y, r);
+  g.addColorStop(0, "#d9b983"); g.addColorStop(0.55, "#8a6a3e"); g.addColorStop(1, "#33251a");
+  ctx.fillStyle = g; ctx.beginPath(); ctx.arc(x, y, r, 0, TAU); ctx.fill();
+  ctx.fillStyle = "rgba(60,95,75,0.35)"; ctx.beginPath(); ctx.arc(x + r * 0.3, y + r * 0.3, r * 0.6, 0, TAU); ctx.fill();
+}
+function celik(ctx, yol, cx, cy, R, ton) {
+  const g = ctx.createRadialGradient(cx - R * 0.3, cy - R * 0.45, R * 0.05, cx, cy, R);
+  const t = ton || ["#78726b", "#4b4642", "#2b2826", "#1a1817"];
+  g.addColorStop(0, t[0]); g.addColorStop(0.35, t[1]); g.addColorStop(0.75, t[2]); g.addColorStop(1, t[3]);
+  ctx.fillStyle = g; ctx.fill(yol);
+}
+function bronzDolgu(ctx, yol, y0, y1) {
+  const g = ctx.createLinearGradient(0, y0, 0, y1); g.addColorStop(0, "#8f7650"); g.addColorStop(0.5, "#6b5435"); g.addColorStop(1, "#43331f");
+  ctx.fillStyle = g; ctx.fill(yol);
+}
+function kenar(ctx, yol, k) {
+  ctx.lineWidth = k + 2.5; ctx.strokeStyle = "#17120e"; ctx.stroke(yol);
+  ctx.lineWidth = k; ctx.strokeStyle = "#6f5634"; ctx.stroke(yol);
+  ctx.lineWidth = k * 0.3; ctx.strokeStyle = "rgba(190,160,110,0.45)"; ctx.stroke(yol);
+}
+// pas, kir, ezik, çizik
+function eskit(ctx, yol, w, h, cx, cy) {
+  cx = cx || 0; cy = cy || 0;
+  ctx.save(); ctx.clip(yol);
+  const R = Math.max(w, h) / 2;
+  let g = ctx.createRadialGradient(cx, cy, R * 0.4, cx, cy, R * 1.1); g.addColorStop(0, "rgba(0,0,0,0)"); g.addColorStop(1, "rgba(25,18,12,0.55)");
+  ctx.fillStyle = g; ctx.fillRect(cx - w, cy - h, w * 2, h * 2);
+  ctx.filter = "blur(3px)";
+  for (let i = 0; i < 14; i++) {
+    const x = cx + (rnd() - 0.5) * w, y = cy + (rnd() - 0.5) * h;
+    ctx.fillStyle = `rgba(${110 + rnd() * 30},${58 + rnd() * 20},30,${0.18 + rnd() * 0.18})`;
+    ctx.beginPath(); ctx.ellipse(x, y, 4 + rnd() * 11, 3 + rnd() * 6, rnd() * 3, 0, TAU); ctx.fill();
+  }
+  ctx.filter = "none";
+  for (let i = 0; i < 5; i++) {
+    const x = cx + (rnd() - 0.5) * w * 0.85, y = cy + (rnd() - 0.5) * h * 0.85, rr = 4 + rnd() * 5;
+    ctx.lineWidth = 1.5; ctx.strokeStyle = "rgba(10,8,6,0.55)"; ctx.beginPath(); ctx.arc(x, y, rr, Math.PI * 1.1, Math.PI * 1.9); ctx.stroke();
+    ctx.strokeStyle = "rgba(200,190,175,0.32)"; ctx.beginPath(); ctx.arc(x, y, rr, Math.PI * 0.1, Math.PI * 0.9); ctx.stroke();
+  }
+  for (let i = 0; i < 120; i++) {
+    const x = cx + (rnd() - 0.5) * w, y = cy + (rnd() - 0.5) * h, u = 2 + rnd() * (i < 10 ? 26 : 8), a = -0.4 + rnd() * 0.8 + (rnd() < 0.3 ? 1.6 : 0);
+    ctx.strokeStyle = i < 10 ? "rgba(205,195,180,0.28)" : `rgba(175,165,150,${0.06 + rnd() * 0.13})`; ctx.lineWidth = i < 10 ? 1.1 : 0.6;
+    ctx.beginPath(); ctx.moveTo(x, y); ctx.lineTo(x + Math.cos(a) * u, y + Math.sin(a) * u); ctx.stroke();
+  }
+  ctx.restore();
+}
+// büyük madalyon: bronz halka + siyah mine + sitenin koyu tema logosu
+function madalyon(ctx, logo, x, y, R, percinSay) {
+  const halka = new Path2D(); halka.arc(x, y, R, 0, TAU);
+  bronzDolgu(ctx, halka, y - R, y + R);
+  ctx.save(); ctx.clip(halka);
+  for (let i = 0; i < 12; i++) { const a = rnd() * TAU, rr = R * (0.85 + rnd() * 0.15); ctx.fillStyle = `rgba(70,110,90,${0.15 + rnd() * 0.2})`; ctx.beginPath(); ctx.arc(x + Math.cos(a) * rr, y + Math.sin(a) * rr, 1.5 + rnd() * 3, 0, TAU); ctx.fill(); }
+  ctx.restore();
+  ctx.strokeStyle = "#15100c"; ctx.lineWidth = 1.6; ctx.stroke(halka);
+  const n = percinSay || 10, d = R * 0.84;
+  for (let i = 0; i < n; i++) { const a = i * TAU / n + Math.PI / n; percin(ctx, x + Math.cos(a) * (R + d) / 2, y + Math.sin(a) * (R + d) / 2, Math.max(1.6, (R - d) * 0.28)); }
+  ctx.fillStyle = "#0b0b0d"; ctx.beginPath(); ctx.arc(x, y, d, 0, TAU); ctx.fill();
+  ctx.strokeStyle = "#000"; ctx.lineWidth = 2; ctx.stroke();
+  const L = d * 1.9; ctx.drawImage(logo, x - L / 2, y - L / 2, L, L);
+  const g = ctx.createLinearGradient(x - d, y - d, x + d * 0.6, y + d * 0.6); g.addColorStop(0, "rgba(255,255,255,0.10)"); g.addColorStop(0.5, "rgba(255,255,255,0)");
+  ctx.fillStyle = g; ctx.beginPath(); ctx.arc(x, y, d, 0, TAU); ctx.fill();
+}
+function plaka(ctx, yol, w, h, cx, cy, kalin, ton) {
+  celik(ctx, yol, cx || 0, cy || 0, Math.max(w, h) * 0.6, ton);
+  eskit(ctx, yol, w, h, cx, cy);
+  kenar(ctx, yol, kalin || 3.2);
+}
+function percinler(ctx, noktalar, r) { for (const [x, y] of noktalar) percin(ctx, x, y, r || 2.5); }
+
+// ---------- 10 MİĞFER (yerel koordinat: madalyon ~ (0,0), +y burna doğru) ----------
+const MIGFER = [
+  { ad: "1. Katmanlı kubbe", ciz(ctx, logo) {
+    for (const [yT, yB, gen] of [[-98, -76, 62], [-82, -58, 80]]) {
+      const l = new Path2D(); l.moveTo(-gen, yT + 20); l.quadraticCurveTo(0, yT - 20, gen, yT + 20);
+      l.lineTo(gen + 4, yB + 20); l.quadraticCurveTo(0, yB - 20, -gen - 4, yB + 20); l.closePath();
+      plaka(ctx, l, gen * 2, 40, 0, yT, 2.2); percinler(ctx, [[-gen * 0.6, (yT + yB) / 2 + 4], [gen * 0.6, (yT + yB) / 2 + 4]], 2.2);
+    }
+    const y = new Path2D(); y.moveTo(-94, -20); y.quadraticCurveTo(-82, -62, 0, -66); y.quadraticCurveTo(82, -62, 94, -20);
+    y.quadraticCurveTo(99, 24, 72, 48); y.lineTo(44, 42); y.quadraticCurveTo(18, 46, 0, 70); y.quadraticCurveTo(-18, 46, -44, 42); y.lineTo(-72, 48); y.quadraticCurveTo(-99, 24, -94, -20); y.closePath();
+    plaka(ctx, y, 196, 140, 0, 0, 3.4);
+    percinler(ctx, [[-86, -22], [-70, -48], [70, -48], [86, -22], [84, 16], [-84, 16], [62, 38], [-62, 38]]);
+    madalyon(ctx, logo, 0, -2, 52, 10);
+  } },
+  { ad: "2. Taç", ciz(ctx, logo) {
+    const tepe = [[-96, -46], [-80, -78], [-60, -52], [-40, -96], [-20, -58], [0, -112], [20, -58], [40, -96], [60, -52], [80, -78], [96, -46]];
+    const y = new Path2D(); y.moveTo(-100, 30); tepe.forEach(([x, yy]) => y.lineTo(x, yy)); y.lineTo(100, 30); y.quadraticCurveTo(50, 40, 0, 66); y.quadraticCurveTo(-50, 40, -100, 30); y.closePath();
+    plaka(ctx, y, 200, 170, 0, -20, 3.2);
+    for (const [x, yy] of tepe.filter((_, i) => i % 2 === 1)) percin(ctx, x, yy + 4, 4.2);
+    const bant = new Path2D(); bant.moveTo(-100, 14); bant.quadraticCurveTo(0, -10, 100, 14); bant.lineTo(100, 30); bant.quadraticCurveTo(0, 8, -100, 30); bant.closePath();
+    bronzDolgu(ctx, bant, 0, 30); kenar(ctx, bant, 1.6);
+    percinler(ctx, [[-80, 18], [-50, 12], [50, 12], [80, 18]], 2.2);
+    madalyon(ctx, logo, 0, -10, 54, 10);
+  } },
+  { ad: "3. Boynuz kılıflı", ciz(ctx, logo) {
+    for (const d of [-1, 1]) {
+      const b = new Path2D(); b.moveTo(d * 52, -30); b.quadraticCurveTo(d * 100, -50, d * 128, -112); b.quadraticCurveTo(d * 110, -40, d * 66, 10); b.closePath();
+      plaka(ctx, b, 90, 130, d * 90, -50, 2.4);
+      ctx.save(); ctx.clip(b);
+      for (const t of [0.3, 0.55]) { const x = d * (62 + 50 * t), yy = -24 - 72 * t; ctx.strokeStyle = "#6f5634"; ctx.lineWidth = 7; ctx.beginPath(); ctx.moveTo(x - d * 30, yy - 8); ctx.lineTo(x + d * 30, yy + 14); ctx.stroke();
+        ctx.strokeStyle = "rgba(190,160,110,0.45)"; ctx.lineWidth = 1.5; ctx.beginPath(); ctx.moveTo(x - d * 30, yy - 10); ctx.lineTo(x + d * 30, yy + 12); ctx.stroke(); }
+      ctx.restore();
+    }
+    const y = new Path2D(); y.ellipse(0, 0, 78, 66, 0, 0, TAU);
+    plaka(ctx, y, 156, 132, 0, 0, 3.4);
+    percinler(ctx, Array.from({ length: 12 }, (_, i) => [Math.cos(i * TAU / 12) * 70, Math.sin(i * TAU / 12) * 58]));
+    madalyon(ctx, logo, 0, 0, 54, 10);
+  } },
+  { ad: "4. Yuvarlak kalkan", ciz(ctx, logo) {
+    const y = new Path2D(); y.arc(0, 0, 86, 0, TAU);
+    plaka(ctx, y, 172, 172, 0, 0, 4);
+    ctx.save(); ctx.clip(y);
+    for (let i = 0; i < 16; i++) { const a = i * TAU / 16; ctx.strokeStyle = "rgba(10,8,6,0.55)"; ctx.lineWidth = 2; ctx.beginPath(); ctx.moveTo(Math.cos(a) * 58, Math.sin(a) * 58); ctx.lineTo(Math.cos(a) * 86, Math.sin(a) * 86); ctx.stroke();
+      ctx.strokeStyle = "rgba(170,160,145,0.35)"; ctx.lineWidth = 1; ctx.beginPath(); ctx.moveTo(Math.cos(a + 0.02) * 58, Math.sin(a + 0.02) * 58); ctx.lineTo(Math.cos(a + 0.02) * 86, Math.sin(a + 0.02) * 86); ctx.stroke(); }
+    ctx.restore();
+    percinler(ctx, Array.from({ length: 16 }, (_, i) => [Math.cos(i * TAU / 16 + 0.2) * 79, Math.sin(i * TAU / 16 + 0.2) * 79]));
+    madalyon(ctx, logo, 0, 0, 58, 12);
+  } },
+  { ad: "5. Dikenli sırt", ciz(ctx, logo) {
+    for (let i = 4; i >= 0; i--) {
+      const yy = -60 - i * 14, s = 1 - i * 0.12;
+      const b = new Path2D(); b.moveTo(-14 * s, yy + 14); b.lineTo(0, yy - 30 * s); b.lineTo(14 * s, yy + 14); b.closePath();
+      plaka(ctx, b, 30, 50, 0, yy, 1.6);
+    }
+    const y = new Path2D(); y.moveTo(-92, -10); y.quadraticCurveTo(-70, -66, 0, -68); y.quadraticCurveTo(70, -66, 92, -10); y.quadraticCurveTo(92, 40, 0, 66); y.quadraticCurveTo(-92, 40, -92, -10); y.closePath();
+    plaka(ctx, y, 184, 134, 0, 0, 3.4);
+    for (const d of [-1, 1]) for (let i = 0; i < 3; i++) { const b = new Path2D(); const x = d * (70 + i * 6), yy = -30 + i * 26; b.moveTo(x, yy - 8); b.lineTo(x + d * 18, yy); b.lineTo(x, yy + 8); b.closePath(); plaka(ctx, b, 20, 16, x, yy, 1.2); }
+    percinler(ctx, [[-78, -30], [78, -30], [-60, 40], [60, 40], [-30, -58], [30, -58]]);
+    madalyon(ctx, logo, 0, 0, 54, 10);
+  } },
+  { ad: "6. Kanatlı", ciz(ctx, logo) {
+    for (const d of [-1, 1]) for (let i = 2; i >= 0; i--) {
+      const b = new Path2D(); const y0 = -20 + i * 18;
+      b.moveTo(d * 50, y0); b.quadraticCurveTo(d * (100 + i * 4), y0 - 40 + i * 6, d * (140 - i * 16), y0 - 70 + i * 22); b.quadraticCurveTo(d * (100 - i * 6), y0 - 10, d * 50, y0 + 22); b.closePath();
+      plaka(ctx, b, 100, 70, d * 90, y0 - 25, 2);
+    }
+    const y = new Path2D(); y.moveTo(-70, -56); y.quadraticCurveTo(0, -76, 70, -56); y.quadraticCurveTo(76, 20, 0, 76); y.quadraticCurveTo(-76, 20, -70, -56); y.closePath();
+    plaka(ctx, y, 150, 150, 0, 0, 3.4);
+    percinler(ctx, [[-62, -48], [62, -48], [-58, 14], [58, 14], [0, 64]]);
+    madalyon(ctx, logo, 0, -4, 52, 10);
+  } },
+  { ad: "7. Baklava", ciz(ctx, logo) {
+    const y = new Path2D(); y.moveTo(0, -98); y.lineTo(108, 0); y.lineTo(0, 84); y.lineTo(-108, 0); y.closePath();
+    plaka(ctx, y, 216, 182, 0, 0, 3.6);
+    const ic = new Path2D(); ic.moveTo(0, -78); ic.lineTo(86, 0); ic.lineTo(0, 66); ic.lineTo(-86, 0); ic.closePath();
+    ctx.strokeStyle = "rgba(10,8,6,0.6)"; ctx.lineWidth = 2; ctx.stroke(ic); ctx.strokeStyle = "rgba(170,160,145,0.3)"; ctx.lineWidth = 1; ctx.stroke(ic);
+    for (const [x, yy] of [[0, -98], [108, 0], [0, 84], [-108, 0]]) { const k = new Path2D(); k.arc(x * 0.9, yy * 0.9, 9, 0, TAU); bronzDolgu(ctx, k, yy - 9, yy + 9); kenar(ctx, k, 1.2); }
+    percinler(ctx, [[54, -45], [-54, -45], [54, 40], [-54, 40]]);
+    madalyon(ctx, logo, 0, -4, 56, 10);
+  } },
+  { ad: "8. Zincir örgülü", ciz(ctx, logo) {
+    const z = new Path2D(); z.moveTo(-110, -10);
+    for (let i = 0; i <= 12; i++) { const a = Math.PI + i * Math.PI / 12; z.lineTo(Math.cos(a) * 110, Math.sin(a) * 88 - 4); }
+    for (let i = 0; i <= 14; i++) { const x = 110 - i * 220 / 14; z.quadraticCurveTo(x - 220 / 28, 70 + (i % 2) * 6, x - 220 / 14, 58); }
+    z.closePath();
+    ctx.save(); ctx.clip(z); ctx.fillStyle = "#1d1b1a"; ctx.fillRect(-120, -100, 240, 180);
+    for (let yy = -96; yy < 80; yy += 6) for (let x = -116 + ((yy / 6) % 2) * 3; x < 116; x += 6) {
+      ctx.strokeStyle = `rgba(${120 + rnd() * 40},${110 + rnd() * 30},${95 + rnd() * 20},0.6)`; ctx.lineWidth = 1; ctx.beginPath(); ctx.arc(x, yy, 2.6, 0, TAU); ctx.stroke();
+    }
+    eskit(ctx, z, 220, 180, 0, -10); ctx.restore();
+    const y = new Path2D(); y.arc(0, -6, 70, 0, TAU);
+    plaka(ctx, y, 140, 140, 0, -6, 3.4);
+    percinler(ctx, Array.from({ length: 10 }, (_, i) => [Math.cos(i * TAU / 10) * 64, Math.sin(i * TAU / 10) * 64 - 6]));
+    madalyon(ctx, logo, 0, -6, 54, 10);
+  } },
+  { ad: "9. Gotik kemer", ciz(ctx, logo) {
+    const y = new Path2D(); y.moveTo(-88, 52); y.bezierCurveTo(-96, -20, -60, -80, 0, -118); y.bezierCurveTo(60, -80, 96, -20, 88, 52); y.quadraticCurveTo(0, 82, -88, 52); y.closePath();
+    plaka(ctx, y, 184, 200, 0, -20, 3.4);
+    ctx.save(); ctx.clip(y);
+    for (let i = -4; i <= 4; i++) { if (i === 0) continue; const a = -Math.PI / 2 + i * 0.32; ctx.strokeStyle = "rgba(10,8,6,0.5)"; ctx.lineWidth = 2; ctx.beginPath(); ctx.moveTo(Math.cos(a) * 58, Math.sin(a) * 58 - 6); ctx.lineTo(Math.cos(a) * 160, Math.sin(a) * 160 - 6); ctx.stroke();
+      ctx.strokeStyle = "rgba(170,160,145,0.3)"; ctx.lineWidth = 1; ctx.beginPath(); ctx.moveTo(Math.cos(a) * 58 + 2, Math.sin(a) * 58 - 6); ctx.lineTo(Math.cos(a) * 160 + 2, Math.sin(a) * 160 - 6); ctx.stroke(); }
+    ctx.restore();
+    percinler(ctx, [[-80, 40], [80, 40], [-84, -10], [84, -10], [0, -104]]);
+    madalyon(ctx, logo, 0, -6, 56, 10);
+  } },
+  { ad: "10. Hilal", ciz(ctx, logo) {
+    const y = new Path2D(); y.moveTo(-112, 34); y.quadraticCurveTo(-100, -70, 0, -80); y.quadraticCurveTo(100, -70, 112, 34);
+    y.quadraticCurveTo(80, -26, 0, -30); y.quadraticCurveTo(-80, -26, -112, 34); y.closePath();
+    plaka(ctx, y, 224, 120, 0, -40, 3.2);
+    percinler(ctx, [[-96, 12], [-80, -34], [-44, -60], [44, -60], [80, -34], [96, 12]]);
+    madalyon(ctx, logo, 0, -24, 58, 12);
+  } },
+];
+
+function yazi(ctx, m, x, y, boy, agirlik, renk, hiza) {
+  ctx.font = `${agirlik} ${boy}px Montserrat`; ctx.fillStyle = renk; ctx.textAlign = hiza || "left"; ctx.fillText(m, x, y);
+}
+
+(async () => {
+  await Promise.all([500, 700, 800].map((w) => document.fonts.load(`${w} 30px Montserrat`, "ÖĞÜŞİÇöğüşıç")));
+  const [genis, logo] = await Promise.all(["genis.png", "logo-koyu.png"].map(yukle));
+  const KARO = 330, ARA = 20, UST = 100;
+  const konum = (i) => [ARA + (i % 5) * (KARO + ARA), UST + Math.floor(i / 5) * (KARO + 70)];
+
+  // A) ejderhanın başında
+  {
+    const c = document.getElementById("migfer-10-ejderhada"), ctx = c.getContext("2d");
+    ctx.fillStyle = "#0B1730"; ctx.fillRect(0, 0, c.width, c.height);
+    yazi(ctx, "10 miğfer tasarımı: ejderhanın başında (17. saniye karesi, büyütülmüş)", ARA, 58, 30, 800, "#fff");
+    ctx.fillStyle = "#2BE3F0"; ctx.fillRect(ARA, 74, 120, 4);
+    MIGFER.forEach((m, i) => {
+      tohum = 1000 + i * 77;
+      const sahne = tuval(1280, 720), s = sahne.getContext("2d");
+      s.drawImage(genis, 0, 0);
+      const kk = tuval(1280, 720), k = kk.getContext("2d");
+      k.translate(347, 182); k.rotate(-0.24); k.scale(0.95, 0.9);
+      m.ciz(k, logo);
+      k.setTransform(1, 0, 0, 1, 0, 0); k.globalCompositeOperation = "source-atop";
+      k.fillStyle = "rgba(128,124,124,0.10)"; k.fillRect(0, 0, 1280, 720);
+      s.save(); s.filter = "blur(0.5px)"; s.shadowColor = "rgba(8,6,6,0.7)"; s.shadowBlur = 12; s.shadowOffsetX = -2; s.shadowOffsetY = 8; s.drawImage(kk, 0, 0); s.restore();
+      const [x, y] = konum(i);
+      ctx.drawImage(sahne, 192, 42, 300, 300, x, y, KARO, KARO);
+      ctx.strokeStyle = "rgba(43,227,240,0.6)"; ctx.lineWidth = 1.5; ctx.strokeRect(x, y, KARO, KARO);
+      yazi(ctx, m.ad, x + 4, y + KARO + 34, 22, 700, "#fff");
+    });
+  }
+  // B) düz tasarım görünümü
+  {
+    const c = document.getElementById("migfer-10-tasarim"), ctx = c.getContext("2d");
+    const g = ctx.createLinearGradient(0, 0, c.width, c.height); g.addColorStop(0, "#0B1730"); g.addColorStop(1, "#050B1A");
+    ctx.fillStyle = g; ctx.fillRect(0, 0, c.width, c.height);
+    yazi(ctx, "10 miğfer tasarımı: önden düz görünüm", ARA, 58, 30, 800, "#fff");
+    ctx.fillStyle = "#2BE3F0"; ctx.fillRect(ARA, 74, 120, 4);
+    MIGFER.forEach((m, i) => {
+      tohum = 1000 + i * 77;
+      const [x, y] = konum(i);
+      ctx.fillStyle = "rgba(255,255,255,0.03)"; ctx.fillRect(x, y, KARO, KARO);
+      ctx.save(); ctx.translate(x + KARO / 2, y + KARO / 2 + 18); ctx.scale(1.18, 1.18); m.ciz(ctx, logo); ctx.restore();
+      yazi(ctx, m.ad, x + 4, y + KARO + 34, 22, 700, "#fff");
+    });
+  }
+  window.HAZIR = true;
+})();
+</script></body></html>
