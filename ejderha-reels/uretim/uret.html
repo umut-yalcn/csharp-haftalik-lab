@@ -12,23 +12,43 @@ const PUS = [118, 111, 117];
 let LOGO, SITE, DUZ;
 
 // yaw: başın sağa/sola dönüşü (radyan). Arkaya bakan hücreler çizilmez.
+// p.afin varsa: referans karedeki miğfer ağı, kafatası noktalarından ölçülen afin dönüşümle taşınır
+// (yüzeyin perspektif sıkışması ve eğilmesi dahil); p.afinW ile benzerlik çözümüyle harmanlanır.
+function agNoktasi(q, px, py) {
+  const R = q.R, yaw = q.yaw || 0;
+  const lx = (px - OX) / OL, ly = (py - OY) / OL, th = lx / R;
+  const wx = R * Math.sin(th - yaw) + R * Math.sin(yaw) * 0.35;
+  const wy = ly + q.bukum * R * (1 - Math.cos(th)) - q.kubbe * (1 - Math.cos(th)) * 10;
+  const sx = wx * q.s, sy = wy * q.s * q.basik;
+  const c = Math.cos(q.rot), s = Math.sin(q.rot);
+  return [q.x + sx * c - sy * s, q.y + sx * s + sy * c, Math.cos(th - yaw)];
+}
 function buk2(hedef, duz, p) {
-  const R = p.R, NX = 26, NY = 10, yaw = p.yaw || 0;
+  const NX = 26, NY = 10, w = p.afin ? (p.afinW || 0) : 0, A = p.afin;
   const nokta = (px, py) => {
-    const lx = (px - OX) / OL, ly = (py - OY) / OL, th = lx / R;
-    const wx = R * Math.sin(th - yaw) + R * Math.sin(yaw) * 0.35;
-    const wy = ly + p.bukum * R * (1 - Math.cos(th)) - p.kubbe * (1 - Math.cos(th)) * 10;
-    const sx = wx * p.s, sy = wy * p.s * p.basik;
-    const c = Math.cos(p.rot), s = Math.sin(p.rot);
-    return [p.x + sx * c - sy * s, p.y + sx * s + sy * c, Math.cos(th - yaw)];
+    const b = agNoktasi(p, px, py);
+    if (w <= 0.001) return b;
+    const r = agNoktasi(p.refm, px, py);
+    const ax = A[0] * r[0] + A[1] * r[1] + A[4], ay = A[2] * r[0] + A[3] * r[1] + A[5];
+    return [w * ax + (1 - w) * b[0], w * ay + (1 - w) * b[1], b[2]];
   };
   for (let j = 0; j < NY; j++) for (let i = 0; i < NX; i++) {
     const u0 = i * 520 / NX, u1 = (i + 1) * 520 / NX, v0 = j * 300 / NY, v1 = (j + 1) * 300 / NY;
-    const A = nokta(u0, v0), B = nokta(u1, v0), C = nokta(u1, v1), D = nokta(u0, v1);
-    if ((A[2] + B[2]) / 2 < 0.05) continue;
-    ucgen(hedef, duz, A[0], A[1], B[0], B[1], C[0], C[1], u0, v0, u1, v0, u1, v1);
-    ucgen(hedef, duz, A[0], A[1], C[0], C[1], D[0], D[1], u0, v0, u1, v1, u0, v1);
+    const A_ = nokta(u0, v0), B = nokta(u1, v0), C = nokta(u1, v1), D = nokta(u0, v1);
+    if ((A_[2] + B[2]) / 2 < 0.05) continue;
+    ucgen(hedef, duz, A_[0], A_[1], B[0], B[1], C[0], C[1], u0, v0, u1, v0, u1, v1);
+    ucgen(hedef, duz, A_[0], A_[1], C[0], C[1], D[0], D[1], u0, v0, u1, v1, u0, v1);
   }
+}
+// hareket bulanıklığı: katman hız yönünde yarım kare pozlama süresince örneklenip ortalanır
+function hareketBulanikligi(kat, vx, vy) {
+  const v = Math.hypot(vx, vy), poz = 0.5;
+  if (v * poz < 0.6) return kat;
+  const n = Math.min(14, Math.ceil(v * poz) + 2);
+  const out = tuval(1280, 720), o = out.getContext("2d");
+  o.globalCompositeOperation = "lighter"; o.globalAlpha = 1 / n;
+  for (let i = 0; i < n; i++) { const t = (i / (n - 1) - 0.5) * poz; o.drawImage(kat, vx * t, vy * t); }
+  return out;
 }
 
 function migferUygula(s, p) {
@@ -37,14 +57,15 @@ function migferUygula(s, p) {
   buk2(k, DUZ, p);
   // renk eşleme + uzaklaştıkça artan pus
   const renk = tuval(1280, 720), r = renk.getContext("2d");
-  r.filter = MIGFER_SABIT.filtre; r.drawImage(kat, 0, 0); r.filter = "none";
+  r.filter = `brightness(${(0.7 * (p.isik || 1)).toFixed(3)}) saturate(0.55) contrast(0.92)`; r.drawImage(kat, 0, 0); r.filter = "none";
   r.globalCompositeOperation = "source-atop";
-  const pusA = Math.min(0.45, 0.16 + Math.max(0, 0.75 - p.s) * 0.6);
+  const pusA = Math.min(0.5, 0.16 + Math.max(0, 0.75 - p.s) * 0.6 + (p.pusEk || 0) * 0.6);
   r.fillStyle = `rgba(${PUS[0]},${PUS[1]},${PUS[2]},${pusA})`; r.fillRect(0, 0, 1280, 720);
   // videonun yumuşaklığı
   const yz = MIGFER_SABIT.yumusak;
   const kucuk = tuval(Math.round(1280 * yz), Math.round(720 * yz)); kucuk.getContext("2d").drawImage(renk, 0, 0, kucuk.width, kucuk.height);
-  const yum = tuval(1280, 720), y = yum.getContext("2d"); y.imageSmoothingQuality = "high"; y.drawImage(kucuk, 0, 0, 1280, 720);
+  const yum0 = tuval(1280, 720), y0 = yum0.getContext("2d"); y0.imageSmoothingQuality = "high"; y0.drawImage(kucuk, 0, 0, 1280, 720);
+  const yum = hareketBulanikligi(yum0, p.vx || 0, p.vy || 0);
   // temas ve ortam gölgesi (ölçeğe göre)
   const golge = tuval(1280, 720), gg = golge.getContext("2d");
   gg.drawImage(yum, 0, 0); gg.globalCompositeOperation = "source-in"; gg.fillStyle = "#000"; gg.fillRect(0, 0, 1280, 720);

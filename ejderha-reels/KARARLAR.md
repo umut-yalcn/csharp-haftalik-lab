@@ -46,3 +46,11 @@ Bu dosya projenin hafızasıdır. Yeni bir adım atmadan önce oku; bir karar de
 - Parametreler: `uretim/parametre.py` → `uretim/parametre.json`. Son çekimde 409. kareye göre benzerlik dönüşümü; uyanma çekiminde göz arası / baş boyu oranıyla yandan-önden geçişi (yaw), yandan görünüşte miğfer kafatasının üstüne, biraz geriye kayar.
 - Çizim: `uretim/uret.html` + `uretim/ortak.js` (onaylı miğfer ve laptop kodu), `node uretim/uret.js <kaynak_kareler> uretim/parametre.json <cikti_kareler>`.
 - Ses: orijinal ses (konserve açılma sesi dahil) olduğu gibi.
+
+## Üretim v2 — miğfer hareket uyumu (geri bildirim: "bilgisayar ve geçişler güzel, miğfer hareket ederken daha uyumlu olmalı")
+- Laptop ve geçişler v1'deki gibi kaldı, dokunulmadı.
+- Kafatası bağlantısı: miğferin oturduğu bölgeden otomatik seçilen 12'şer dokulu nokta izlenir (`uretim/nokta_sec.py` → `iz/d5.json`, `iz/d6.json`); aykırılar atılarak benzerlik ve **afin** dönüşüm çözülür. Afin dönüşüm baş eğilip dönerken kafatası yüzeyindeki perspektif sıkışma ve eğilmeyi miğfere de uygular (güvene göre benzerlik çözümüyle harmanlanır).
+- **Hareket bulanıklığı:** miğfer hızı (kare başına 10–14 px'e kadar) yönünde yarım kare pozlamayla bulanıklaştırılır; ejderha durunca net.
+- **Işık/sis eşleme:** miğferin altındaki bölgenin parlaklığı ve kontrastı her karede ölçülür (409. kare referans); miğfer parlaklığı ve pusu buna göre ayarlanır.
+- Doğrulama: miğfere göre sabitlenmiş kırpmalarda altındaki kafatası dokusu kaymıyor; ardışık karelerde sıçrama yok.
+- Çıktılar: `cikti/ejderha-dikey-9x16.mp4`, `cikti/ejderha-yatay.mp4`, kontrol için `cikti/ejderha-migfer-yakindan.mp4` (miğferi takip eden yakın kadraj, 10,5–18 sn).
