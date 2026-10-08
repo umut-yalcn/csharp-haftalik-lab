@@ -1,0 +1,125 @@
+<!doctype html>
+<html><head><meta charset="utf-8"></head><body style="margin:0;background:#000">
+<canvas id="kare" width="1280" height="720"></canvas>
+<script src="ortak.js"></script>
+<script>
+// Onaylı tasarımlar:
+//  - miğfer: Hilal, örnek 8 (eskitme orta k=0.45, gömülü; matlık 3. Orta)
+//  - laptop: kararmış çelik, köşe başlıkları, deri kayış yok; ekran net, koyu tema ana sayfa
+const KIRP_KOYU = [130, 0, 1580, 938];
+const MIGFER_SABIT = { k: 0.45, tohum: 4242 + 31, filtre: "brightness(0.7) saturate(0.55) contrast(0.92)", yumusak: 0.62, dikenEsik: 128, bant: 9 };
+const PUS = [118, 111, 117];
+let LOGO, SITE, DUZ;
+
+// yaw: başın sağa/sola dönüşü (radyan). Arkaya bakan hücreler çizilmez.
+function buk2(hedef, duz, p) {
+  const R = p.R, NX = 26, NY = 10, yaw = p.yaw || 0;
+  const nokta = (px, py) => {
+    const lx = (px - OX) / OL, ly = (py - OY) / OL, th = lx / R;
+    const wx = R * Math.sin(th - yaw) + R * Math.sin(yaw) * 0.35;
+    const wy = ly + p.bukum * R * (1 - Math.cos(th)) - p.kubbe * (1 - Math.cos(th)) * 10;
+    const sx = wx * p.s, sy = wy * p.s * p.basik;
+    const c = Math.cos(p.rot), s = Math.sin(p.rot);
+    return [p.x + sx * c - sy * s, p.y + sx * s + sy * c, Math.cos(th - yaw)];
+  };
+  for (let j = 0; j < NY; j++) for (let i = 0; i < NX; i++) {
+    const u0 = i * 520 / NX, u1 = (i + 1) * 520 / NX, v0 = j * 300 / NY, v1 = (j + 1) * 300 / NY;
+    const A = nokta(u0, v0), B = nokta(u1, v0), C = nokta(u1, v1), D = nokta(u0, v1);
+    if ((A[2] + B[2]) / 2 < 0.05) continue;
+    ucgen(hedef, duz, A[0], A[1], B[0], B[1], C[0], C[1], u0, v0, u1, v0, u1, v1);
+    ucgen(hedef, duz, A[0], A[1], C[0], C[1], D[0], D[1], u0, v0, u1, v1, u0, v1);
+  }
+}
+
+function migferUygula(s, p) {
+  const orij = s.getImageData(0, 0, 1280, 720);
+  const kat = tuval(1280, 720), k = kat.getContext("2d");
+  buk2(k, DUZ, p);
+  // renk eşleme + uzaklaştıkça artan pus
+  const renk = tuval(1280, 720), r = renk.getContext("2d");
+  r.filter = MIGFER_SABIT.filtre; r.drawImage(kat, 0, 0); r.filter = "none";
+  r.globalCompositeOperation = "source-atop";
+  const pusA = Math.min(0.45, 0.16 + Math.max(0, 0.75 - p.s) * 0.6);
+  r.fillStyle = `rgba(${PUS[0]},${PUS[1]},${PUS[2]},${pusA})`; r.fillRect(0, 0, 1280, 720);
+  // videonun yumuşaklığı
+  const yz = MIGFER_SABIT.yumusak;
+  const kucuk = tuval(Math.round(1280 * yz), Math.round(720 * yz)); kucuk.getContext("2d").drawImage(renk, 0, 0, kucuk.width, kucuk.height);
+  const yum = tuval(1280, 720), y = yum.getContext("2d"); y.imageSmoothingQuality = "high"; y.drawImage(kucuk, 0, 0, 1280, 720);
+  // temas ve ortam gölgesi (ölçeğe göre)
+  const golge = tuval(1280, 720), gg = golge.getContext("2d");
+  gg.drawImage(yum, 0, 0); gg.globalCompositeOperation = "source-in"; gg.fillStyle = "#000"; gg.fillRect(0, 0, 1280, 720);
+  s.save(); s.globalAlpha = 0.65; s.filter = `blur(${9 * p.s}px)`; s.drawImage(golge, -2 * p.s, 9 * p.s); s.restore();
+  s.save(); s.globalAlpha = 0.55; s.filter = `blur(${3 * p.s}px)`; s.drawImage(golge, 0, 3 * p.s); s.restore();
+  s.drawImage(yum, 0, 0);
+  // gren + kenar bandında dikenler önde
+  const rr = 150 * p.s + 30;
+  const bx = Math.max(0, Math.floor(p.x - rr)), by = Math.max(0, Math.floor(p.y - rr));
+  const bw = Math.min(1280, Math.ceil(p.x + rr)) - bx, bh = Math.min(720, Math.ceil(p.y + rr)) - by;
+  if (bw <= 0 || bh <= 0) return;
+  const sd = s.getImageData(bx, by, bw, bh), md = yum.getContext("2d").getImageData(bx, by, bw, bh);
+  const bul = tuval(1280, 720), bb = bul.getContext("2d"); bb.filter = `blur(${MIGFER_SABIT.bant * p.s}px)`; bb.drawImage(yum, 0, 0);
+  const bd = bb.getImageData(bx, by, bw, bh), o = orij.data, esik = MIGFER_SABIT.dikenEsik;
+  for (let yy = 0; yy < bh; yy++) for (let xx = 0; xx < bw; xx++) {
+    const i = (yy * bw + xx) * 4, a = md.data[i + 3] / 255;
+    if (a > 0.02) { const n = (Math.random() - 0.5) * 16 * a; sd.data[i] += n; sd.data[i + 1] += n; sd.data[i + 2] += n; }
+    if (a < 0.3) continue;
+    const ab = bd.data[i + 3] / 255; if (ab > 0.93) continue;
+    const oi = ((by + yy) * 1280 + (bx + xx)) * 4;
+    const lum = 0.3 * o[oi] + 0.59 * o[oi + 1] + 0.11 * o[oi + 2];
+    if (lum < esik) continue;
+    const t = Math.min(1, (lum - esik) / 25) * Math.min(1, (0.93 - ab) / 0.25);
+    for (let ch = 0; ch < 3; ch++) sd.data[i + ch] = sd.data[i + ch] * (1 - t) + o[oi + ch] * t;
+  }
+  s.putImageData(sd, bx, by);
+}
+
+// geniş planlarda şövalyenin elindeki küçük laptop (17. sn referansı: eller (640,292), ölçek 1 -> genişlik 84)
+function laptopGenis(s, kareIm, L) {
+  const k = L.k, w = 84 * k, x = L.hx - w / 2, y = L.hy - 54 * k;
+  const lk = tuval(1280, 720), l = lk.getContext("2d");
+  const ek = laptop(l, { x, y, w, site: SITE, kirp: KIRP_KOYU, derinlik: 6 * k, tasma: 3 * k });
+  l.globalCompositeOperation = "source-atop"; l.fillStyle = "rgba(160,166,172,0.10)"; l.fillRect(0, 0, 1280, 720);
+  s.save(); s.filter = `blur(${0.7 * k}px)`; s.drawImage(lk, 0, 0); s.restore();
+  s.save(); s.globalCompositeOperation = "screen";
+  const g = s.createRadialGradient(L.hx, y + 24 * k, 5, L.hx, y + 24 * k, 90 * k); g.addColorStop(0, "rgba(110,190,255,0.18)"); g.addColorStop(1, "rgba(110,190,255,0)");
+  s.fillStyle = g; s.fillRect(L.hx - 140 * k, y - 90 * k, 280 * k, 220 * k); s.restore();
+  netEkran(s, SITE, KIRP_KOYU, ek);
+  // eldivenler laptopun gövdesini tutar
+  const el = new Path2D(); el.rect(L.hx - 90 * k, L.hy + 1 * k, 50 * k, 25 * k); el.rect(L.hx + 40 * k, L.hy + 1 * k, 50 * k, 25 * k);
+  s.save(); s.clip(el); s.drawImage(kareIm, 0, 0); s.restore();
+}
+
+// yakın plan (157. kare referansı), dx/dy: kameranın küçük kayması
+function yakinPlan(s, kareIm, dx, dy) {
+  const yama = tuval(1280, 720), y2 = yama.getContext("2d");
+  y2.translate(1280, 0); y2.scale(-1, 1); y2.drawImage(kareIm, 0, 0);
+  const mk = tuval(1280, 720), m = mk.getContext("2d");
+  m.filter = "blur(10px)"; m.fillStyle = "#fff"; m.fillRect(880 + dx, 196 + dy, 160, 128);
+  y2.setTransform(1, 0, 0, 1, 0, 0); y2.globalCompositeOperation = "destination-in"; y2.drawImage(mk, 0, 0);
+  s.drawImage(yama, 0, 0);
+  const lk = tuval(1280, 720), l = lk.getContext("2d");
+  const ek = laptop(l, { x: 372 + dx, y: 112 + dy, w: 536, site: SITE, kirp: KIRP_KOYU, derinlik: 38, tasma: 16 });
+  s.save(); s.filter = "blur(0.5px)"; s.shadowColor = "rgba(0,0,0,0.5)"; s.shadowBlur = 22; s.shadowOffsetY = 10; s.drawImage(lk, 0, 0); s.restore();
+  s.save(); s.globalCompositeOperation = "screen";
+  const g = s.createRadialGradient(640 + dx, 300 + dy, 120, 640 + dx, 300 + dy, 560);
+  g.addColorStop(0, "rgba(110,190,255,0.20)"); g.addColorStop(1, "rgba(110,190,255,0)");
+  s.fillStyle = g; s.fillRect(0, 0, 1280, 720); s.restore();
+  netEkran(s, SITE, KIRP_KOYU, ek);
+}
+
+window.hazirla = async () => {
+  [LOGO, SITE] = await Promise.all(["varlik/logo-koyu-tema.png", "varlik/site-ana-sayfa-koyu.png"].map(yukle));
+  DUZ = duzMigfer(LOGO, MIGFER_SABIT.k, MIGFER_SABIT.tohum);
+  return true;
+};
+window.ciz = async (no, P) => {
+  const im = await yukle(`kareler/${String(no).padStart(3, "0")}.png`);
+  const c = document.getElementById("kare"), s = c.getContext("2d");
+  s.setTransform(1, 0, 0, 1, 0, 0); s.globalCompositeOperation = "source-over"; s.filter = "none";
+  s.drawImage(im, 0, 0);
+  if (P && P.yakin) yakinPlan(s, im, P.yakin.dx, P.yakin.dy);
+  if (P && P.migfer) migferUygula(s, P.migfer);
+  if (P && P.laptop) laptopGenis(s, im, P.laptop);
+  return c.toDataURL("image/png");
+};
+</script></body></html>

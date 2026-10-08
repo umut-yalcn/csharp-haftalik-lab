@@ -38,3 +38,11 @@ Bu dosya projenin hafızasıdır. Yeni bir adım atmadan önce oku; bir karar de
 
 ## Kod
 `tasarim-kodu/` içindeki sayfalar Canvas ile tasarım görsellerini üretir (`node calistir.js <sayfa>.html`). Sayfaların yanında `genis.png` (17 sn karesi), `yakin.png` (6,5 sn karesi), `site-koyu.png`, `site-acik.png`, `logo.png`, `logo-koyu.png` ve `node_modules` (Playwright, Montserrat) bulunmalıdır; bunlar `referans/` ve `kariyer-pusulan-video/uret/node_modules` içindedir.
+
+## Üretim v1 (Yol 1 + (b) düzeni, ücretsiz) — `cikti/ejderha-dikey-9x16.mp4`, `cikti/ejderha-yatay.mp4`
+- Kullanıcı kararı: önce ücretsiz yol denenir — orijinal videonun üstüne kare kare kompozit (telif riski kabul edildi), dikey için 9:16 ekranın ortasında yatay video + üstte/altta bulanık arka plan.
+- Çekimler (24 fps, 432 kare): 1–118 ve 169–251 değişmez · 119–144 geniş sis: küçük laptop · 145–168 yakın plan: büyük laptop · 252–347 ejderha uyanır (yandan → önden): miğfer + küçük laptop · 348–432 baş şövalyenin yanında: miğfer + küçük laptop.
+- Takip: `uretim/izle.py` (numpy yama eşleme, OpenCV yok). Ejderha: gözler + burun; şövalye: eller + miğfer; yakın plan: eldivenler/kemer.
+- Parametreler: `uretim/parametre.py` → `uretim/parametre.json`. Son çekimde 409. kareye göre benzerlik dönüşümü; uyanma çekiminde göz arası / baş boyu oranıyla yandan-önden geçişi (yaw), yandan görünüşte miğfer kafatasının üstüne, biraz geriye kayar.
+- Çizim: `uretim/uret.html` + `uretim/ortak.js` (onaylı miğfer ve laptop kodu), `node uretim/uret.js <kaynak_kareler> uretim/parametre.json <cikti_kareler>`.
+- Ses: orijinal ses (konserve açılma sesi dahil) olduğu gibi.
