@@ -1,0 +1,87 @@
+1
+00:00:00,000 --> 00:00:00,150
+[sessiz]
+
+2
+00:00:00,150 --> 00:00:01,200
+[SAHNE 1 · kedi ejderhanın pençesinde] kedi bağırışı / savaş çığlığı
+
+3
+00:00:01,200 --> 00:00:01,450
+[ses] keskin vurgu – çığlığın en yüksek yeri
+
+4
+00:00:01,450 --> 00:00:02,900
+[ses] uzayan kedi çığlığı ("Fight fight fight" havası)
+
+5
+00:00:02,900 --> 00:00:03,650
+[ses] çığlık sönüyor
+
+6
+00:00:03,650 --> 00:00:04,500
+[ses] kısa metalik sesler – kılıç / zırh şıkırtısı
+
+7
+00:00:04,500 --> 00:00:04,950
+[sessize yakın]
+
+8
+00:00:04,950 --> 00:00:06,000
+[SAHNE 2 · sisli çayırda şövalye] boğuk vuruş / rüzgâr
+
+9
+00:00:06,000 --> 00:00:07,000
+[SAHNE 3 · yakın plan, laptop] konserve açılma sesi (en yüksek ses, 6,1 sn)
+
+10
+00:00:07,000 --> 00:00:07,600
+[SAHNE 4 · kedi kılıcı bırakıyor] tok vuruş – kılıç yere düşüyor
+
+11
+00:00:07,600 --> 00:00:08,200
+[ses] tiz kısa ses – kedi tepkisi / metal çınlaması
+
+12
+00:00:08,200 --> 00:00:10,450
+[ses] kedi koşuyor – hafif adım ve zırh şıkırtıları
+
+13
+00:00:10,450 --> 00:00:12,200
+[SAHNE 5 · ejderha uyanıyor] derin ejderha hırıltısı ve gövde hareketi
+
+14
+00:00:12,200 --> 00:00:13,150
+[ses] ağır ejderha adımı (tok, alçak)
+
+15
+00:00:13,150 --> 00:00:14,200
+[ses] ağır ejderha adımı
+
+16
+00:00:14,200 --> 00:00:14,900
+[SAHNE 6 · ejderha başını indiriyor] ağır adım
+
+17
+00:00:14,900 --> 00:00:15,700
+[ses] ejderha hırıltısı / soluk
+
+18
+00:00:15,750 --> 00:00:16,450
+[ses] "Miyav" – kedi
+
+19
+00:00:16,450 --> 00:00:16,700
+[sessize yakın]
+
+20
+00:00:16,700 --> 00:00:17,250
+[ses] ejderha soluğu / hırıltı
+
+21
+00:00:17,250 --> 00:00:17,650
+[sessize yakın]
+
+22
+00:00:17,650 --> 00:00:17,950
+[ses] son hırıltı – video biter
