@@ -65,3 +65,5 @@ Bu dosya projenin hafızasıdır: kullanıcıyla verilen ve onaylanan kararlar b
 - Önce kısa deneme (S1 + S4, ~70 kredi): Chris'in Türkçe telaffuzu kontrol edilir; sonra tam üretim.
 - Üretim bu bulut ortamında yapılacak (kullanıcı kararı). Gereken: ortam ayarlarında `ELEVENLABS_API_KEY` (Network secrets) ve izinli alan `api.elevenlabs.io`. Betik: `seslendirme/uret_ses.py`.
 - ElevenLabs ücretsiz planı: paylaşımın açıklamasına ElevenLabs kaynak olarak eklenecek (kullanıcı kararı).
+- **Klipler üretildi** (kullanıcının bilgisayarındaki oturumda, Chris / eleven_v3, sonda [pause]) ve dala yüklendi: `seslendirme/klipler/S1–S9.mp3`.
+- Montaj: `seslendirme/montaj.py` → `cikti/kariyer-pusulan-2500-seslendirmeli.mp4` (görüntü birebir aynı, yalnızca ses eklendi; ses −15 LUFS). Uzun gelen S3 ve S5 için S3 6,75'e, S4 9,05'e, S6 16,6'ya kaydırıldı; ekran yazılarına dokunulmadı.
