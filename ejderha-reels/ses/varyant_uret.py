@@ -1,7 +1,7 @@
 """Chris kaydından (E1-chris-simdiki.mp3) daha kalın ve duraksamalı 10 sn varyantlar üretir.
 Yöntem: kayıt sessizliklerden ifadelere bölünür; her ifade rubberband ile kalınlaştırılır ve yavaşlatılır;
 ifadeler arasına orijinal oda sesiyle uzatılmış duraklamalar konur; toplam tam 10,0 sn.
-Kullanım: python3 -I varyant_uret.py <kaynak.mp3> <cikti_klasoru>
+Kullanım: python3 -I varyant_uret.py <kaynak.mp3> <cikti_klasoru> [2]   (2: ikinci tur, daha ince)
 """
 import os, subprocess, sys, tempfile
 
@@ -18,6 +18,16 @@ VARYANT = [
     ("4-kalin-dogal-tini",     -3.0, "preserved", 0.92, [0.8, 1.3, 0.8, 1.4], "bass=g=4:f=110"),
     ("5-dramatik-duraksamali", -2.5, "shifted",   0.90, [0.7, 1.4, 0.9, 1.6], "bass=g=3:f=120,aecho=0.8:0.5:38:0.12"),
 ]
+# 2. tur: "biraz daha ince" — orijinal (0) ile 1. varyant (-1,5) arası, duraksamalar korunur
+VARYANT2 = [
+    ("6-cok-hafif-kalin",            -0.5, "shifted",   0.95, [1, 1, 1, 1],         "bass=g=1:f=120"),
+    ("7-hafif-kalin-dogal",          -0.8, "preserved", 0.94, [1, 1, 1, 1],         "bass=g=1.5:f=120"),
+    ("8-ince-duraksamali",           -1.0, "shifted",   0.93, [0.8, 1.3, 0.8, 1.4], "bass=g=1.5:f=120"),
+    ("9-ince-sakin",                 -0.7, "shifted",   0.90, [1, 1.1, 1, 1.2],     "bass=g=1:f=120"),
+    ("10-ince-dramatik",             -1.2, "shifted",   0.92, [0.7, 1.4, 0.9, 1.6], "bass=g=1.5:f=120,aecho=0.8:0.5:38:0.10"),
+]
+if len(sys.argv) > 3 and sys.argv[3] == "2":
+    VARYANT = VARYANT2
 
 def ff(*a):
     subprocess.run(["ffmpeg", "-loglevel", "error", "-y", *a], check=True)
