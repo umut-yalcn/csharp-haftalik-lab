@@ -63,3 +63,8 @@ Bu dosya projenin hafızasıdır. Yeni bir adım atmadan önce oku; bir karar de
 ## Üretim v4 — laptop ekranında yeni sayfa (2204 program, 984 kurum; Toptalent.co ve Mastercard kartları)
 - Kaynak: `referans/site-ana-sayfa-koyu-v3.png` (1919×989, yakınlaştırılmış). Logo ve "Kayıt Ol" kesilmesin diye tam genişlik (kaydırma çubuğu hariç, 1904 px) kullanıldı; ekran oranı (1,684) için alt kısım sayfanın zemin rengiyle uzatıldı → `referans/site-ana-sayfa-koyu-v3-tam.png`, kırpma `[0, 0, 1904, 1130]`.
 - Başka hiçbir şey değişmedi (kontrol: ekran dışındaki pikseller v3 ile birebir aynı).
+
+## Seslendirme — ses seçimi (aday)
+- Kullanıcıya gelen istek: Chris sesi "biraz daha kalın ve duraksamalı" olsun. Kaynak `ses/kaynak/E1-chris-simdiki.mp3` (7,7 sn, ElevenLabs Chris, kullanıcının bilgisayarında üretilmiş).
+- Bu ortamda ElevenLabs erişimi yok; rubberband ile 10 varyant üretildi (`ses/varyant/`, `ses/varyant_uret.py`, zip: `ses/chris-ses-varyantlari.zip`): 1–5 kalın (−1,5 … −3,5 yarım ton), 6–10 daha ince (−0,5 … −1,2 yarım ton); hepsi ~10 sn, uzatılmış duraklamalı.
+- **Kullanıcı kararı: şimdilik orijinal E1 sesi düşünülüyor** (işlenmemiş `E1-chris-simdiki.mp3`).
