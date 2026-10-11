@@ -1,0 +1,51 @@
+
+S1  (hece 13/13)
+   Bir:+1.7  fırsatı:+1.2  kaçırmış:-0.4  olabilir:-0.1  misin:+2.7
+   vurgulu okunan: Bir, fırsatı, misin   | olması gereken: kaçırmış
+   GEREKSİZ vurgu: Bir, fırsatı, misin
+   EKSİK vurgu: kaçırmış
+
+S2  (hece 8/8)
+   Bir:+1.3  staj:+4.0  Bir:-1.8  burs:-0.9  Bir:-0.7  eğitim:+0.3
+   vurgulu okunan: Bir, staj   | olması gereken: staj, burs, eğitim
+   GEREKSİZ vurgu: Bir
+   EKSİK vurgu: burs, eğitim
+
+S3  (hece 8/8)
+   Belki:+2.7  de:+0.5  o:+3.8  tek:-0.8  başvuru:-0.4
+   vurgulu okunan: Belki, o   | olması gereken: tek
+   GEREKSİZ vurgu: Belki, o
+   EKSİK vurgu: tek
+
+S4  (hece 17/17)
+   Ve:+1.5  bugün:+0.8  iki:+0.4  bin:+0.6  beş:+2.0  yüz:+0.1  kişi:+0.3  Kariyer:-0.1  Pusulan'da:+4.0
+   vurgulu okunan: Ve, beş, Pusulan'da   | olması gereken: iki, bin, beş, yüz
+   GEREKSİZ vurgu: Ve, Pusulan'da
+   EKSİK vurgu: iki, bin, yüz
+
+S5  (hece 19/19)
+   İki:-1.0  bin:+2.3  beş:+2.8  yüz:+1.4  farklı:-0.5  hedef:+1.4  farklı:-0.5  hikâye:+0.8  farklı:+2.5  gelecek:-1.8
+   vurgulu okunan: bin, beş, yüz, hedef, farklı   | olması gereken: hedef, hikâye, gelecek
+   GEREKSİZ vurgu: bin, beş, yüz, farklı
+   EKSİK vurgu: hikâye, gelecek
+
+S6  (hece 21/21)
+   Ama:+0.1  mesele:-0.4  iki:-0.7  bin:+0.6  beş:+0.4  yüz:+4.0  değil:+0.2  Sıradaki:+2.2  fırsatı:+0.8  bulmak:-0.1
+   vurgulu okunan: yüz, Sıradaki   | olması gereken: değil, Sıradaki
+   GEREKSİZ vurgu: yüz
+   EKSİK vurgu: değil
+
+S7  (hece 6/6)
+   Keşfet:+0.9  Kaydet:+1.3  Başvur:+2.5
+   vurgulu okunan: Kaydet, Başvur   | olması gereken: -
+   GEREKSİZ vurgu: Kaydet, Başvur
+
+S8  (hece 12/14)
+   İyi:+0.2  ki:+1.4  varsınız:+0.1  Daha:+1.0  yeni:+4.5  başlıyoruz:+0.1
+   vurgulu okunan: ki, yeni   | olması gereken: yeni
+   GEREKSİZ vurgu: ki
+
+S9  (hece 21/21)
+   İki:-1.2  bin:+1.4  beş:+1.9  yüz:+2.0  kişi:-0.0  pusulasını:+0.2  buldu:-2.8  Sıradaki:+3.4  sen:+3.0  misin:+0.3
+   vurgulu okunan: bin, beş, yüz, Sıradaki, sen   | olması gereken: sen
+   GEREKSİZ vurgu: bin, beş, yüz, Sıradaki
