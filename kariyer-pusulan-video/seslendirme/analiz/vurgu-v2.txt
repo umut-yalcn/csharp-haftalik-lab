@@ -1,0 +1,105 @@
+
+S1a  (hece 13/13)  uyum -1.4
+   Bir:+0.9  fırsatı:+1.3  kaçırmış:+0.7  olabilir:+1.6  misin:+1.2
+   vurgulu okunan: fırsatı, olabilir, misin   | olması gereken: kaçırmış
+   GEREKSİZ vurgu: fırsatı, olabilir, misin
+   EKSİK vurgu: kaçırmış
+
+S1b  (hece 13/13)  uyum -1.5
+   Bir:+1.6  fırsatı:+1.8  kaçırmış:+0.8  olabilir:+0.1  misin:+0.1
+   vurgulu okunan: Bir, fırsatı   | olması gereken: kaçırmış
+   GEREKSİZ vurgu: Bir, fırsatı
+   EKSİK vurgu: kaçırmış
+
+S2a  (hece 8/8)  uyum -2.3
+   Bir:+0.5  staj:+3.1  Bir:+0.2  burs:-2.4  Bir:+1.3  eğitim:-0.7
+   vurgulu okunan: staj, Bir   | olması gereken: staj, burs, eğitim
+   GEREKSİZ vurgu: Bir
+   EKSİK vurgu: burs, eğitim
+
+S2b  (hece 8/8)  uyum +0.1
+   Bir:+0.2  staj:+3.4  Bir:-0.0  burs:+0.6  Bir:-1.0  eğitim:-0.2
+   vurgulu okunan: staj   | olması gereken: staj, burs, eğitim
+   EKSİK vurgu: burs, eğitim
+
+S3a  (hece 8/8)  uyum +0.1
+   Belki:-0.8  de:+2.4  o:+0.3  tek:+2.5  başvuru:+0.1
+   vurgulu okunan: de, tek   | olması gereken: tek
+   GEREKSİZ vurgu: de
+
+S3b  (hece 8/8)  uyum -0.1
+   Belki:+1.2  de:+1.7  o:+2.0  tek:+2.0  başvuru:-1.3
+   vurgulu okunan: de, o, tek   | olması gereken: tek
+   GEREKSİZ vurgu: de, o
+
+S4a  (hece 17/17)  uyum -2.1
+   Ve:+0.9  bugün:+1.1  iki:-0.2  bin:+0.2  beş:+2.7  yüz:+1.2  kişi:+1.2  Kariyer:-0.1  Pusulan'da:+2.1
+   vurgulu okunan: beş, yüz, Pusulan'da   | olması gereken: iki, bin, beş, yüz
+   GEREKSİZ vurgu: Pusulan'da
+   EKSİK vurgu: iki, bin
+
+S4b  (hece 17/17)  uyum -4.2
+   Ve:-1.3  bugün:+0.5  iki:-1.5  bin:+0.5  beş:+1.2  yüz:+0.8  kişi:-2.4  Kariyer:+1.9  Pusulan'da:+2.5
+   vurgulu okunan: Kariyer, Pusulan'da   | olması gereken: iki, bin, beş, yüz
+   GEREKSİZ vurgu: Kariyer, Pusulan'da
+   EKSİK vurgu: iki, bin, beş, yüz
+
+S5a  (hece 19/19)  uyum -2.7
+   İki:-2.1  bin:+1.6  beş:+1.9  yüz:+2.5  farklı:+2.1  hedef:+2.0  farklı:+0.6  hikâye:-0.1  farklı:-0.1  gelecek:+0.5
+   vurgulu okunan: bin, beş, yüz, farklı, hedef   | olması gereken: hedef, hikâye, gelecek
+   GEREKSİZ vurgu: bin, beş, yüz, farklı
+   EKSİK vurgu: hikâye, gelecek
+
+S5b  (hece 19/19)  uyum -1.4
+   İki:+1.3  bin:+0.9  beş:+1.3  yüz:+1.4  farklı:+0.5  hedef:+0.3  farklı:-0.0  hikâye:+1.2  farklı:+1.0  gelecek:+1.5
+   vurgulu okunan: İki, beş, yüz, gelecek   | olması gereken: hedef, hikâye, gelecek
+   GEREKSİZ vurgu: İki, beş, yüz
+   EKSİK vurgu: hedef, hikâye
+
+S6a  (hece 21/21)  uyum +0.0
+   Ama:+2.2  mesele:+0.6  iki:-0.5  bin:+0.5  beş:+1.6  yüz:+1.2  değil:+0.1  Sıradaki:+5.2  fırsatı:-1.7  bulmak:-1.3
+   vurgulu okunan: Ama, beş, yüz, Sıradaki   | olması gereken: değil, Sıradaki
+   GEREKSİZ vurgu: Ama, beş, yüz
+   EKSİK vurgu: değil
+
+S6b  (hece 21/21)  uyum +0.1
+   Ama:+1.0  mesele:-0.2  iki:+0.1  bin:+1.2  beş:+1.2  yüz:-0.0  değil:-0.6  Sıradaki:+4.3  fırsatı:-0.9  bulmak:-1.3
+   vurgulu okunan: bin, Sıradaki   | olması gereken: değil, Sıradaki
+   GEREKSİZ vurgu: bin
+   EKSİK vurgu: değil
+
+S7a  (hece 6/6)  uyum -2.3
+   Keşfet:-0.1  Kaydet:+2.3  Başvur:+1.4
+   vurgulu okunan: Kaydet, Başvur   | olması gereken: -
+   GEREKSİZ vurgu: Kaydet, Başvur
+
+S7b  (hece 6/6)  uyum -3.0
+   Keşfet:-0.1  Kaydet:+3.0  Başvur:+1.0
+   vurgulu okunan: Kaydet   | olması gereken: -
+   GEREKSİZ vurgu: Kaydet
+
+S8a  (hece 12/14)  uyum -4.4
+   İyi:+3.3  ki:+2.8  varsınız:+0.3  Daha:+0.6  yeni:-0.6  başlıyoruz:+1.9
+   vurgulu okunan: İyi, ki, başlıyoruz   | olması gereken: yeni
+   GEREKSİZ vurgu: İyi, ki, başlıyoruz
+   EKSİK vurgu: yeni
+
+S8b  (hece 11/14)  uyum -4.0
+   İyi:+2.4  ki:-2.2  varsınız:+0.5  Daha:+3.6  yeni:+0.1  başlıyoruz:-3.6
+   vurgulu okunan: İyi, Daha   | olması gereken: yeni
+   GEREKSİZ vurgu: İyi, Daha
+   EKSİK vurgu: yeni
+
+S9a  (hece 21/21)  uyum -7.5
+   İki:-1.3  bin:+1.3  beş:+1.6  yüz:+3.0  kişi:+2.4  pusulasını:-0.6  buldu:+0.1  Sıradaki:+4.6  sen:-2.4  misin:+1.5
+   vurgulu okunan: bin, beş, yüz, kişi, Sıradaki, misin   | olması gereken: sen
+   GEREKSİZ vurgu: bin, beş, yüz, kişi, Sıradaki, misin
+   EKSİK vurgu: sen
+
+S9b  (hece 21/21)  uyum -3.3
+   İki:-0.7  bin:+1.7  beş:+1.4  yüz:+1.9  kişi:+1.8  pusulasını:+0.8  buldu:-0.5  Sıradaki:+3.7  sen:+1.0  misin:+2.9
+   vurgulu okunan: bin, beş, yüz, kişi, Sıradaki, misin   | olması gereken: sen
+   GEREKSİZ vurgu: bin, beş, yüz, kişi, Sıradaki, misin
+   EKSİK vurgu: sen
+
+SEÇİM: S1a(-1.4)  S2b(+0.1)  S3a(+0.1)  S4a(-2.1)  S5b(-1.4)  S6b(+0.1)  S7a(-2.3)  S8b(-4.0)  S9b(-3.3)

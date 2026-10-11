@@ -32,8 +32,8 @@ def f0(w):
     k = lo + int(np.argmax(c[lo:hi]))
     return SR / k if c[k] > 0.35 * c[0] else np.nan
 
-def analiz(ad, metin):
-    x = oku(f"klipler/{ad}.mp3")
+def analiz(ad, metin, yol=None):
+    x = oku(yol or f"klipler/{ad}.mp3")
     hop, win = 80, 320
     # ünlü bandı (300–2500 Hz) enerjisi: hece çekirdekleri burada belirgin
     n = (len(x) - win) // hop
@@ -59,25 +59,44 @@ def analiz(ad, metin):
         while a > 0 and s[a] > s[i] - 6 and i - a < 25: a -= 1
         while b < n - 1 and s[b] > s[i] - 6 and b - i < 25: b += 1
         seg = x[a*hop:b*hop+win]
-        ozel.append((s[i], np.nanmedian([f0(seg[j:j+640]) for j in range(0, max(1, len(seg)-640), 80)] or [np.nan]), (b - a) * hop / SR, i * hop / SR))
+        ozel.append((s[i], np.nanmedian([f0(seg[j:j+640]) for j in range(0, max(1, len(seg)-640), 80)] or [np.nan]), (b - a) * hop / SR, i * hop / SR, a * hop / SR, (b * hop + win) / SR))
     O = np.array([[o[0], o[1], o[2]] for o in ozel], float)
     O[:, 1] = np.where(np.isnan(O[:, 1]), np.nanmean(O[:, 1]), O[:, 1])
     z = (O - O.mean(0)) / (O.std(0) + 1e-6)
     puan = z[:, 0] + z[:, 1] + 0.7 * z[:, 2]
     sonuc, j = [], 0
     for w, h in zip(kel, hece):
-        p = puan[j:j+h]; t = [o[3] for o in ozel[j:j+h]]
-        sonuc.append((w, float(p.max()) if len(p) else float("nan"), t[0] if t else None)); j += h
+        p = puan[j:j+h]; seg = ozel[j:j+h]
+        aralik = (seg[0][4], seg[-1][5]) if seg else None
+        sonuc.append((w, float(p.max()) if len(p) else float("nan"), aralik)); j += h
     return sonuc, len(tepe), sum(hece)
 
-for ad, m in METIN.items():
-    s, bulunan, beklenen = analiz(ad, m)
+def degerlendir(s, hedef):
     vurgulu = [w for w, p, _ in s if p > 1.2]
-    hedef = HEDEF[ad]
     fazla = [w for w in vurgulu if w not in hedef]
     eksik = [w for w in hedef if w not in vurgulu]
-    print(f"\n{ad}  (hece {bulunan}/{beklenen})")
-    print("   " + "  ".join(f"{w}:{p:+.1f}" for w, p, _ in s))
-    print(f"   vurgulu okunan: {', '.join(vurgulu) or '-'}   | olması gereken: {', '.join(hedef) or '-'}")
-    if fazla: print(f"   GEREKSİZ vurgu: {', '.join(fazla)}")
-    if eksik: print(f"   EKSİK vurgu: {', '.join(eksik)}")
+    hp = [p for w, p, _ in s if w in hedef and not np.isnan(p)]
+    dp = [p for w, p, _ in s if w not in hedef and not np.isnan(p)]
+    # uyum: hedef kelimelerin ortalaması - diğerlerinin en yükseği (soru sonu 'misin' hariç)
+    dp2 = [p for w, p, _ in s if w not in hedef and w != "misin" and not np.isnan(p)]
+    uyum = (np.mean(hp) if hp else 0) - (max(dp2) if dp2 else 0) - 0.5 * len(eksik)
+    return vurgulu, fazla, eksik, uyum
+
+if __name__ == "__main__":
+    klasor = sys.argv[1] if len(sys.argv) > 1 else "klipler"
+    ekler = sys.argv[2].split(",") if len(sys.argv) > 2 else [""]
+    secim = {}
+    for ad, m in METIN.items():
+        en = None
+        for ek in ekler:
+            s, bulunan, beklenen = analiz(ad, m, f"{klasor}/{ad}{ek}.mp3")
+            vurgulu, fazla, eksik, uyum = degerlendir(s, HEDEF[ad])
+            print(f"\n{ad}{ek}  (hece {bulunan}/{beklenen})  uyum {uyum:+.1f}")
+            print("   " + "  ".join(f"{w}:{p:+.1f}" for w, p, _ in s))
+            print(f"   vurgulu okunan: {', '.join(vurgulu) or '-'}   | olması gereken: {', '.join(HEDEF[ad]) or '-'}")
+            if fazla: print(f"   GEREKSİZ vurgu: {', '.join(fazla)}")
+            if eksik: print(f"   EKSİK vurgu: {', '.join(eksik)}")
+            if en is None or uyum > en[1]: en = (ek, uyum)
+        secim[ad] = en
+    if len(ekler) > 1:
+        print("\nSEÇİM: " + "  ".join(f"{a}{e}({u:+.1f})" for a, (e, u) in secim.items()))

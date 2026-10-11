@@ -67,3 +67,6 @@ Bu dosya projenin hafızasıdır: kullanıcıyla verilen ve onaylanan kararlar b
 - ElevenLabs ücretsiz planı: paylaşımın açıklamasına ElevenLabs kaynak olarak eklenecek (kullanıcı kararı).
 - **Klipler üretildi** (kullanıcının bilgisayarındaki oturumda, Chris / eleven_v3, sonda [pause]) ve dala yüklendi: `seslendirme/klipler/S1–S9.mp3`.
 - Montaj: `seslendirme/montaj.py` → `cikti/kariyer-pusulan-2500-seslendirmeli.mp4` (görüntü birebir aynı, yalnızca ses eklendi; ses −15 LUFS). Uzun gelen S3 ve S5 için S3 6,75'e, S4 9,05'e, S6 16,6'ya kaydırıldı; ekran yazılarına dokunulmadı.
+- **Vurgu düzeltmesi (v2):** Geri bildirim "bazı yerlerde gereksiz, bazı yerlerde eksik vurgu". Kural: sesteki vurgu = ekranda gradyanla vurgulanan kelime. Duygu etiketleri kaldırıldı, vurgulu kelime BÜYÜK HARF; her satır stability 0.5 (a) ve 1.0 (b) ile üretildi (`seslendirme/klipler-v2/`).
+- Vurgu kulakla değil ölçümle kontrol ediliyor: `seslendirme/vurgu_analiz.py` (hece başına perde/yükseklik/süre). Sonuçlar `seslendirme/analiz/`.
+- Seçim (`seslendirme/klipler-secim/`): S1, S2, S3, S8 kelime düzeyinde ses işlemeyle düzeltildi (`vurgu_duzelt.py`); S4=v2a, S5=v2b, S6=v2b, S7=v2a, S9=v1. Video: `cikti/kariyer-pusulan-2500-seslendirmeli-v2(-HD).mp4`. S4 ve S5 hâlâ zayıf.

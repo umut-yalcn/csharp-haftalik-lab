@@ -1,0 +1,48 @@
+
+S1  (hece 13/13)  uyum +0.6
+   Bir:+1.4  fırsatı:+0.5  kaçırmış:+2.0  olabilir:+0.8  misin:+2.7
+   vurgulu okunan: Bir, kaçırmış, misin   | olması gereken: kaçırmış
+   GEREKSİZ vurgu: Bir, misin
+
+S2  (hece 8/8)  uyum +0.8
+   Bir:-0.2  staj:+3.2  Bir:-0.4  burs:+0.3  Bir:-1.5  eğitim:+1.2
+   vurgulu okunan: staj   | olması gereken: staj, burs, eğitim
+   EKSİK vurgu: burs, eğitim
+
+S3  (hece 8/8)  uyum +0.8
+   Belki:-0.8  de:+1.8  o:+0.4  tek:+2.6  başvuru:+0.2
+   vurgulu okunan: de, tek   | olması gereken: tek
+   GEREKSİZ vurgu: de
+
+S4  (hece 17/17)  uyum -2.5
+   Ve:+0.3  bugün:+0.4  iki:+0.5  bin:+2.4  beş:+0.5  yüz:-0.7  kişi:-1.6  Kariyer:+1.7  Pusulan'da:+1.6
+   vurgulu okunan: bin, Kariyer, Pusulan'da   | olması gereken: iki, bin, beş, yüz
+   GEREKSİZ vurgu: Kariyer, Pusulan'da
+   EKSİK vurgu: iki, beş, yüz
+
+S5  (hece 19/19)  uyum -3.7
+   İki:+2.4  bin:+2.4  beş:+1.2  yüz:-1.9  farklı:+1.2  hedef:+0.3  farklı:+1.0  hikâye:+0.5  farklı:+1.3  gelecek:-0.2
+   vurgulu okunan: İki, bin, beş, farklı   | olması gereken: hedef, hikâye, gelecek
+   GEREKSİZ vurgu: İki, bin, beş, farklı
+   EKSİK vurgu: hedef, hikâye, gelecek
+
+S6  (hece 21/21)  uyum -0.4
+   Ama:+1.2  mesele:+0.2  iki:-0.2  bin:+1.4  beş:+0.6  yüz:+0.8  değil:-0.9  Sıradaki:+5.2  fırsatı:+2.1  bulmak:-1.9
+   vurgulu okunan: bin, Sıradaki, fırsatı   | olması gereken: değil, Sıradaki
+   GEREKSİZ vurgu: bin, fırsatı
+   EKSİK vurgu: değil
+
+S7  (hece 6/6)  uyum -2.5
+   Keşfet:+0.2  Kaydet:+2.5  Başvur:+1.2
+   vurgulu okunan: Kaydet, Başvur   | olması gereken: -
+   GEREKSİZ vurgu: Kaydet, Başvur
+
+S8  (hece 13/14)  uyum +3.2
+   İyi:+0.2  ki:+0.9  varsınız:+1.2  Daha:+1.0  yeni:+4.4  başlıyoruz:+0.0
+   vurgulu okunan: varsınız, yeni   | olması gereken: yeni
+   GEREKSİZ vurgu: varsınız
+
+S9  (hece 21/21)  uyum -1.4
+   İki:-1.3  bin:+0.3  beş:+0.9  yüz:+2.0  kişi:-0.9  pusulasını:+0.6  buldu:+3.1  Sıradaki:+2.7  sen:+1.8  misin:-1.7
+   vurgulu okunan: yüz, buldu, Sıradaki, sen   | olması gereken: sen
+   GEREKSİZ vurgu: yüz, buldu, Sıradaki
