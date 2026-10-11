@@ -58,3 +58,10 @@ Bu dosya projenin hafızasıdır: kullanıcıyla verilen ve onaylanan kararlar b
 4. "Başvur yazısı iyi okunmuyor", "yazılar çok hızlı geçiyor, 0.75x'e alabiliriz", "geçişler biraz fazla ışıklı" → kesit 6 kelimeleri keskin stile geçti, insansız sürüm 0.75x ve yumuşak geçişlerle yeniden üretildi.
 5. "Her şey mükemmel; geçişlerdeki beyaz flaş azalsın" → beyaz flaşlar 0.2'ye indirildi (`--flas az`), başka hiçbir şey değişmedi.
 6. "12–16. saniyeler görsel olarak çok boş" → kesit 4'e pusula ve 2.500 ışık noktası (A seçeneği) eklendi, başka hiçbir şey değişmedi.
+
+## Seslendirme (2.500 kişi Reels)
+- Videoda ses yoktu; seslendirme eklenecek. Metin onaylandı: `seslendirme/METIN-TASLAK.md` (S1–S9, ~394 karakter), ekrandaki yazılarla eş zamanlı.
+- Ses: Chris (E1 sesi, ElevenLabs `eleven_v3`, kimlik iP95p4xoKVk53GoZ742B), Türkçe. Satır satır üretilip saniyesine yerleştirilir.
+- Önce kısa deneme (S1 + S4, ~70 kredi): Chris'in Türkçe telaffuzu kontrol edilir; sonra tam üretim.
+- Üretim bu bulut ortamında yapılacak (kullanıcı kararı). Gereken: ortam ayarlarında `ELEVENLABS_API_KEY` (Network secrets) ve izinli alan `api.elevenlabs.io`. Betik: `seslendirme/uret_ses.py`.
+- ElevenLabs ücretsiz planı: paylaşımın açıklamasına ElevenLabs kaynak olarak eklenecek (kullanıcı kararı).
